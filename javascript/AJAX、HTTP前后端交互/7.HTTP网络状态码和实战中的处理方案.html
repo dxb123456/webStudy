@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    //http请求报文
+    //1. 请求行
+        // method url
+        // GET/ xxx?id=2
+        //Post/login
+        //PUT
+        //DELETE
+    //2.多个请求头
+        //Host:www.baidu.com
+        //cookie：a=xxx;b=xxx
+        //Content-Type:application/x-www-form-urlencoded；application/json
+    //3.请求体
+        //username=tom&pwd=123
+        //{'username':'123,"pwd":123}
+
+
+    //相应报文
+        //1.相应状态码：status
+            //常用状态码：
+                //200 ok
+                //201 Created 成功请求，已创建新的资源
+                //304        走缓存资源
+                //401 unauthorized 未授权/要求用户验证身份
+                // 404 Not Found 无法找到资源
+                // 500 Internel Server Error   服务器内部错位
+        //2.多个响应头
+            //Content-Type:text/html;charset=utf-8
+            //Set-Cookie:BD_CK_SAM=1;path=/
+        //3.响应体
+            //html 文本/json 文本/js/css/图片
+
+        // 请求方式的分类：
+            //restful :一个请求路径对应多个操作，请求方式决定请求操作类型
+            //restless ： 一个路径只对应一个操作，一般只有get/post
+
+        // put/delete 请求会先发跨域的options 请求
+</script>
+</body>
+</html>

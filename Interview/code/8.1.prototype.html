@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 名词解释 ：原型对象prototype
+    // 在JavaScript 中，每当定义一个对象（函数）时候，对象中都会包含一些预定义的属性。其中函数对象的一个属性就是原型对象 prototype 。注：普通对象没有prototype，有__proto__。
+    // 原型对象其实就是普通对象 （Function.prototype 除外，它是函数对象，但它很特殊，他没有prototype 属性（前面说道函数对象都有prototype 属性））
+    //原型对象是用来做什么的呢？主要作用是用于继承
+
+    var obj = {
+        a: 1,
+        b: 2
+    }
+
+    console.log(obj)
+
+    var person = function (name) {
+        // this.name = name;
+        // function aa(){
+        //     console.log(111)
+        // }
+        this.mm = 200;   //公共属性 public
+        var kk = 100;  //私有属性 private
+        this.getKk = function () {
+            return kk
+        }
+    };
+    console.dir(new person(100).getKk())
+    console.dir(new person(100).mm)
+    // person.kk=1
+    // person.prototype.getName = function(){
+    //     return this.name;
+    // }
+    var veb = new person('Veblen');
+    veb.a = 1;
+    console.dir(person.__proto__ === Function.prototype)
+    console.dir(person.prototype.__proto__ === Object.prototype)
+
+    console.dir(person)
+    console.log(veb)
+    console.log(4, person.prototype === veb.__proto__)  // 返回true
+    // veb.getName(); // Veblen
+
+    // 总结：
+    // 1.函数
+    // var person = function(name){
+    //     this.name = name;
+    // };
+    // console.dir( person)
+    // 当创建一个函数的时候，js会默认生成一个原型对象prototype 和 __proto__ ,
+    //      __proto__指向的是Function.prototype;
+    //      prototype中包含 构造函数constructor和__proto__,这里的__proto__指向一个空的Object对象，
+
+    // 2.对象
+    // var myobj = {} || new Object()
+    // console.log(myobj)
+    // 当创建一个对象时，js会生成一个 __proto__  ,这个__proto__ 指向空的Object
+
+    // 3.类对象
+    // var man = new person()
+    // console.log(man)
+    // 当创建man对象时，js会创建一个__proto__，这个__proto__指向person.prototype,
+
+    // 4.Object.create(null)
+    // var kk=Object.create(null);  //声明一个没有__proto__ 的对象
+    // var kk1=Object.create({});  //声明一个正常的对象
+    // console.log(kk.__proto__)
+    // console.log(kk1)
+
+</script>
+
+
+<!--什么是原型链？-->
+JavaScript是面向对象的，每个实例对象都有一个__proto__属性，该属性指向它的原型对象，这个实例对象的构造函数有一个原型属性prototype,与实例的proto属性指向同一个对象。当一个对象在查找一个属性的时候，自身没有就会根据__proto__向它的原型进行查找，如果都没有，则向它的原型的原型继续查找，直到查到Object.prototype.proto_为null,这样也就形成了原型链。
+
+原型对象和实例之间有什么作用呢？
+
+通过一个构造函数创建出来的多个实例，如果都要添加一个方法，给每个实例去添加并不是一个明智的选择。这时就该用上原型了。
+
+在实例的原型上添加一个方法，这个原型的所有实例便都有了这个方法。
+
+var M = function (name) { this.name = name; }
+var o3 = new M('o3')
+实例就是对象，在本例中o3就是实例，M就是构造函数。
+
+实例通过new一个构造函数生成的。
+
+从上图中可以知道，实例的proto指向的是原型对象。
+
+实例的构造函数的prototype也是指向的原型对象。
+
+原型对象的construor指向的是构造函数。
+
+补充：
+
+只有函数有prototype,对象是没有的。
+
+但是函数也是有proto的，因为函数也是对象。函数的proto指向的是Function.prototype。
+</body>
+</html>

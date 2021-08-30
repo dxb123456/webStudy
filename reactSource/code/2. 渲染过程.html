@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./react.development.js"></script>
+    <script src="./react-dom.development.js"></script>
+    <!-- 生产环境中不建议使用 -->
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    let style = {color: 'green', border: '1px solid red', margin: '5px'}
+    let virtualDom = (
+        <div>
+            <div key="B2" style={style}>我是B2</div>
+            <div key="B4" style={style}>我是B4</div>
+            <div key="B3" style={style}>我是B3</div>
+        </div>
+    )
+
+    function isSameVnode(a, b ) {
+        if(typeof b === 'undefined' ){
+            return false
+        }
+        if (a.key == b.key && a.type === b.type) {
+            return true
+        }
+        return false
+    }
+
+    let workInProgress;
+    const Placement = 'Placement'   //插入节点标识
+    const Move_Placement = 'Move_Placement' //移动节点
+    const Update_Placement = 'Update_Placement' //更新
+    const Delete_Placement = 'Delete_Placement' //删除
+    const Complete = 'Complete' //处理完成
+    const TAG_ROOT = 'TAG_ROOT';    //Fiber 根节点
+    const TAG_HOST = 'TAG_HOST';    //原生dom节点
+    const TAG_TEXT = 'TAG_TEXT';    //文本节点
+    const Deleted = 'Deleted'       //已经删除
+    var delete_Array = [];
+    var alternate = null;      //上一个RootFiber
+    function workLoop() {
+        workInProgress.oldFider = alternate
+        while (workInProgress) {   //如果有任务就执行
+            workInProgress = performUnitWork(workInProgress)   //执行完成后会返回下一个任务
+        }
+        alternate = rootFiber;
+        commitRoot(rootFiber)
+    }
+
+    function commitRoot(rootFiber) {   //提交root
+        console.log(rootFiber)
+        var currentEffect
+        if (delete_Array.length) {
+            currentEffect = delete_Array.shift();
+
+            while (currentEffect) {
+                let flags = currentEffect.flags;
+                switch (flags) {
+                    case Delete_Placement:
+                        commitDeletePlacement(currentEffect)
+                        break;
+                    case Update_Placement:
+                        commitUpdatePlacement(currentEffect)
+                        break;
+                    case Placement:
+                        commitPlacement(currentEffect)
+                        break;
+                }
+                currentEffect = delete_Array.shift();
+            }
+        }
+
+        currentEffect = rootFiber.firstEffect;
+        while (currentEffect) {
+            let flags = currentEffect.flags;
+            switch (flags) {
+                case Delete_Placement:
+                    commitDeletePlacement(currentEffect)
+                    break;
+                case Update_Placement:
+                    commitUpdatePlacement(currentEffect)
+                    break;
+                case Placement:
+                    commitPlacement(currentEffect)
+                    break;
+            }
+            currentEffect = currentEffect.nextEffect
+        }
+    }
+
+    function commitUpdatePlacement(currentEffect) {//提交更新
+        if (currentEffect.tag === TAG_TEXT) {
+            if (currentEffect.stateNode.nodeValue !== currentEffect.newValue) {
+                currentEffect.stateNode.nodeValue = currentEffect.newValue
+            }
+        } else {
+            setAttr(currentEffect.stateNode, currentEffect)
+        }
+        currentEffect.flags = Complete
+    }
+
+    function commitDeletePlacement(currentEffect) { //提交删除节点
+        let parent = currentEffect.return.stateNode;
+        currentEffect.flags = Deleted;
+        parent.removeChild(currentEffect.stateNode)
+
+    }
+
+    function commitPlacement(currentEffect) {  // 提交插入节点
+        let parent = currentEffect.return.stateNode;
+        setAttr(currentEffect.stateNode, currentEffect)
+        currentEffect.flags = Complete
+        parent.appendChild(currentEffect.stateNode)
+    }
+
+    function performUnitWork(workInProgress) {   //构建fiber
+        debugger
+        beginWork(workInProgress)           //开始构建fiber
+        if (workInProgress.child) {         //深度优先处理，如果有子孙元素, 将子元素赋值给下一次任务
+            return workInProgress.child
+        }
+
+        while (workInProgress) {
+            completeUnitOfWork(workInProgress);         //如果没有儿子，自己就结束了
+            if (workInProgress.sibling) {               //如果没有儿子了 则找兄弟元素，
+                return workInProgress.sibling
+            }
+            workInProgress = workInProgress.return  //如果兄弟元素也没有了，则会找到父级，最终workProgress会是undefined
+        }
+    }
+
+    //fiber在结构的时候要创建真实dom节点，深度检测没有子元素才执行这一步,给自己创建dom
+    function completeUnitOfWork(workInProgress) {
+        let stateNode;
+        switch (workInProgress.tag) {
+            case TAG_HOST:
+                stateNode = createStateNode(workInProgress);
+                break;
+            case TAG_TEXT:
+                stateNode = createStateNode(workInProgress);
+                break;
+        }
+
+        // 在完成工作的但愿的时候要判断当前的fiber节点有没有对应的dom操作
+        makeEffectList(workInProgress)
+
+    }
+
+    function makeEffectList(completeWork) {
+        let returnFiber = completeWork.return;      //或者这个元素的父fiber
+        if (returnFiber) {
+            if (!returnFiber.firstEffect) {           //如果父fiber的第一个结果元素没有，将父元素的第一个结果元素等于当前元素的第一个结果元素
+                returnFiber.firstEffect = completeWork.firstEffect;
+            }
+            if (completeWork.lastEffect) {
+                if (returnFiber.lastEffect) {
+                    returnFiber.lastEffect.nextEffect = completeWork.firstEffect
+                }
+                returnFiber.lastEffect = completeWork.lastEffect
+            }
+            if (completeWork.flags) {
+                if (returnFiber.lastEffect) {
+                    returnFiber.lastEffect.nextEffect = completeWork
+                } else {
+                    returnFiber.firstEffect = completeWork
+                }
+                returnFiber.lastEffect = completeWork
+            }
+        }
+    }
+
+    function createStateNode(fiber) {
+        if (fiber.stateNode) {
+            return fiber.stateNode
+        }
+        if (fiber.tag === TAG_HOST) {
+            var stateNode = document.createElement(fiber.type)
+
+        } else if (fiber.tag === TAG_TEXT) {
+            var stateNode = document.createTextNode(fiber.newValue)
+        }
+
+        fiber.stateNode = stateNode;
+
+        return fiber.stateNode
+    }
+
+    function setAttr(stateNode, fiber) {
+        for (var key in fiber.props) {
+            if (key != 'key' && key != 'children') {
+                if (key != 'style') {
+                    stateNode.setAttribute(fiber.props[key])
+                } else {
+                    let styleObj = fiber.props.style;
+                    Object.keys(styleObj).map(item => {
+                        stateNode.style[item] = styleObj[item]
+                    })
+                }
+            }
+        }
+    }
+
+    //根据当前dom和vdom构建fiber树
+    function beginWork(workInProgress) {
+        let nextChildren = workInProgress.props && workInProgress.props.children;
+        if (typeof nextChildren === 'string' || Object.prototype.toString.call(nextChildren) === '[object Object]') {
+            nextChildren = [nextChildren]
+        }
+        if (nextChildren) {
+            if (alternate) {
+                if (workInProgress.oldFider) {
+                    var oldFiber = workInProgress.oldFider.child
+                }
+                if (nextChildren.length == 1) {   //新元素只有一个节点
+                    return reconcileSingleChildren(workInProgress, nextChildren, oldFiber)
+                } else {    //新元素有多个节点
+                    return diffFiber(workInProgress, nextChildren, oldFiber)
+                }
+            } else {
+                //首次渲染
+                return reconcileChildren(workInProgress, nextChildren)
+            }
+        }
+    }
+
+    //单节点对比
+    function reconcileSingleChildren(returnFiber, nextChildren, oldFiber) {
+        let newVDom = nextChildren[0];
+        var newFiber = null;
+        while (oldFiber) {
+            if (isSameVnode(newVDom, oldFiber) || (typeof newVDom === 'string' && oldFiber.tagName === TAG_TEXT)) {
+                newFiber = updateFiber(newVDom, oldFiber, returnFiber)
+            } else {
+                oldFiber.flags = Delete_Placement;
+                delete_Array.push(oldFiber);
+            }
+            oldFiber = oldFiber.sibling
+        }
+        if (!newFiber) {
+            newFiber = createFiber(returnFiber, newVDom);
+            returnFiber.child = newFiber;
+        }
+        if (newFiber.sibling) {
+            delete newFiber.sibling
+        }
+        return newFiber
+    }
+
+    //根据父fiber和子vdom树，构建当前returnFiber的子Fiber树
+    function reconcileChildren(returnFiber, nextChildren, childNodes) {
+        let previousFiber; //上一个fiber儿子
+        let firstChildFiber; //当前returnFiber的大儿子
+        if (!childNodes) {
+            for (let newIndex = 0; newIndex < nextChildren.length; newIndex++) {
+                var newFiber;
+                newFiber = createFiber(returnFiber, nextChildren[newIndex]);
+                if (!previousFiber) {
+                    firstChildFiber = newFiber
+                } else {
+                    previousFiber.sibling = newFiber
+                }
+                previousFiber = newFiber
+            }
+            returnFiber.child = firstChildFiber;
+            return firstChildFiber    //返回大儿子
+        }
+    }
+
+    //多个节点对比
+    function diffFiber(returnFiber, nextChildren, oldFiber) {
+        var oldFiberArray = []
+        while (oldFiber) {
+            oldFiberArray.push(oldFiber)
+            oldFiber = oldFiber.sibling
+        }
+        let previousFiber; //上一个fiber儿子
+        let firstChildFiber; //当前returnFiber的大儿子
+        let firstIndex = 0, childLength = nextChildren.length - 1, fiberLength = oldFiberArray.length - 1;
+        let complete = false;
+        while (isSameVnode(nextChildren[firstIndex], oldFiberArray[firstIndex])) {
+            //从前往后查找
+            var newFiber = updateFiber(nextChildren[firstIndex], oldFiberArray[firstIndex], returnFiber);
+            if (!previousFiber) {
+                firstChildFiber = newFiber
+            } else {
+                previousFiber.sibling = newFiber
+            }
+            previousFiber = newFiber;
+            if (firstIndex >= childLength) {
+                firstIndex++
+                deleteFiberArray(oldFiberArray, firstIndex)
+                complete = true;
+                break
+            } else {
+                firstIndex++;
+            }
+        }
+        if (!complete) {
+            if(firstIndex > fiberLength){
+                while(nextChildren[firstIndex]){
+                    var newFiber = createFiber(returnFiber, nextChildren[firstIndex]);
+                    if (!previousFiber) {
+                        firstChildFiber = newFiber
+                    } else {
+                        previousFiber.sibling = newFiber
+                    }
+                    previousFiber = newFiber;
+                    firstIndex++
+                }
+                complete = true
+            }
+        }
+
+        if(!complete){
+            let map = new Map();
+            for (let i = firstIndex; i <= fiberLength; i++) {
+                var key = oldFiberArray[i].key || i;
+                map.set(key,oldFiberArray[i])
+            }
+
+            for (let i = firstIndex; i <= childLength; i++) {
+                let key = nextChildren[i].key || i;
+                // map.set(key,oldFiberArray[i])
+                if(map.has(key)){
+                    var newFiber = updateFiber(nextChildren[i], map.get(key), returnFiber);
+                    map.delete(key)
+                }else{
+                    var newFiber = createFiber(returnFiber, nextChildren[i]);
+                }
+                if (!previousFiber) {
+                    firstChildFiber = newFiber
+                } else {
+                    previousFiber.sibling = newFiber
+                }
+                previousFiber = newFiber;
+            }
+            if(map.size>0){
+                for(var key in map){
+                    map.get(key).flags = Delete_Placement;
+                    delete_Array.push(map.get(key));
+                }
+            }
+        }
+
+        // if(!complete){
+        //     while (isSameVnode(nextChildren[lastIndex], oldFiberArray[fiberLastIndex])) {
+        //         // 从后往前查找
+        //         var newFiber = updateFiber(nextChildren[lastIndex], oldFiberArray[fiberLastIndex], returnFiber);
+        //         if (!previousFiber) {
+        //             firstChildFiber = newFiber
+        //         } else {
+        //             previousFiber.sibling = newFiber
+        //         }
+        //         previousFiber = newFiber;
+        //         firstIndex++;
+        //     }
+        // }
+
+        // for(var i=0;i<nextChildren.length;i++){
+        //     if(isSameVnode(nextChildren[i], oldFiber[i])){
+        //
+        //     }else{
+        //
+        //     }
+        //
+        // }
+
+        returnFiber.child = firstChildFiber;
+        return firstChildFiber;
+    }
+
+
+    function deleteFiberArray(array, start = 0, end) {
+        end = end || array.length - 1
+        for (start; start <= end; start++) {
+            array[start].flags = Delete_Placement;
+            delete_Array.push(array[start]);
+        }
+    }
+
+
+    //当fiber不能复用，创建新fiber
+    function createFiber(parent, element) {
+        if (typeof element === 'string') {
+            return {
+                newValue: element,
+                tag: TAG_TEXT,
+                flags: Placement,
+                return: parent
+            }
+        } else {
+            return {
+                tag: TAG_HOST,
+                type: element.type,
+                key: element.key,
+                flags: Placement,
+                props: element.props,  //属性对象,
+                return: parent
+            }
+        }
+    }
+
+    //当fiber可以复用时，需要将复用的fiber标记
+    function updateFiber(element, oldfiber, returnFiber) {
+        if (oldfiber.tag == TAG_TEXT) {
+            oldfiber.newValue = element
+        } else {
+            oldfiber.props = element.props
+        }
+        oldfiber.flags = Update_Placement;
+        oldfiber.return = returnFiber;
+        returnFiber.child = oldfiber;
+        oldfiber.oldFider = oldfiber;
+        delete oldfiber.firstEffect
+        delete oldfiber.lastEffect
+        delete oldfiber.nextEffect
+
+        return oldfiber
+    }
+
+
+    let root = document.getElementById('root');
+    let rootFiber = {
+        tag: TAG_ROOT,
+        key: 'ROOT',
+        stateNode: root,
+        props: {children: [virtualDom]}
+    }
+
+    workInProgress = rootFiber;   //将根节点加入任务
+    workLoop()    //启动任务循环
+
+    setTimeout(() => {
+        let virtualDom1 = (
+            <div>
+                <div key="B1" style={style}>我是新B1</div>
+                <div key="B4" style={style}>我是新B4</div>
+            </div>
+        )
+        rootFiber = {
+            tag: TAG_ROOT,
+            key: 'ROOT',  //
+            stateNode: root,  //
+            props: {children: [virtualDom1]}
+        }
+        workInProgress = rootFiber;   //将根节点加入任务
+        workLoop()    //启动任务循环
+
+    }, 2000)
+
+
+    // ReactDOM.render(
+    //     <virtualDom />,
+    //     document.getElementById('example')
+    // );
+</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <!-- 生产环境中不建议使用 -->
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<img src="img/domdiff.png" alt="">
+<div id="example"></div>
+
+<script type="text/babel">
+    // 1.jsx语法的解析过程
+    //    语法词法解析->语法分析->AST树 ->babel转换成新语法树->通过.code就能获取到
+    //   A.老结果： React.createElement(tag,props,children列表）(如："hello",React.createElement('span',null,'word')))
+   //   B.新结果:_jsx(tag,{id:'title',children:['hello',_jsx("span",{children：'word'})]})    ，新的结果中不需要手动引入import React from 'React'
+
+    //2.VDom的理解
+    // 执行React.createElement() 后生成的普通对象，存储着元素的一些信息。可跨平台，避免用户操作真实的dom，可实现差异化更新。
+    //注意：vdom需要消耗额外的内存，渲染不一定更快如：初次更新，或者大面积删除或者替换时
+
+    //3.函数组件和类组件的区别
+        //源码中的区分：Component.prototype.isReactComponent = {}
+        //不同点：1）类组件更耗内存（创建并保存实例）
+        //      2) 函数组件有值捕获特性; 函数组件中使用React.useState()，会有闭包特性，变量会一直指向原有的值，不会打印出最新的值
+        //      3) 类组件有自己的状态，函数组件没有自己的状态，可以使用useState
+        //      4) 类组件有生命周期，函数组件没有生命周期，现在可以使用useEffect实现
+        //      5) 类组件 可以通过继承实现逻辑复用（官方不推荐,官方推荐高阶组件）；函数组件可以通过自定义Hooks实现逻辑复用
+        //      6)跳过更新，类组件可以通过 钩子函数shouldComponentUpdate （返回true或者false）和 通过继承React.pureComponent 来跳过更新，函数组件可以使用React.memo来跳过更新  ；React.memo 包裹的函数组件 只有包裹的数据变了才会刷新
+    //          7) 随着函数组件的不断完善，未来函数组件可能会成为主流；因为可以更好的屏蔽this问题、规范和复用逻辑和并发渲染
+    class Aa extends React.Component{
+        render(){
+            return (<p>1233</p>)
+        }
+    }
+
+    function Bb (){
+        let [number,setNumber] = React.useState(0)
+        const handle = ()=>{
+            setTimeout(()=>{
+                console.log(number)   //返回0
+            },2000)
+            setNumber(number+1)
+        }
+        return (<div>
+            <p>{number}</p>
+            <button onClick={handle}>+</button>
+        </div>)
+    }
+    let memoFun = React.memo(Bb)
+    ReactDOM.render(
+        <Bb />,
+        document.getElementById('example')
+    );
+    console.log(!!Aa.prototype.isReactComponent)
+    console.dir(Aa)
+
+
+    //4.react的渲染流程
+        //设计理念：A.虚拟dom:跨平台渲染  B.快速响应:异步可中断+增量更新
+        //fiber 异步可中断：讲一个大任务拆分成n个小任务; 增量更新:更新时使用了diff对比精准化更新
+        // ReactDom.unstable_createRoot(root).render(<App/>)
+        //渲染流程：
+            // 见 2.渲染过程.html
+
+    //5.react的diff算法  对比的是老的fiber和新的jsx，生成新的fiber的过程
+        //特点：1）只会对比同级元素
+        //     2) 不通的元素会删除 老结构，创建新结构
+        //      3)通过key标识移动的节点
+        //场景：1.单节点对比:
+                //当元素没有给定key时，key为当前元素的索引。当key和tag一样的时候才能复用
+                //当找到可以复用的节点时，其余的节点会被删除
+                //当对比key和tag一样时，会复用老节点的dom和fiber，再看属性是否有变化
+                //当key一样 但是tag不通，直接删除节点，添加新元素
+              //2.多节点对比：  会有两遍遍历：第一遍处理节点更新(包括属性和类型的更新）），第二遍处理节点的新增、删除和移动
+                //注意：节点移动时，新列表中index值大的变动，index值小的不动
+                //看图片
+
+    //6.react 合成事件的理解？
+        //1.事件委托 解释一下
+        //2.和原生的事件差异：
+            //类型            原生事件        合成事件
+            //命名方式          全小写          小驼峰
+            //事件处理函数       字符串          函数对象
+            //阻止默认          返回false       event.preventDefault()
+        //3.合成事件流程：
+            // 1）react将事件委托到document上，绑定一个捕获事件使用onClickCapture，绑定冒泡事件使用onClick
+            // 2)当真实DOM事件元素触发事件，先处理原生事件，然后冒泡的document对象后，再处理React事件
+            // 3) react事件绑定的时刻是在reconcliation阶段，会在原生事件绑定前执行
+                //目的和优势:a.保持兼容性，react采用顶层事件代理机制，能够保证冒泡一执行
+                //b.事件对象可能会被创建和回收，引入事件池和释放事件池（react17中被废除）
+               // 例如：react16版本
+                //document捕获->父捕获->子捕获->子冒泡->父冒泡->(这里会走React定义的父子捕获->子父冒泡事件)->document冒泡
+                //模拟合成事件的原理；
+                    //a. docuemnt.addEventListener('click',func)
+                    //b. func(event){
+    //                      1.获取当前targer,循环查找元素的父级节点，直到body，得到一个数组[target,parent,...,body]
+    //                      2.模拟捕获阶段，从数组后往前，取出onClickCapture，执行onClickCapture 函数
+    //                      3.模拟冒泡阶段，从数组从前往后，取出onClick，执行onClick 函数
+    //
+    //          }
+
+                //react17版本  与旧版本不同的是委托对象变成跟元素Root了，主要还是考虑兼容；
+    //                  a.root.addEventListener('click',CaptureFunc,true)
+    //                  b.root.addEventListener('click',clickFunc,false)
+                // document捕获->react父捕获->react子捕获->原生root捕获->原生父捕获->原生子捕获->原生子冒泡->原生父冒泡->react子冒泡->react父冒泡->root冒泡->document冒泡
+
+    //event.stopPropagation();阻止向上冒泡,本级元素的函数监听还会执行
+    //event.stopImmediatePropagation()；阻止向上冒泡,本级元素的监听也不执行了
+
+
+    //7.setState() 是同步还是异步
+        // 了解 monoRepos
+        // 1.同步模式下(目前版本是异步)，在事件处理函数中，setState() 是异步的
+
+</script>
+</body>
+</html>

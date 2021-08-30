@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hooks</title>
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <!-- 生产环境中不建议使用 -->
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<div id="example"></div>
+
+
+<script type="text/babel">
+    function init(num){
+        return num+10+1
+    }
+    function Counter() {
+        let mm = React.useState(0);
+        let [number, dispatch] =mm;
+        console.log(number)
+        const handle = () => {
+            dispatch(++number)
+        }
+        return (<div>
+            <p>{number}</p>
+            <button onClick={handle}>+</button>
+        </div>)
+    }
+
+    ReactDOM.render(
+        <Counter/>,
+        document.getElementById('example')
+    );
+</script>
+
+</body>
+</html>

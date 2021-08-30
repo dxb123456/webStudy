@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" style="font-size: 30px">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            font-size: 20px;
+            /*line-height:150%;*/
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <!--    <p style="background-color: red">-->
+    <!--        我没给行高-->
+    <!--    </p>-->
+    <!--    <p class="p1" style="line-height: 1.5;background-color: red">-->
+    <!--        我是行高1.5-->
+    <!--        <div style="line-height: 150%">我是span</div>-->
+    <!--    </p>-->
+    <!--    <p class="p2" style="line-height: 25px;background-color: red">-->
+    <!--        我是行高25px-->
+    <!--        <div style="line-height: 150%">我是span</div>-->
+    <!--    </p>-->
+    <!--    <p class="p3" style="line-height: 1.5em;background-color: red;font-size: 45px">-->
+    <!--        我是行高1.5em-->
+    <!--        <div style="line-height: 200%">我是span</div>-->
+    <!--    </p>-->
+    <!--    <p class="p4" style="line-height: 200%;background-color: red;font-size: 45px">-->
+    <!--        我是行高200%-->
+    <!--        <div style="line-height: 150%">我是span</div>-->
+    <!--    </p>-->
+    <!--    <p>-->
+    <!--        <div>我是测试</div>-->
+    <!--    </p>-->
+
+    <div style="line-height: 150%;font-size: 16px;">
+        父元素内容
+        <div style="font-size: 30px;">
+            web前端开发<br/>
+            <p>
+                line-height行高问题
+            </p>
+        </div>
+    </div>
+    <div style="line-height: 1.5em;font-size: 16px;">
+        父元素内容
+        <div style="font-size: 30px;">
+            web前端开发<br/>
+            line-height行高问题
+            <div style="font-size:20px">
+                xxxxx
+                <p>
+                    yyyyyy
+                </p>
+            </div>
+        </div>
+    </div>
+    <div style="line-height: 1.5;font-size: 16px;">
+        父元素内容
+        <div style="font-size: 30px;">
+            web前端开发<br/>
+            line-height行高问题
+            <div style="font-size:20px">
+                xxxxx
+                <p>
+                    yyyyy
+                </p>
+            </div>
+        </div>
+    </div>
+    <div style="line-height: 1.5rem;font-size: 16px;">
+        父元素内容
+        <div style="font-size: 30px;">
+            web前端开发<br/>
+            line-height行高问题
+            <div style="font-size:20px">
+                xxxxx
+            </div>
+        </div>
+    </div>
+    <p>总结：
+        1. 1.5em 会根据当前的字体大小(或继承父元素字体)10*1.5 = 15px值 ，后续元素都获得15px行高
+        2. 150% 会根据当前的字体大小(或继承父元素字体)10*1.5 = 15px值 ，后续元素都获得15px行高。
+        3. 1.5rem 根据根字体fontsize * 1.5 = 20px，后续元素都获得20px的行高
+        4. 1.5 后续元素的所有行高都是字体大小的1.5倍，再参与计算。
+    </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        canvas{
+            background-color:#f1f1f1 ;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <canvas id="canvas" width="800" height="600"></canvas>
+</div>
+
+<script>
+    var canvas = document.getElementById('canvas')
+    var ctx = canvas.getContext('2d')
+    //1.绘制线
+    ctx.save() ; //保存之前绘制的场景设置
+    ctx.moveTo(10,200);//移动笔触
+    ctx.lineTo(50,150);//绘制直线
+    ctx.lineTo(50,200);
+    ctx.stroke();  //绘制路径线路
+
+    //2.绘制圆弧 arc(x,y,r,0,Math.PI,false) //flase 默认是顺时针
+    ctx.beginPath();//开启新路径
+    ctx.arc(200,200,50,0,2*Math.PI)
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(200,100,50,0,2*Math.PI/3)
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(300,200,50,0,2*Math.PI/3,true) //逆时针方向画       // ctx.arc(300,200,50,0,-2*Math.PI/3,true) //逆时针方向画   负的表示坐标沿着下周取反了
+    ctx.closePath();//路径闭合
+    // ctx.stroke();
+    ctx.fill(); //绘制填充操作
+
+    //3.绘制矩形 react(x,y,width,height)
+    ctx.beginPath();
+    ctx.rect(400,50,5,50)
+    ctx.stroke()
+
+    ctx.beginPath();
+    ctx.strokeRect(400,150,50,50) //直接空心绘制
+    // ctx.fillRect(400,150,50,50)  //直接实心样式
+
+    //样式
+    //场景的保存和恢复 save restore
+    ctx.beginPath()
+    ctx.strokeStyle='#00ff00'
+    ctx.strokeRect(500,100,50,50)
+    ctx.fillStyle='#00ff00'
+    ctx.fillRect(500,150,50,50);
+
+
+    ctx.restore()  //恢复之前的绘制设置
+    ctx.save()
+    ctx.beginPath();
+    ctx.arc(100,100,50,0,2*Math.PI)
+    ctx.fillStyle='#00ff00'
+    ctx.fill()
+
+    //4.绘制曲线 ：二次/三次贝塞尔曲线
+    ctx.beginPath();
+    ctx.moveTo(100,300);
+    ctx.quadraticCurveTo(0,550,100,450)   //二次曲线 100和500是控制点坐标，100和700是终点坐标
+    ctx.quadraticCurveTo(200,550,100,300)
+    ctx.stroke()
+
+    //三次曲线 moveTo(x1，y1)  （cx1,cx2,cy1,cy2,x2,y2）
+    ctx.beginPath()
+    ctx.moveTo(200,400)
+    ctx.bezierCurveTo(100,500,400,550,300,600)
+    ctx.stroke()
+
+    //5.绘制圆角矩形
+    //arcTo  以两条切线绘制圆弧x1,y1 arcTo(x0,y0,x2,y2,r)
+    ctx.beginPath()
+    ctx.strokeRect(400,400,100,100)
+    ctx.moveTo(400,400);
+    ctx.arcTo(400,500,500,500,50)
+    ctx.stroke()
+
+    //6.绘制文本  ctx.fillText(txt,x,y,maxWidth)
+    //ctx.textAlign:start(默认)、end、center、left、right 都是以x、y基点的
+    ctx.restore();
+    ctx.save();
+    ctx.beginPath();
+    ctx.font='bold 20px Arial';
+    ctx.fillStyle='red';
+    ctx.textAlign = 'center';
+    ctx.fillText('我是canvas',100,100,200)
+
+    ctx.font='bold 30px Arial';
+    ctx.strokeText('我是canvas',100,200,200)
+
+
+    //7.清除区域 (x,y,width,height)
+    ctx.clearRect(0,0,600,800)
+
+    //8.转换
+    //1)scale(scalewidth,scaleheight) 缩放
+    //2)rotate(n*Math.PI/180) 旋转
+    //3)translate(x,y) 重新映射画布上的（0，0）点
+    //4)transform() 替换绘图的当前转换矩阵
+    //5)setTransform() 将当前转换设置成单位矩阵
+
+     ctx.restore();
+    ctx.save()
+    ctx.fillRect(100,100,50,50)
+    ctx.translate(125,125)
+    ctx.rotate(20*Math.PI/180)
+    ctx.fillStyle='red'
+    ctx.scale(1.2,1.2)
+    ctx.fillRect(-25,-25,50,50)
+
+    ctx.restore()
+    ctx.save()
+    ctx.fillStyle='blue'
+    ctx.fillRect(100,100,50,50)
+</script>
+</body>
+</html>

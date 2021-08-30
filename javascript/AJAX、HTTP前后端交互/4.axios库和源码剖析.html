@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <!--    <script src="myAxios.js"></script>-->
+</head>
+<body>
+
+<script>
+    axios.post('http://localhost:8000/axios-demo',{params:{'sss':123}}).then(res => {
+        console.log(res)
+    })
+    // var kk = axios(
+    //     {
+    //         url: 'http://localhost:8000/axios-demo',
+    //         method: 'POST',
+    //         params:{'ddd':123},
+    //         // data:{
+    //         //     a:100,
+    //         //     b:200
+    //         // }
+    //     }
+    // ).then(res => {
+    //     console.log(res)
+    // })
+    // console.log(kk)
+
+    // Promise.resolve(
+    //     new Promise((resolve,reject) => {
+    //         console.log('inner Promise');
+    //         resolve('123');
+    //     }).then(data=>{
+    //         console.log(1,typeof(data), data);
+    //         return data+'4';
+    //     })
+    // ).then(data=>{
+    //     return Promise.resolve('Randy'+data);
+    // }).then(data=>{
+    //     console.log(2,typeof(data), data)
+    // });
+
+    Promise.resolve('120').then(value=>{
+        console.log(value,'1')
+    }).then(value=>new Promise((resolve,reject)=>{
+        console.log(value,2)
+        resolve(10)
+    })).then(value=>{
+        console.log(value,3)
+    })
+</script>
+
+</body>
+</html>

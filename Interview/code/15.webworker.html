@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    // Web Workers 模拟多线程
+    // 相关api
+        //onmessage:接收另一个线程的回调函数
+        //postMessage:向另一个线程发送消息
+    // 不足：
+        //不能操作dom
+        //兼容性差
+        //不能跨域加载js
+
+    //Worker(url)
+    var myWorker = new Worker('./15.1.myworker.js');
+    //postMessage 给分线程传递消息
+    myWorker.postMessage(500000000)
+    //onmessage 接收分线程信息
+    myWorker.onmessage = function(event){
+        console.log(`运算结果是${event.data}`)
+    }
+</script>
+</body>
+</html>

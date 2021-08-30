@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hooks</title>
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <!-- 生产环境中不建议使用 -->
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<div id="example"></div>
+
+
+<script type="text/babel">
+    // useEffect(fun,arr)   arr存储依赖，当某个值变化，副作用生效，没有array则表示，所有的数据变化都会执行副作用，依赖为空，则表示只有当componentDidMount执行
+    //useEffect 与class组件中的
+    //  1) componentDidMount  //挂载完成
+    //  2）componentDidUpdate //更新完成
+    //  3)componentWillUnmount //解除挂载
+    // 具有相同的api，只不过是合成了一个api
+
+    //useLayoutEffect  的执行速度会更快，useEffect类似宏任务，useLayoutEffect 类似微任务
+
+    function Counter(props) {
+        console.log(props)
+        let mm = React.useState(0)
+        let [number, dispatch] =mm;
+        console.log(number)
+        const handle = () => {
+            dispatch(++number)
+        }
+        React.useEffect(()=>{
+            //相当于 componentDidMount 和 componentDidUpdate:
+            console.log(number)
+            let timer= setTimeout(()=>{
+                dispatch(++number);
+                document.title=`useEffect有作用了值是：${number}`
+            },2000)
+            return ()=>{     //相当于在componentWillUnmount 阶段执行清除定时器
+                clearTimeout(timer)
+            }
+        },[])
+        return (<div title="100">
+            <p>{number}</p>
+            <button onClick={handle}>+</button>
+        </div>)
+    }
+
+    ReactDOM.render(
+        <Counter/>,
+        document.getElementById('example')
+    );
+</script>
+
+</body>
+</html>

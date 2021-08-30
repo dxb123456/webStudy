@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hooks</title>
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <!-- 生产环境中不建议使用 -->
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<div id="example"></div>
+
+
+<script type="text/babel">
+    // useRef(data) 返回对象{currnt:data}    ：1.可以 跨渲染周期 保存值，2.可以挂载dom元素
+    // useRef是用来在组件不同渲染之间共用一些数据的，它的作用和我们在Vue Class Component里面为$refs.xxx 赋值是一样的。那么它的一些特性就跟refs是类似：
+    //
+    // 组件更新之后，可以获取最新的状态、值
+    //     值不需要响应式处理
+    //     独立于其他作用域之外，不污染其他作用域
+    //     useRef返回的是对象
+
+    function Counter(props) {
+        console.log(props)
+        let mm = React.useState(0)
+        let [number, dispatch] = mm;
+        const newNum1 = React.useRef(setTimeout(()=>{
+        },1000));
+        const newNum = React.useRef('22222');
+
+        const myref = React.useRef();
+        // console.log(myref)
+        const handle = () => {
+            dispatch(++number);
+            newNum.current = number;
+            // console.log(number, newNum)
+        }
+        React.useEffect(()=>{
+            console.log(newNum1)
+            // console.log(myref)
+        })
+        return (<div >
+            <p ref={myref}>{number}</p>
+            <button onClick={handle}>+</button>
+        </div>)
+    }
+
+    ReactDOM.render(
+        <Counter  title="100"/>,
+        document.getElementById('example')
+    );
+</script>
+
+</body>
+</html>

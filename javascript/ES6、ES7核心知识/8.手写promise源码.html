@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="my_promise.js"></script>
+</head>
+<body>
+
+<script>
+
+    //then 链式操作中，
+    //      第一个then是处理第一个promise的结果，处理结束后返回仍然是个promise对象，能够继续使用链式操作，如果第一个promise手动return数据，则该数据会成为第二个then的接收数据，且第二个promise的状态是处理过的，依次类推。。。
+    // const promise = new Promise((resolve, reject) => {
+    //     // setTimeout(() => {
+    //     //     resolve('成功')
+    //     //     console.log("start");
+    //     // }, 2000)
+    //     resolve('成功');
+    //     console.log("start");
+    // })
+    // let p  = promise.then(
+    //     (value1) => {
+    //         return p
+    //     },
+    //     reason1 => console.log("错误:"+reason1)
+    // )
+    //     .then(
+    //     (value1) => {
+    //         console.log("成功2:"+value1)
+    //     },
+    //     reason1 => console.log("错误2:"+reason1)
+    // )
+    // .then(
+    //         value2 => {
+    //             return new Promise((resolve,reject)=>{
+    //                 setTimeout(()=>{
+    //                     reject('新Promise：错误')
+    //                 },1000)
+    //             })
+    //         },
+    //         reason2 => console.log(reason2)
+    //     )
+    // .then(
+    //     value3 => {
+    //         console.log("成功3:"+value3)
+    //     },
+    //     reason3 => console.log(reason3)
+    // )
+    // console.log('我是底部')
+
+
+    //创建静态方法 resolve
+
+    // let yy = Promise.resolve('11').then(
+    //     value=>console.log(value),
+    //     reason=>console.log(reason)
+    // )
+    // let pyy = new Promise((resolve,reject)=>{
+    //     resolve('pyy')
+    // })
+    // let yy22 = Promise.resolve(pyy).then(
+    //     value=>console.log(value),
+    //     reason=>console.log(reason)
+    // )
+
+
+    let yyy = Promise.reject('22').then(
+        value => console.log(value),
+        reason => console.log(reason))
+
+
+    let p1 = new Promise((resolve, reject) => {
+        resolve('100')
+    })
+    let p2 = new Promise((resolve, reject) => {
+        reject('200')
+    })
+
+    Promise.all([p1, p2]).then(
+        value => {
+            console.log(value)
+        },
+        reason => {
+            console.log(reason)
+        }
+    )
+    Promise.all([p1, p2]).then(
+        value => {
+            console.log(value)
+        },
+        reason => {
+            console.log(reason)
+        }
+    )
+
+
+    let p100 = new Promise((resolve, reject) => {
+        setTimeout(()=>{
+            resolve('p100')
+        },1000)
+
+    })
+    let p200 = new Promise((resolve, reject) => {
+        setTimeout(()=>{
+            reject('p200')
+        },100)
+    })
+
+    //race 谁快用谁
+    Promise.race([p100, p200]).then(
+        value => {
+            console.log(value)
+        },
+        reason => {
+            console.log(reason)
+        }
+    )
+
+</script>
+</body>
+</html>

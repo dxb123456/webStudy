@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>history</title>
+</head>
+<body>
+    <h1 id="h1">sjjsdjaddasdasd</h1>
+<script>
+
+    // history.go(-2);//后退两次
+    // history.go(2);//前进两次
+    // history.back(); //后退
+    // history.forward(); //前进
+    // console.log(history)
+    //
+    // history.back();
+    document.getElementById('h1').onclick=(e)=>{
+        history.pushState({color:'yellow'}, 'red', 'red');
+        // window.history.replaceState(data, title, targetURL)
+        // history.forward();
+        // e.preventDefault();
+    }
+    window.onpopstate = function(event){
+        console.log(event.state)
+        if(event.state && event.state.color === 'red'){
+            document.body.style.color = 'red';
+        }
+    }
+    // history.pushState({color:'yellow'}, 'red', 'red')
+</script>
+
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 1. push 在数组后面添加元素，返回数组的长度
+    var arr1 = [1,2,3,4];
+    var a1=arr1.push(1)
+    console.log("push",arr1,a1)
+
+    //2.pop 在数组尾部删除一个元素，返回这个元素
+    var arr2 = [1,2,3,4];
+    var a2=arr2.pop()
+    console.log("pop",arr2,a2)
+
+    // 3.unshift  在数组前部添加 一个或多个数据，返回数组长度
+    var arr3 = [1,2,3,4];
+    var a3=arr3.unshift(1,2)
+    console.log("unshift",arr3,a3)
+
+    // 4.shift 在数组前删除一个元素，返回这个元素
+    var arr4 = [1,2,3,4];
+    var a4=arr4.shift()
+    console.log("shift",arr4,a4)
+
+    //5.slice(start,end),返回被截取的数组，原数组不改变
+    //  注意：1）如果不传参数，返回原数组，
+    //       2）只有一个参数表示，从当前开始到结尾，
+    //       3）两个参数 截取的数据包含start不包含end位置
+    var arr5 = [1,2,3,4,5,6];
+    var a5 = arr5.slice(1,3);
+    console.log('slice',a5,arr5)
+
+    //6.splice(start,length,...item) 返回截取的数组
+    //  注意：1）如果没有参数，返回空数组，
+    //       2）如果只有一个参数，表示从从当前位置截取到最后；
+    //       3）两个参数，从start开始截取length长度的数组；
+    //       4）...item 表示在删除的位置插入新的数据；不传不插入
+    var arr6 = [1,2,3,4,5,6];
+    var a6 = arr6.splice(1,3,10,100,1000,10000);
+    console.log('splice',a6,arr6)
+
+    //7.reverse 颠倒数组位置,原数组改变
+    var arr7 = [1,2,3,4,5,6];
+    var a7 = arr7.reverse();
+    console.log('reverse',a7,arr7)
+
+    //8.sort(fun) 排序 原数组变化
+    var arr8 = [1,2,3,4,5,6];
+    var  a8 =arr8.sort((a,b)=>{
+        // return a-b   //升序
+        return b-a   //降序
+    })
+    console.log('sort',a8,arr8)
+
+    //9.join(str)  将数组通过str连接成字符串，默认是逗号
+    var arr9 = [1,2,3,4,5,6];
+    var a9 = arr9.join('');
+    console.log('join',a9,arr9);
+
+    //10.concat(..item)  将数组链接,返回新数组，原数组不变
+    var arr10 = [1,2,3,4,5,6];
+    var arr10_1 = [[1,2,3]];
+    var arr10_2 = [7,8,9];
+    var a10 = arr10.concat(arr10_1,arr10_2,10);
+    console.log('concat',a10,arr10)
+
+
+    //11.indexOf       string.indexOf(searchvalue,start)  start表示从某个索引开始，返回首次出现的位置索引，若无返回-1,判断为绝对判断
+    var arr11 = [1,5,2,3,4,5,6];
+    var a11 = arr11.indexOf(5,3);
+    console.log('indexOf',a11,arr11)
+
+    //12.forEach((item,index,arr)=>{})   无返回值
+    var arr12 = [1,5,2,3,4,5,6];
+    arr12.forEach((item,index,arr)=>
+        console.log(item,index,arr)
+    )
+
+    //13.map((item,index,arr)=>{})   返回新数组，原数组不变
+    var arr13 = [1,5,2,3,4,5,6];
+    var a13=arr13.map((item,index,arr)=>
+          item *= 2
+    )
+    console.log('map',a13,arr13)
+
+    //14.filter((item，index,arr)=>{return 条件})  //筛选数组，返回新数组，原数组不变
+    var arr14 = [1,5,2,3,4,5,6];
+    var a14=arr14.filter((item,index,arr)=>item % 2 ==0)
+    console.log('filter',a14,arr14)
+
+    //15.some((item，index，arr)=>{return 条件}) 检测数组中是否符合条件，含有返回true,没有返回false
+    var arr15 = [1,5,2,3,4,5,6,100];
+    var a15 = arr15.some((item,index,arr)=>
+         item == 100
+    )
+    console.log('some',a15,arr15)
+
+    //16.every((item，index，arr)=>{return 条件}) 检测数组中所有元素，是否都符合条件，符合返回true，不符合返回false
+    var arr16 = [1,5,2,3,4,5,6,100];
+    var a16 = arr16.every((item,index,arr)=>{
+        return typeof item ==='number'
+    })
+    console.log('every',a16,arr16)
+
+    //17.reduce((pre,cur,index,arr)=>{},initValue) 对数组中的所有元素调用回调函数，把计算的值传给下一次回调
+    var arr17 = [1,5,2,3,4,5,6,100];
+    var a17 = arr17.reduce((pre,item,index,arr)=>{
+        return pre+item
+    })
+    console.log('reduce',a17,arr17)
+
+
+    //es6新增的方法
+    //18.Array.from(arrayLike[, mapFn[, thisArg])   方法从一个类似数组或可迭代对象创建一个新的，浅拷贝的数组实例
+    console.log('from',Array.from('foo')) //['f','o','o']
+    console.log('from',Array.from([1,2,3],x=>x+x)) //['2','4','6']
+
+    let set = new Set(['foo', 'bar', 'baz', 'foo']);
+    console.log('from',Array.from(set)); //['foo','bar','baz']
+
+    let map = new Map([[1, 2], [2, 4], [4, 8]]);
+    console.log('from',Array.from(map)); //[[1, 2], [2, 4], [4, 8]]
+    const mapper = new Map([['1', 'a'], ['2', 'b']]);
+    console.log('from',Array.from(mapper.values()));
+    // ['a', 'b'];
+    console.log(mapper.keys())
+    console.log('from',Array.from(mapper.keys()));
+    // ['1', '2'];
+
+    function f() {
+        return Array.from(arguments);
+    }
+    console.log('from',f(1, 2, 3));
+    console.log('from',Array.from([1, , 3])); // [1, undefined, 3]
+
+    // 19.Array.of(...items) 将参数变成数组
+    console.log('of',Array.of(1,3))
+    console.log('of',Array.of(5,6,7))
+    console.log('of',Array.of())
+
+
+    //20.find() 查找数组中符合条件的元素，只返回第一个，没有则返回undefined
+    var arr20 = [{a:100,b:20},{a:20,c:30}];
+    var a20 = arr20.find(item=>{
+        return item.a == 500
+    })
+    console.log('find',a20,arr20)
+
+    //21. findIndex() 查找数组中符合条件的元素，返回第一个索引
+    var arr21 = [{a:100,b:20},{a:20,c:30}];
+    var a21 = arr21.findIndex(item=>{
+        return item.a == 100
+    })
+    console.log('findIndex',a21,arr21)
+
+    //22.includes(value, fromIndex(可选)) //检测数组中是否包含一个值，包含NaN  fromIndex可为负值
+    var arr22 = [1,NaN,3,4,5,6];
+    var a22 = arr22.includes(4,-2);
+    console.log('includes',a22,arr22)
+
+    //23.fill(value，startIndex(可选)，endIndex(可选))  返回修改后的数组，原数组改变
+    // 0个参数：默认全用undefined填充
+    // 1个参数：全部是用value值填充
+    // 2个参数：从startIndex开始到最后用value填充
+    var arr23 = [1,NaN,3,4,5,6];
+    var a23 = arr23.fill();
+    console.log('fill',a23,arr23)
+
+    //24.entries(); //返回一个数组的迭代对象
+    var fruits = ["Banana", "Orange", "Apple", "Mango"];
+    // console.log('entries',fruits.entries().next().value)
+    for(const [key,value] of fruits.entries()){
+        console.log(key,value)
+    }
+
+    //25.keys()  //遍历键名 ,返回一个数组的迭代对象
+    var arr25 = [1,NaN,3,4,5,6];
+    var a25 = arr25.keys();
+    for(const key of a25){
+        console.log(key)
+    }
+    console.log('keys',a25,arr25)
+
+    //26.values()  遍历键值对，返回一个数组的迭代对象
+    var arr26 = [1,NaN,3,4,5,6];
+    var a26 = arr26.values();
+    for(const value of a26){
+        console.log(value)
+    }
+    console.log('values',a26,arr26)
+
+    //27.flat(Infinity) 多维数组转一维数组
+    console.log([1 ,[2, 3]].flat()); // [1, 2, 3]
+    // 指定转换的嵌套层数
+    console.log([1, [2, [3, [4, 5]]]].flat(3)); // [1, 2, 3, [4, 5]]
+    // 不管嵌套多少层
+    console.log([1, [2, [3, [4, 5]]]].flat(Infinity)); // [1, 2, 3, 4, 5]
+    // 自动跳过空位
+    console.log([1, [2, , 3]].flat()); // [1, 2, 3]
+
+
+    //28.…：扩展运算符
+    var arr28 = [1,NaN,3,4,5,6];
+    console.log([...arr28,100,300])
+
+    //Array.isArray(arr)  判断是否是数组
+    console.log(Array.isArray([]))
+    console.log(Array.isArray({}))
+    console.info(Array.isArray(null))
+    console.info(Array.isArray(null))
+    console.debug(Array.isArray(null))
+    console.log(arr28)
+</script>
+</body>
+</html>

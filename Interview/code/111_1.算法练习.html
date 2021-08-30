@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //1. 使用reduce 查询字母出现的字数
+    const arr = ["Newsgd", "is" ,"the","premier","online","source","of","Guangdong","news"];
+    console.log(arr.join('').split(''));
+    let arr1 = arr.join('').split('').reduce((prev,cur,index)=>{
+         if(cur in prev){
+             prev[cur]++
+         }else{
+             prev[cur] = 1
+         }
+         return prev
+    },{})
+    // console.log(Array.form(arr1))
+    function findMax(obj){
+        let newArr = Object.values(obj).sort((a,b)=>{
+            return b-a
+        })
+        let newkey = Object.keys(obj).find((key)=>{
+            return obj[key] == newArr[0]
+        })
+        return newkey+":"+obj[newkey]
+    }
+    console.log(findMax(arr1))
+
+    // 2.数组去重和排序
+    // 1) 使用set
+    // 2）取当前项跟以后的数组比较
+    // 3) 创建新对象，存储
+    // 4) 先排序后相邻项比对
+
+
+
+
+
+    //3.数组排序
+    // 1) 冒泡排序
+    // 2) 插入排序
+    // 3) 快速排序
+
+    //4.数组的扁平化处理
+    // 1) flat(Infinity)
+    // 2）toString
+    // 3) JSON.Stringify()
+    // 4) 循环验证数组 通过concat链接
+
+    //5.斐波那契数列 [1,1,2,3,5,8,13,21,34,...]
+    //
+
+
+
+
+    //other
+    for(let [key ,value] of ary.entries()){
+        console.log(key,value)
+    }
+
+    var ary = [23,44,56,66,77,88,33,44,77,90];
+    let inter = ary.reduce((pre,cur)=>{
+        return pre.set(cur)
+    },new Map()).keys()
+
+    console.log(Array.from(inter))
+</script>
+</body>
+</html>

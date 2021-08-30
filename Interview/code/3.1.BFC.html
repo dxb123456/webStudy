@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        /*第一组*/
+        .aside{
+            width: 100px;
+            height: 200px;
+            background-color: red;
+            float: left;
+        }
+        .main{
+            width: 500px;
+            height: 300px;
+            background-color: #666666;
+            overflow: hidden;
+        }
+        /*第二组*/
+        .main1{
+            width: 400px;
+            background-color: #666666;
+            overflow: hidden;
+        }
+    /*    第三组*/
+        .div1{
+            width: 100px;
+            height: 50px;
+            background-color: #00ff00;
+            margin: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>第一组:BFC的区域不会与float box重叠</h1>
+<div class="aside"></div>
+<div class="main"></div>
+
+<h1>第二组：计算BFC的高度时，浮动元素也参与计算</h1>
+<div >
+    <div class="main1">
+        <div class="aside"></div>
+    </div>
+</div>
+
+
+<h1>第三组：计算BFC的高度时，浮动元素也参与计算</h1>
+<div >
+    <div class="div1"></div>
+    <div style="display: inline-block">
+        <div class="div1"></div>
+    </div>
+</div>
+
+
+
+
+<p style="overflow: hidden">
+    1，什么是BFC？
+    1）BFC(Block formatting context)直译为“块级格式化上下文”。BFC它是一个独立的渲染区域，只有Block-level box（块元素）参与，它规定了内部的Block-level box如何布局，并且与这个区域外部毫不相关。
+    2）可以理解成：创建了 BFC的元素就是一个独立的盒子，里面的子元素不会在布局上影响外面的元素（里面怎么布局都不会影响外部），BFC仍属于文档中的普通流
+    3）不是所有的元素，模式都能产生BFC 。w3c规范：display属性为block, list-item ,table的元素，会产生BFC。
+
+    2，BFC的原理是什么？
+    1）内部的Box会在垂直方向，一个接一个地放置。
+    2）Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠
+    3）每个元素的margin box的左边， 与包含块border box的左边相接触(对于从左往右的格式化，否则相反)。即使存在浮动也是如此。
+    4）BFC的区域不会与float box重叠。
+    5）BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此。
+    6）计算BFC的高度时，浮动元素也参与计算
+
+    3，如何创建BFC?
+    1）根元素
+    2）float属性不为none
+    3）position不为static和relative
+    4）overflow不为visible
+    5）display为inline-block, table-cell, table-caption, flex, inline-flex
+
+    4,BFC作用？
+    1）防止外边距重叠。
+    bfc导致的属于同一个bfc中的子元素的margin重叠(Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠)
+    我们可以在div外面包裹一层容器，并触发该容器生成一个BFC。那么两个div便不属于同一个BFC，就不会发生margin重叠了。
+    2）清除浮动的影响
+    块级子元素浮动，如果块级父元素没有设置高度，其会有高度塌陷的情况发生。
+    原因：子元素浮动后，均开启了BFC，父元素不会被子元素撑开。
+    解决方法：由第六条原理得，计算BFC的高度时，浮动元素也参与计算。所以只要将父容器设置为bfc
+    就可以把子元素包含进去：这个容器将包含浮动的子元素，它的高度将扩展到可以包含它的
+    子元素，在这个BFC，这些元素将会回到页面的常规文档流。
+    3）防止文字环绕
+</p>
+
+
+<div>
+
+    <div style="width: 100px;height:30px;float: left;background-color: red">
+
+    </div>
+
+    <p>测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+    </p>
+
+
+</div>
+</body>
+</html>

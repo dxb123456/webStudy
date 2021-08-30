@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            position: relative;
+        }
+        .box{
+            position: relative;
+            font-size: 0;
+            overflow: hidden;
+        }
+        .blue{
+            background-color: #00ff00;
+            width: 200px;
+            height: 200px;
+        }
+        .red{
+            background-color: #ff0000
+        }
+
+        /*第一种方式：使用calc*/
+        .div1{
+            width: 200px;
+            height: 200px;
+            display: inline-block;
+        }
+        .div11{
+            width: calc(100% - 400px);
+            height: 200px;
+            display: inline-block;
+        }
+        .div111{
+            width: 200px;
+            height: 200px;
+            display: inline-block;
+        }
+
+    /*第二种方法：position + margin*/
+        .div2{
+            position: absolute;
+            top:0;
+            left: 0;
+        }
+        .div22{
+            margin: 0 200px;
+            height: 200px;
+        }
+        .div222{
+            position: absolute;
+            top:0;
+            right: 0;
+        }
+
+    /*第三种：float + 定位*/
+        .div3{
+            float: left;
+        }
+        .div33{
+
+            position: absolute;
+            left: 200px;
+            right: 200px;
+            height: 200px;
+        }
+        .div333{
+            float: right;
+        }
+
+
+    /*第四种：float*/
+        .div4{
+            float: left;
+        }
+        .div44{
+            margin: 0 200px;
+            height: 200px;
+        }
+        .div444{
+            float: right;
+        }
+    /*    第五种：flex*/
+        .flex{
+            display: flex;
+        }
+        .div55{
+            flex: 1 1 auto;
+        }
+
+    /*    高度自适应*/
+        .box1{
+            height: 800px;
+        }
+        .header{
+            position: absolute;
+            top:0;
+            left:0;
+            width: 100%;
+            height: 120px;
+            background-color: lime;
+        }
+        .main{
+            position: absolute;
+            top: 120px;
+            bottom: 120px;
+            left:0;
+            width: 100%;
+            height: auto;
+            background-color: red;
+        }
+        .footer{
+            position: absolute;
+            bottom:0;
+            left:0;
+            width: 100%;
+            height: 120px;
+            background-color: lime;
+        }
+    </style>
+</head>
+<body>
+    <p>宽度自适应：第一种</p>
+    <div class="box">
+        <div class="div1 blue"></div>
+        <div class="div11 red"></div>
+        <div class="div111 blue"></div>
+    </div>
+
+    <p>宽度自适应：第二种</p>
+    <div class="box">
+        <div class="div2 blue"></div>
+        <div class="div22 red"></div>
+        <div class="div222 blue"></div>
+    </div>
+    <p>宽度自适应：第三种</p>
+    <div class="box">
+        <div class="div3 blue"></div>
+        <div class="div33 red"></div>
+        <div class="div333 blue"></div>
+    </div>
+    <p>宽度自适应：第四种</p>
+    <div class="box">
+        <div class="div4 blue"></div>
+        <div class="div444 blue"></div>
+        <div class="div44 red"></div>
+    </div>
+    <p>宽度自适应：第五种</p>
+    <div class="box flex">
+        <div class="div5 blue"></div>
+        <div class="div55 red"></div>
+        <div class="div555 blue"></div>
+    </div>
+
+    <p>高度自适应：</p>
+    <div class="box box1">
+        <div class="header"></div>
+        <div class="main"></div>
+        <div class="footer"></div>
+    </div>
+
+    <div class="box box1">
+        <div style="width:100%;height:auto;position: absolute;top:0;bottom: 0;font-size: 20px;background-color: #56817A"> 测试</div>
+    </div>
+</body>
+</html>

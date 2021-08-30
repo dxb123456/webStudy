@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="4.1.myaxios.js"></script>
+</head>
+<body>
+<button onclick="cancelFun()">取消</button>
+<script>
+    // axios({
+    //     aa:'111'
+    // }).then(resolve=>{
+    //     console.log(resolve)
+    // },reject=>{
+    //     console.log(reject)
+    // })
+
+
+    // axios.interceptors.request.use(function(config){
+    //     console.log('request1')
+    //     return config
+    // },function (error){
+    //     return Promise.reject(error)
+    // })
+    // axios.interceptors.request.use(function(response){
+    //     console.log('request2')
+    //     return response
+    // },function (error){
+    //     return Promise.reject(error)
+    // })
+    //
+    // axios.interceptors.response.use(function(response){
+    //     console.log('responsegsd1')
+    //     return response
+    // },function (error){
+    //     return Promise.reject(error)
+    // })
+    // axios.interceptors.response.use(function(response){
+    //     console.log('responsegsd2')
+    //     return response
+    // },function (error){
+    //     return Promise.reject(error)
+    // })
+
+    //取消请求
+    var CancelToken = axios.CancelToken;
+    var cancel;
+
+    function cancelFun() {
+        // console.log('100')
+        cancel()
+    }
+
+    // let myajax = axios(
+    //     {
+    //         url: 'http://localhost:8000/axios-demo',
+    //         methods: 'get',
+    //         cancelToken: new CancelToken(function executor(c) {
+    //             cancel = c
+    //         })
+    //     })
+    //     .then(
+    //         res => {
+    //             console.log(res)
+    //         },
+    //         error => {
+    //             console.log(error,'--------')
+    //         }
+    //     )
+
+
+
+    // let myajax = axios.get('http://localhost:8000/axios-demo',
+    //     {
+    //         method: 'get',
+    //         hhh:'hhh',
+    //         data:{
+    //             rr:200
+    //         }
+    //     })
+    //     .then(
+    //         res => {
+    //             console.log(res)
+    //         },
+    //         error => {
+    //             console.log(error,'--------')
+    //         }
+    //     )
+
+    let myajax = axios.get('http://localhost:8000/axios-demo',
+        {
+            data:{
+                aa:100,
+                bb:200
+            },
+            params: {
+                a:'张三'
+            }
+        }
+)
+        .then(
+            res => {
+                console.log(res)
+            },
+            error => {
+                console.log(error,'--------')
+            }
+        )
+
+
+
+    var kk = axios(
+        {
+            url: 'http://localhost:8000/axios-demo',
+            method: 'POST',
+            params:{'ddd':'老王'},
+            data:{
+                a:'张三',
+                b:200
+            }
+        }
+    ).then(res => {
+        console.log(res)
+    })
+</script>
+</body>
+</html>

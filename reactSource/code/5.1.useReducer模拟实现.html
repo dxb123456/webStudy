@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hooks</title>
+    <script src="./react.development.js"></script>
+    <script src="./react-dom.development.js"></script>
+    <!-- 生产环境中不建议使用 -->
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<div class="mydiv" style="width: 100px;height:200px
+;background-color: lime">
+</div>
+<div id="example"></div>
+<script>
+    const FunctionComponent = 0;        //函数组件
+    const ClassComponent = 1;           //类组件
+    const IndeterminateComponent = 2;   //未知组件
+    const HostRoot = 3;                  //根节点
+    const HostComponent = 5;            //原生dom节点
+
+    let ReactCurrentDispatcher = {current: null};   //记录当前的dispatcher
+    let workInProgressHook = null;  //当前正在使用的hook
+    let currentHook = null;         //当前的老hook
+    let currentlyRenderingFiber;    //当前正在使用的fiber
+
+
+</script>
+
+<script type="text/babel">
+
+    const HookDispatcherOnMount = {     //当前hook处于挂载状态
+        userReducer: mountReducer,
+        useState: mountState
+    }
+    const HookDispatcherOnUpdate = {
+        //当前hook处于渲染状态
+        userReducer: updateReducer,
+        useState: updateState
+    }
+
+    const reducer = (state, action) => {
+        if (action.type === 'add') {
+            return state + 1
+        } else {
+            return state
+        }
+    }
+    const reducer1 = (state, action) => {
+        if (action.type === 'add') {
+            return state + 1
+        } else {
+            return state
+        }
+    }
+
+    function Counter() {
+        let mm = useReducer(reducer, 10);
+        let mm1 = useReducer(reducer1, 100);
+        let [number, dispatch] = mm;
+        let [number1, dispatch1] = mm1;
+        let [str, setStr] = useState(3000);
+        console.log(number, number1, str);
+        const handle = () => {
+            dispatch({type: 'add'});
+            dispatch1({type: 'add'});
+            setStr((str) => str);
+            setStr((str) => ++str);
+        }
+        return (
+            <p onClick={handle}>{str}</p>
+        )
+    }
+
+    document.onclick = function () {
+        window.counter.props.onClick()
+    }
+    // $('.mydiv').onclick = function (){
+    //     window.counter.props.onClick()
+    // }
+    let workInProgress = {
+        tag: IndeterminateComponent,
+        type: Counter,   //此组件的具体类型
+        alternate: null  //上一次渲染的fiber
+    }
+    render(workInProgress)
+
+    function render(fiber) {
+        workInProgress = fiber;
+        workLoop();
+    }
+
+    function workLoop() {
+        while (workInProgress) {
+            //这里 performUnitOfWork() 最终返回的是workInProgress.child 就是fiber的子节点
+            workInProgress = performUnitOfWork(workInProgress)
+        }
+    }
+
+    function performUnitOfWork(unitOfWork) {
+        let current = unitOfWork.alternate;     //这里是老fiber,首次渲染时current为null
+        return beginWork(current, unitOfWork)    //返回的是子fiber
+    }
+
+    function beginWork(current, workInProgress) {
+        if (current) {
+            //更新
+            switch (workInProgress.tag) {
+                case FunctionComponent:
+                    return updateFunctionComponent(
+                        current,
+                        workInProgress,
+                        workInProgress.type   //Counter组件
+                    )
+                default:
+                    break
+            }
+        } else {
+            //初始渲染
+            switch (workInProgress.tag) {
+                case IndeterminateComponent:   //不知是什么Component时 走这里
+                    //处理不确定的component
+                    return mountIndeterminateComponent(
+                        current,
+                        workInProgress,
+                        workInProgress.type   //Counter组件
+                    )
+                default:
+                    break
+            }
+        }
+
+    }
+
+    function updateFunctionComponent(current, workInProgress, Component) {
+        let children = renderWithHooks(
+            current,
+            workInProgress,
+            Component
+        )
+        window.counter = children;
+        workInProgress.tag = FunctionComponent;//这里声明是一个函数组件
+        reconcileChildren(null, workInProgress, children)
+        return workInProgress.child    //这里先返回null，后面逻辑没写
+        // return null
+    }
+
+
+    function mountIndeterminateComponent(current, workInProgress, Component
+    ) {
+        //给fiber绑定hooks
+        let newChildren = renderWithHooks(
+            current,
+            workInProgress,
+            Component
+        )
+        window.counter = newChildren;           //这里没有实际意义，只供我们后期点击使用
+        workInProgress.tag = FunctionComponent;//这里更改tag为函数组件
+        reconcileChildren(current, workInProgress, newChildren)
+        return workInProgress.child
+    }
+
+    function reconcileChildren(current, workInProgress, children) {
+        //这里简化了对比过程，详见渲染过程，
+        let childFiber = {
+            tag: HostComponent,    //HostComponent为原生dom节点
+            type: children.type    //type 是Counter实例
+        }
+        workInProgress.child = childFiber
+    }
+
+    function updateReducer(reducer, initialArg) {
+        //构建新的hooks列表
+        let hook = updateWorkInProgressHook();//更新创建一个新的hook链表
+        const queue = hook.queue;
+        let current = currentHook;
+        const pendingQueue = queue.pending;
+        if (pendingQueue != null) {
+            //根据老的状态和更新队列里的更新对象计算新的状态
+            let first = pendingQueue.next;
+            let oldState = current.memoizedState;
+            let update = first;
+            let newState = oldState;
+            do {
+                const action = update.action;
+                newState = reducer(oldState, action)
+                //注意：useState中  render函数为固定函数，不是外界传入的
+                // basicStateReducer(state,action){
+                //      console.log(state,action)
+                //      return typeof action ==='function'?action(oldState):action; //是函数的话将
+                // }
+
+                update = update.next
+            } while (update != null && update != first)
+            queue.pending = null;
+            hook.memoizedState = newState;
+            currentHook.memoizedState = newState;
+            queue.lastRenderedState = newState;
+        }
+
+        let dispatch = dispatchAction.bind(null, currentlyRenderingFiber, queue)
+        return [hook.memoizedState, dispatch]
+
+    }
+
+    function updateWorkInProgressHook() {
+        let nextCurrentHook;
+        if (currentHook === null) { //这是第一个hook
+            let current = currentlyRenderingFiber.alternate
+            nextCurrentHook = current.memoizedState
+        } else {
+            nextCurrentHook = currentHook.next
+        }
+        currentHook = nextCurrentHook;
+
+        const newHook = {
+            memoizedState: currentHook.memoizedState,
+            queue: currentHook.queue,
+            next: null
+        }
+        if (workInProgressHook === null) { //说明这是第一个 hook
+            currentlyRenderingFiber.memoizedState = workInProgressHook = newHook
+
+        } else {
+            workInProgressHook = workInProgressHook.next = newHook;
+        }
+        return workInProgressHook
+    }
+
+    //useReducer 在不同的阶段会有不同的处理方式，这里先模拟挂载阶段
+    function renderWithHooks(current, workInProgress, Component) {
+        currentlyRenderingFiber = workInProgress; //当前正在使用的fiber
+        currentlyRenderingFiber.memoizedState = null; //清空当前fiber的memoizedState属性
+        if (current) {
+            ReactCurrentDispatcher.current = HookDispatcherOnUpdate;  //更新阶段
+        } else {
+            ReactCurrentDispatcher.current = HookDispatcherOnMount;  //挂载阶段
+        }
+        let children = Component(); //组件执行，此时会将useReducer执行，返回的是component的虚拟dom
+        currentlyRenderingFiber = null;
+        workInProgressHook = null;
+        currentHook = null;
+        return children
+    }
+
+    function useReducer(reducer, initialArg) {
+        return ReactCurrentDispatcher.current.userReducer(reducer, initialArg)
+    }
+
+    function useState(initialState) {
+        return ReactCurrentDispatcher.current.useState(initialState)
+    }
+
+
+    function mountReducer(reducer, initialArg) {
+        //reducer:用户传过来的函数
+        //initialArg:用户传过来的数据
+        //构建hooks链条：流程：fiber.memoizedState = hook1 --next-->hook2 --next-->hook3
+        let hook = mountWorkInProgressHook(); //返回的是当前创建的新hook
+        hook.memoizedState = initialArg;      //给hook.memoizedState = 外部传入的值
+        const queue = (hook.queue = {
+            pending: null,
+            lastRenderedReducer: reducer,
+            lastRenderedState: initialArg
+        })  //hook.queue = {pending:null}
+        const dispath = dispatchAction.bind(null, currentlyRenderingFiber, queue)
+        return [hook.memoizedState, dispath]     //将值 和 方法对外暴露
+    }
+
+
+    function mountState(initialState) {
+        let hook = mountWorkInProgressHook();
+        hook.memoizedState = initialState;
+        const queue = (hook.queue = {
+            pending: null,
+            lastRenderedReducer: basicStateReducer,
+            lastRenderedState: initialState
+        });
+        const dispath = dispatchAction.bind(null, currentlyRenderingFiber, queue)
+        return [hook.memoizedState, dispath]
+    }
+
+    function basicStateReducer(oldstate, action) {
+        return typeof action === 'function' ? action(oldstate) : action;
+    }
+
+    function updateState(initialState) {
+        return updateReducer(basicStateReducer, initialState)
+    }
+
+    function dispatchAction(currentlyRenderingFiber, queue, action) {
+        //这个函数绑定了当前的fiber;
+        const update = {action, next: null}
+        const pending = queue.pending;
+        if (pending === null) {
+            update.next = update;
+        } else {
+            update.next = pending.next;
+            pending.next = update;
+        }
+        queue.pending = update;
+
+        //以下代码为对比新老状态是否一直，一致的话就不调度。
+        const lastRenderedReducer = queue.lastRenderedReducer;
+        const lastRenderedState = queue.lastRenderedState;
+        let eagerState = lastRenderedReducer(lastRenderedState, action)
+        if (Object.is(eagerState, lastRenderedState)) {
+            return
+        }
+        scheduleUpdateOnFiber(currentlyRenderingFiber, queue, action)
+    }
+
+    //调度更新
+    function scheduleUpdateOnFiber(oldfiber) {
+
+        //这里应该从子节点找到根fiber，创建新fiber，此处简化了，可以见渲染过程
+        let newFiber = {
+            ...oldfiber,
+            alternate: oldfiber
+        }
+        workInProgress = newFiber
+        workLoop()
+
+    }
+
+    function mountWorkInProgressHook() {
+        let hook = {
+            memoizedState: null,//自己的状态
+            queue: null,        //自己的更新队列，环形链表 {pending:null}
+            next: null          //指向下一个hook
+        }
+        if (workInProgressHook === null) {
+            //workInProgressHook：当前正在使用的hook；
+            // 给fiber.memoizedState = hook;
+            currentlyRenderingFiber.memoizedState = workInProgressHook = hook
+        } else {
+            workInProgressHook = workInProgressHook.next = hook;
+        }
+        return hook
+    }
+
+    // ReactDOM.render(
+    //     <Counter/>,
+    //     document.getElementById('example')
+    // );
+</script>
+
+</body>
+</html>

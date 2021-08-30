@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            font-size: 15px;
+        }
+        .center{
+            width: 600px;
+            height: 200px;
+        }
+        .center div{
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+            display: inline-block;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- inlinblock 的元素中 div默认是以 底部线作为基准，当div中有文字时，会以最后一行的文字底部作为基线排列-->
+<div class="center">
+    <!-- 当div中没有文字时 都是以div的底部线排列-->
+    <div class="div1"></div>
+    <div class="div2"></div>
+</div>
+<div class="center">
+    <!-- 当div中有文字时，后面的div底部先和前面的最后一行文字底部对齐-->
+    <div class="div1">
+        <p>sssdssds</p>
+        <p>dsdmddmsnfdnsn</p>
+    </div>
+    <div class="div2"></div>
+</div>
+
+<div class="center">
+    <!-- div1的底部和div2的文字底部在一条线上-->
+    <div class="div1"></div>
+    <div class="div2">
+        <p>sssdssds</p>
+    </div>
+</div>
+</body>
+</html>

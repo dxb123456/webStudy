@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .blue {
+            width: 200px;
+            height: 200px;
+            background-color: blue;
+        }
+
+        .red {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+
+        .flex {
+            display: flex;
+            display: -webkit-flex;
+        }
+
+        .inlineflex {
+            display: inline-flex;
+            flex-direction: column;
+        }
+
+        .content {
+            flex-wrap: wrap;
+        }
+
+        .content .blue {
+            flex-shrink: 0;
+        }
+
+        .center h5 {
+            font-size: 20px;
+            text-indent: 1em;
+            line-height: 2;
+        }
+
+        .center p {
+            text-indent: 2em;
+            font-size: 18px;
+            line-height: 2;
+        }
+
+        .box {
+            width: 800px;
+            height: auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .box li {
+            margin-bottom: 20px;
+            list-style: none;
+            width: 100px;
+            height: 200px;
+            margin-right: 10px;
+            border: 1px solid #333;
+        }
+
+        .box:after {
+            content: "";
+            flex: auto;
+        }
+
+        /*flex-direction属性决定主轴的方向（即项目的排列方向）。*/
+        /*flex-direction: row | row-reverse | column | column-reverse;*/
+
+        /*flex-wrap属性定义，如果一条轴线 排不下，如何换行？*/
+        /*flex-wrap: nowrap | wrap | wrap-reverse;*/
+
+        /*flex-flow属性是flex-direction属性和flex-wrap属性的简写形式，默认 row nowrap。*/
+
+        /*justify-content属性定义了项目在主轴上的对齐方式*/
+        /*justify-content:flex-start | flex-end | center | space-between |space-around;*/
+
+        /*align-items属性定义项目在交叉轴上如何对齐。*/
+        /*align-items:flex-start | flex-end | center | baseline | stretch;*/
+
+
+        /*容器内部元素属性：   */
+        /*order属性定义项目的排列顺序。数值越小，排列越靠前，默认为0.*/
+        /*一下6个属性设置在项目上。order flex-grow flex-shrink flex-basis flex align-self*/
+
+        /*flex-grow属性定义项目的放大比例，默认值为0，即如果存在剩余空间，也不放大。*/
+        /*如果所有项目的flex-grow属性都为1，则它们将等分剩余空间（如果有的话）。如果一个项目的flex-grow属性为2，其他项目为1，则牵着占据的剩余空间将比其他项多一倍*/
+
+        /*flex-shrink属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。*/
+        /*如果所有项目的flex-shrink属性都为1，当空间不足时，都将等比例缩小。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。负值对该属性无效。*/
+
+        /*flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选*/
+        /*该属性有两个快捷值：auto (1 1 auto) 和 none (0 0 auto)。建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。*/
+
+        /*align-self属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。*/
+        /*align-self: auto | flex-start | flex-end | center | baseline | stretch;*/
+    </style>
+</head>
+<body>
+<span class="inlineflex">
+        <span>我是测试</span>
+       <b style="padding: 10px">我是b标签</b>
+    </span>
+<span style="padding: 10px">
+        我是300
+    </span>
+<div class="flex content">
+    <div class="blue"></div>
+    <div class="red right">
+        <p>我是测试</p>
+        <span>100</span>
+        <span>200</span>
+        <div class="blue" style="width: 50px;height: 50px"></div>
+    </div>
+    <div class="blue" style="height: 100px;">
+        <p>我是测试1</p>
+    </div>
+    <div class="blue" style="height: 110px;">
+        <p>我是测试1</p>
+        <p>我是测试2</p>
+    </div>
+    <div class="blue">
+        <p>我是测试1</p>
+        <p>我是测试1</p>
+        <p>我是测试2</p>
+    </div>
+</div>
+
+<ul class="box">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+    <li>9</li>
+    <li>10</li>
+</ul>
+
+<!--    <div class="flex" style="flex-direction: column;">-->
+<!--        <header class='blue' style="width: 100%;height: 60px;flex-shrink: 0"></header>-->
+<!--        <div class="red" style="flex: 1">-->
+<!--            qwiiqdjaskdkjasd-->
+<!--        </div>-->
+<!--    </div>-->
+
+<div class="center">
+    <h2>容器属性</h2>
+    <h5>1.flex-direction：主轴方向</h5>
+    <p>row(默认值):水平 </p>
+    <p>row-reverse:水平倒序</p>
+    <p>column:垂直</p>
+    <p>column-reverse:垂直倒序</p>
+
+    <h5>2.flex-wrap：换行方式</h5>
+    <p>nowrap(默认值):不换行</p>
+    <p>wrap:换行，第一行在上</p>
+    <p>wrap-reverse:换行第二行在上</p>
+
+    <h5>3.flex-flow：主轴方向与换行方式的缩写</h5>
+    <p>row nowrap (默认值) </p>
+
+    <h5>4.justify-content：主轴对齐方式</h5>
+    <p>flex-start(默认值):左对齐</p>
+    <p>flex-end:右对齐</p>
+    <p>center:居中</p>
+    <p>space-between:空隙均分(不含边界)</p>
+    <p>space-around:空隙均分(含边界)</p>
+
+    <h5>5.align-items：侧轴的对齐方式</h5>
+    <p>flex-start:起点对齐</p>
+    <p>flex-end:终点对齐</p>
+    <p>center:居中对齐</p>
+    <p>baseline:第一行基线对齐</p>
+    <p>stretch(默认值):如果项目未设置高度或设为auto，将占满整个容器的高度</p>
+    <img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071011.png" alt="">
+
+    <h5>6.align-content:多跟轴线的对齐方式，若只有一根轴线该属性无效</h5>
+    <p>flex-start：与交叉轴起点对齐</p>
+    <p>flex-end：与交叉轴终点对齐</p>
+    <p>center:居中对齐</p>
+    <p>space-between:两端对齐中间平分</p>
+    <p>space-around：所有空隙平分</p>
+    <p>stretch(默认值)：轴线占满整个交叉轴</p>
+
+    <h2>项目的属性</h2>
+    <h5>order：项目的排列顺序；数值越小，越靠前，默认为0</h5>
+    <img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071013.png" alt="">
+    <h5>flex-grow：项目的放大比例；空间不足时，不放大，默认为0(即不放大)</h5>
+    <img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071014.png" alt="">
+    <h5>flex-shrink：项目的缩小比例；默认为1(即空间不足时，项目缩小)，负值无效</h5>
+    <img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071015.jpg" alt="">
+    <h5>flex-basis：分配多余空间时，项目占据的主轴空间，默认为auto(即项目本来的大小)</h5>
+    <h5>flex：flex-grow，flex-shrink，flex-basis三者的缩写，默认为0 1 auto （后两个属性可选），该属性有两个快捷值：auto (1 1 auto) 和 none (0 0
+        auto)。</h5>
+    <h5>align-self：允许单个项目与其他项目不一样的对齐方式，默认为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch</h5>
+    <p>flex-start:起点对齐</p>
+    <p>flex-end:终点对齐</p>
+    <p>center:居中对齐</p>
+    <p>baseline:第一行基线对齐</p>
+    <p>stretch(默认值):如果项目未设置高度或设为auto，将占满整个容器的高度</p>
+    <img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071016.png" alt="">
+</div>
+
+</body>
+</html>

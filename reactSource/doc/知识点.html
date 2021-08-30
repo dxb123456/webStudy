@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    img{
+      max-width: 800px;
+    }
+  </style>
+</head>
+<body>
+  <p>
+    1.import css文件会全局使用css样式。 可以将webpack中的配置rules中的css解析中的css-loader?modules 让css文件模块话，使用import modulesCss from './css.css' 查看modulesCss文件；只有类和id会被模块化，不想被模块话可以:global(.class){color:red} ; :local() 会被模块化，默认会被模块化，一般不用；项目中一般只对less，scss 提供模块化，.css文件不提供模块化
+    2.modules 可配置 css-loader？modules&localIdentName=[path][name]-[local]-[hash:5]
+     <ul>
+      <li>
+        [path] 样式表相对项目根目录的路径
+      </li>
+      <li>
+        [name] 样式表文件名
+      </li>
+    <li>
+      [local] 样式类名称
+    </li>
+    <li>
+      [hash：length] 表示32位hash值，length可配置
+    </li>
+      </ul>
+
+    3. 多个className可以使用 className={cssobj.test + ' mytest'} 也可以是用 className={[cssobj.test,"mytest"].join(' ')} 或者使用模板字符串`${aaa.aa}`
+    4.Vue.$mount('#app')  可以指定模板
+
+    5.使用context 垮组件传递数据
+  第一步： const {Provider,Consumer} = React.createContext(); 使用<Provider value="aa"><child></child></Provider>  ;然后使用<Consumer>{data=<span>data就是我要拿到的aa数据</span>}</Consumer>
+  6.props中的children能获取到组件中的数据或组件或者函数；props效验：安装prop-types 包（npm i prop-types）,import PropTypes from 'prop-types',组件内部使用:组件.propTypes ={colors:PropTypes.array }，常见类型有array、bool、func、number、object、string，react元素类型：element，必填项isRequired,如：{colors:PropTypes.array.isRequired },特定结构的对象：shape({}) 如：
+  {
+    obj:PropTypes.shape({
+      id:PropTypes.number,
+      color:PropTypes.string,
+      fontSize:PropTypes.string
+  })
+  }
+  7.给组件的props添加默认值；组件.defaultProps = {
+    color:'red'
+  }
+
+  8.钩子函数 ：
+    1) 第一阶段：初始化
+    组件的执行顺序：constructor  ->componentWillMount（将废弃） -> render  -> componentDidMount
+    constructor : 创建组件最先执行；初始化start，处理函数绑定this;
+    componentWillMount : render执行前调用；
+    render :渲染Ui；不能在render中使用setState
+    componentDidMount ：组件挂载后 ;  发送请求，dom操作
+    2）第二阶段：数据更新
+      state改变：componentWillUpdate(废弃) -> render -> componentDidUpdate(prevProps)
+      props改变：componentWillReceiveProps(废弃) -> componentWillUpdate(废弃) -> render -> componentDidUpdate(prevProps)
+
+    3）第三阶段：卸载阶段
+      componentWillUnmount  执行清理工作
+      <img src="../src/assets/images/生命周期.jpg" alt="">
+  </p>
+  <p>
+    新版钩子函数：新增的两个
+  </p>
+
+
+ <p>render-props和高阶组件</p>
+  <p>
+    1.render-props:
+      a.render核心代码：
+        组件内：render ：（）{
+          return this.props.render(this.state)
+        }
+        调用者：
+    <Mouse render={(mouse)=>{return (<p>鼠标位置：{mouse.x}，{mouse.y}</p>) }}></Mouse>
+      b.children代替render
+      render ：（）{
+        return this.props.children(this.state)
+      }
+      <Mouse>
+        {(mouse) => <p>{mouse.x},{mouse.y}</p>}
+      </Mouse>
+      优化：添加校验：
+          Mouse.propTypes ={
+            children:PropTypes.func.isRequired
+          }
+          ：解除事件监听
+          componentWillUnmount(){
+            window.removeEventListener('mousemove',this.mouseHandle)
+          }
+
+      2.高阶组件 ：给组件进行包装，返回新组件
+        使用步骤：
+           1）创建函数，以with开头
+           2）指定函数参数，参数以大写字母开头（作为要渲染的组件）
+           3）组件内部创建一个类组件，提供复用的状态逻辑代码，并返回
+           4）在该组件中，渲染参数组件，同时将状态通过props传递给参数组件
+           5）调用该高阶组件，传入要增强的组件，通过返回值拿到增强的组件，然后将期渲染到组件中
+         例如：
+          function withMouse(WrappedComponent){
+              class Mouse extends React.component{
+                ...
+                return(){
+                    return <WrappedCompontent {...this.state} {...props}></WrappedCompontent>
+                }
+              }
+              return Mouse
+          }
+        设置displayName：
+        Mouse.displayName = `withMouse${getDisplayName(WrappedCompontent)}`
+    function getDisplayName(WrappedCompontent){
+    return WrappedCompontent.displayName || WrappedCompontent.name || 'Compontent'
+  }
+  </p>
+
+
+<p>
+  react原理：
+  1.setState，
+    异步：this.setState({a:1})
+    异步：this.setState((state,props)=>{
+            return {
+              count:state.count + 1
+            }
+        })
+        这个语法的state使用的是更新后的state，多次更新时 推荐这种方式
+
+  2.jsx语法
+  jsx->createElement()->react对象
+  <img src="../src/assets/images/jsx.png" alt="">
+  3.组件更新机制
+   当组件更新时，自身以及子孙组件都会更新
+  4.组件性能优化
+    1）.减轻：state，不需要渲染的不要放在state中，如定时器id
+    2）.避免不必要的重新渲染，可以使用shouldCompontentUpdata（nextProps，nextState） 返回false 组件不重新渲染，
+  nextProps，nextState  参数都是最新的参数
+    3）.纯组件  PureCompontent：自带shouldCompontentUpdate 钩子，内部会分别对比props和state的值来判断是否需要重新渲染组件,对比是浅层对比，不适用深度对象和数组的对比，setState需使用新对象或者数组
+  5.虚拟dom和diff
+   render 方法只是进行了diff算法，并没有重新渲染，虚拟dom可以看做是jsx和state的混合；虚拟dom是解决了性能问题，最大的价值是让react 脱离了浏览器环境的束缚，只要能够运行js的地方，都能运行react
+</p>
+
+
+<p>
+  react 路由
+    1.Router（BrowserRouter或者HashRouter）：包裹整个应用，只需要使用一次即可
+    Route:路由展示组建的相关信息,和页面的展示位置 <Route path="/first" component = {First}></Route>
+    Link：a标签
+  编程式导航 js跳转
+    this.props.history.push('/home)
+  匹配模式：
+    模糊匹配 （默认）
+    精确匹配： exact
+</p>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .div1, .div2 {
+            display: inline-block;
+            width: 100px;
+            height: 200px;
+            border: 1px solid #666;
+            margin-right: 50px;
+            vertical-align: top;
+        }
+
+        .div1 p {
+            background-color: lime;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="div1">
+    <!-- 拖拽元素 需要设置draggable  ，图片和链接默认自带 -->
+    <p draggable="true">点我拖拽过去1</p>
+    <p draggable="true">点我拖拽过去2</p>
+
+</div>
+<div class="div2" draggable="true"></div>
+<script>
+    //1) ondragstart - 用户开始拖动元素时触发
+    //2) ondrag - 元素正在拖动时触发                     //会一直触发
+    //3) ondragend - 用户完成元素拖动后触发
+
+    let p = document.querySelectorAll('p');
+    let div2 = document.querySelector('.div2');
+    let div1 = document.querySelector('.div1');
+    let dragItem=null;
+
+    for(var i=0 ;i< p.length;i++){
+        p[i].ondragstart = function (e) {
+            dragItem = this;
+            console.log('拖拽元素：start'+i)
+        }
+        p[i].ondrag = function (e) {
+            console.log('拖拽元素：drag'+i)
+        }
+        p[i].ondragend = function (e) {
+            console.log('拖拽元素：dragend'+i)
+            dragItem = null;
+        }
+    }
+
+
+
+    div1.ondragenter = function(){
+        console.log('目标元素：enter')
+    }
+    div1.ondragover = function(e){
+        e.preventDefault()
+        // console.log('目标元素：over')
+    }
+    div1.ondragleave = function(){
+        console.log('目标元素：leave')
+    }
+    div1.ondrop = function(e){
+        e.preventDefault();
+        if(dragItem){
+            this.appendChild(dragItem)
+        }else{
+            console.log(e)
+        }
+
+        console.log(e)
+        console.log('目标元素：drop')
+    }
+
+
+
+
+    div2.ondragenter = function(){
+        console.log('目标元素：enter')
+    }
+    div2.ondragover = function(e){
+        e.preventDefault()
+        // console.log('目标元素：over')
+    }
+    div2.ondragleave = function(){
+        console.log('目标元素：leave')
+    }
+    div2.ondrop = function(e){
+        e.preventDefault();
+        if(dragItem){
+            this.appendChild(dragItem)
+        }else{
+            console.log(e)
+            let file = e.dataTransfer.files[0] //文件上传的信息存放在dataTransfer的files中
+            let readFile =  new FileReader();
+            readFile.readAsText(file,'utf8')
+            readFile.onload=function(){
+                console.log(readFile.result)
+            }
+
+        }
+        console.log('目标元素：drop')
+    }
+    //1) ondragenter - 当被鼠标拖动的对象进入其容器范围内时触发此事件
+    //2) ondragover - 当某被拖动的对象在另一对象容器范围内拖动时触发此事件   //会一直触发
+    //3) ondragleave - 当被鼠标拖动的对象离开其容器范围内时触发此事件
+    //4）ondrop - 在一个拖动过程中，释放鼠标键时触发此事件
+</script>
+</body>
+</html>

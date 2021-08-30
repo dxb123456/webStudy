@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <p class="img">
+        <img data-width="1750" data-height="1311.5" src="http://s1-cdn-bb.bbwc.cn/statics/images/modernlady/ipad/transparent.png" data-src="uploadfile/2019/0725/5d39730c44477_640x479.jpg" data-edit="uploadfile/2019/0725/5d39730c44477_m.jpg">
+        <span class="info">http://v.cdn.bb.bbwc.cn/Numero/2019/07/25/20190725171546956/20190725171546956.mp4</span>
+    </p>
+</div>
+<script>
+
+    // 变量提升，使用var，function声明变量时，当前作用域的函数会被直接创建，当前作用域中的var 和 块作用域(包含子孙)中var，function 都会被赋值undefined。没有声明的变量在使用时 会被赋值为全局变量（不会变量提升）。
+    //let const 创建的变量只能先创建再使用 否则会报错，不会变量提升
+
+    console.log(m,vv,uuu,aa,aaa,m11)
+
+    let lb =0;
+    if(lb){
+        function aaa(){
+            console.log(1)
+        }
+        let a=10
+    }else{
+        let c=100
+    }
+    for(var i=0;i<1;i++){
+        var m=10
+        {
+            var m11=0
+        }
+    }
+    i=0
+
+    //while循环是先判断循环条件，再执行循环。
+    //do while循环则是先执行循环，再判断条件，条件满足时继续循环，条件不满足时退出
+    while (i>0){
+        var vv=0
+        console.log(11)
+    }
+
+    do {
+        console.log(1000)
+        i++;
+    }while (i==0)
+
+    function gg(){
+        console.log(111)
+    }
+
+    is=10;
+    switch (is) {
+        case 10:
+            function aa(){
+                console.log(111)
+            }
+            var uuu=100
+            console.log(">10");
+            break;   //有 break 跳出switch，没有会继续执行case 100；
+        case 100:
+            console.log('>100');
+            break;
+        default:
+            console.log("<10")
+    }
+
+    console.dir(gg)
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>文件拖拽</title>
+    <style>
+        #div1 {
+            width: 500px;
+            height: 500px;
+            background: #cccccc;
+            border: 1px solid #000000;
+            text-align: center;
+            line-height: 500px;
+        }
+    </style>
+    <script>
+
+
+
+        window.onload = function () {
+            var div1 = document.getElementById("div1");
+            //拖拽进入
+            div1.addEventListener("dragenter", function () {
+                div1.innerHTML = "请松手" ;
+            }, false);
+            //拖拽离开
+            div1.addEventListener("dragleave", function () {
+                div1.innerHTML = "拖到这里上传" ;
+            }, false);
+            //悬停
+            div1.addEventListener("dragover", function (ev) {
+                ev.preventDefault();//取消事件的默认动作，防止浏览器打开文件
+            }, false);
+            //松手
+            div1.addEventListener("drop", function (ev) {
+                ev.preventDefault();//取消事件的默认动作。
+                let fileReader = new FileReader() ;
+                let file = ev.dataTransfer.files[0] ;
+                fileReader.onload = function(){
+                    alert("成功"+this.result);
+                }
+                fileReader.onerror = function(){
+                    alert("读取失败");
+                }
+                fileReader.readAsText(file) ;
+            }, false);
+
+        }
+    </script>
+</head>
+
+<body>
+<div id="div1">拖到这里上传</div>
+</body>
+</html>

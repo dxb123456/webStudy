@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="myVue.js"></script>
+</head>
+<body>
+    <div id="mvvm">
+        <input type="text" v-model="inputValue">
+        <span v-html="html" v-on:click="aa" :style="{fontSize:font}">123219</span>
+        <span v-text="text" >我是text</span>
+        <div>
+            <h1 @click="kk">{{name}}</h1>
+            <p>
+                {{inputValue}}
+            </p>
+            <p :style="{fontSize:font}">
+                {{obj.mm.n}}
+            </p>
+
+        </div>
+        <input type="text" v-model="obj.mm.n">
+        <p>{{num}}
+            <button @click="add">添加</button>
+            <button @click="reduce">减法</button>
+        </p>
+
+    </div>
+    <script>
+        var myApp=new myVue({
+            el:'#mvvm',
+            data(){
+                return {
+                    text:'Hello Word',
+                    inputValue:'100',
+                    name:'张三',
+                    obj:{aa:100,mm:{n:200}},
+                    html:'<h2>我是测试</h2>',
+                    color:'#aaa',
+                    opacity:'0.5',
+                    font:'36px',
+                    num:1,
+                }
+            },
+            methods:{
+                aa(){
+                    myApp.$nextTick(()=>{
+                        // console.log(document.getElementsByTagName('h1')[0].innerHTML,1)
+                        console.log(this.name)
+                        this.name = '1000000'
+                        console.log(this.name)
+                    })
+                    this.name='李四';
+                    this.name ='老王';
+                    this.name = '100';
+                    this.inputValue =200;
+                    this.num =3;
+                    myApp.$nextTick(()=>{
+                        console.log(document.getElementsByTagName('h1')[0].innerHTML,2)
+                    })
+                },
+                kk(){
+                    console.log("kk")
+                },
+                add(){
+                    this.num++
+                },
+                reduce(){
+                    this.num--
+                }
+            }
+        })
+        myApp.$data.font = '22px';
+        // console.log(myApp.$data.inputValue)
+    </script>
+</body>
+</html>

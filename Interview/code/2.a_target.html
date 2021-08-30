@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="https://www.baidu.com" target="_blank">我是blank，在新页面加载url</a><br>
+<a href="https://www.baidu.com" target="_self">我是self,在当前页面加载url</a><br>
+<a href="https://www.baidu.com" target="_top">我是top，在整个窗口中加载url,如无则在当前</a><br>
+<a href="https://www.baidu.com" target="_parent">_parent，在父窗口中加载url，如无则在当前</a>
+
+<script src="http://resource-sdk.bbwc.cn/js/lib/jquery/jquery_3.1.1.min.js"></script>
+<script>
+    var list=100;
+    function aa(){
+        $.ajax({
+            type:'post',
+            url:'https://cms-api-inhouse.ifashion.asia/article/essay/alist?type=ANDROID',
+            data:JSON.stringify({
+                "column_id": "0",
+                "pagesize": 0,
+                "top": 0,
+                "appid": 21,
+                "outputFormat": 1,
+                "type": "ANDROID"
+            }),
+            success(res){
+
+                res = JSON.parse(res)
+
+                var length = res.data.list.length;
+                console.log(length)
+            },
+            error(err){
+                console.log(err)
+            }
+        })
+    }
+    var kk = setInterval(()=>{
+        // if(list.length == 0){
+        //     clearInterval(kk)
+        //     console.log('结束')
+        // }else{
+        //     console.log(list.length)
+        //     aa();
+        // }
+        aa();
+    },1000)
+
+</script>
+</body>
+</html>

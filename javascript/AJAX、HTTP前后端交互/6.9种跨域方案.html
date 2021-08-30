@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="//resource-sdk.bbwc.cn/js/lib/jquery/jquery_3.1.1.min.js"></script>
+</head>
+<body>
+
+
+  <p>跨域：协议，域名，端口号</p>
+  <p>同源：协议，域名，端口号 三者都一样</p>
+
+<!--9中跨域-->
+
+  <script>
+    // 1.JSONP  src没有域的限制,jsonp只支持get请求，url劫持数据不安全。
+      // 1）.创建script，src=url?callback=func
+      // 2) func(data) 直接执行
+      //jq中的jsonp
+      // $.ajax({
+      //     url:'url',
+      //     method:'get',
+      //     dataType:'jsonp',  //执行jsonp请求
+      //     success:res=>{
+      //         console.log(res)   //JQ默认会创建一个全局函数，执行这个全局函数，会将res传给success
+      //     }
+      // })
+    //2.CORS 跨域资源共享
+
+    // res.header('Access-Control-Allow-Origin',*);
+        $.ajax({
+            url:'http://localhost:8000/adm',
+            method:'get',
+            success:res=>{
+                console.log(res)
+            }
+        })
+
+
+    //3.代理proxy =>webpack  webpack-dev-serve
+      //配置方法
+        //devServer:{
+            //port:3000,
+            //progress:true,
+            //contentBase:'./build',
+            //重点
+            //proxy:{
+                //  '/':{
+                //     target:'http://127.0.0.1:3001',
+                //     changeOrigin:true    //改变源
+                //  }
+            //}
+
+
+      //4.nginx反向代理
+
+      //5.postMessage();window.postMessage()
+        //A.html 中有<iframe id='iframe' src='B.html' frameborder = '0' style='display:none'>
+    iframe.onload=function(){
+        iframe.contentWindow.postMessage('aaa','http://127.0.0.1:1002/')//第一个参数是信息，第二个参数是源，不知道请写*
+    }
+
+        //B.html
+        //    监听给B发送的信息
+            window.onmessage = function(ev){
+            console.log(ev.data); //获得数据
+            ev.source.postMessage(ev.data+'@@@'+ev.origin)  //再返回数据
+            }
+
+
+
+    //6.WebSocket
+
+    //7.document.domain +iframe
+      //只能实现：同一个主域名，不同子域之间的操作；v.qq.com 和sports.qq.com
+    //A页面中  iframe中含有B页面
+        // document.domain = 'qq.com'
+        // var user = 'admin'
+
+      //B页面中：
+      //  document.domain = 'qq.com';
+      //  alert(window.parent.user)
+
+
+      //8.window.name + iframe  需要三个页面、
+      //a.html:  ,a和c用同一个域， 利用的原理加载的第一个iframe 添加了name之后再改变成同源name后只要不重新写window.name,那么name会一直保存
+        //  iframe='b.html'
+        // iframe.onload=function(){
+                iframe.src='c.html';
+                console.log(iframe.contentWindow.name)
+        //    }
+      //b.html:  一般在服务器中存储
+        // window.name = ''
+      //c.html: c中什么都不写
+
+    //9.location.hash + iframe
+
+      //A和C同源
+        //A和B不同源
+      //A中：iframe src='B.html'
+            iframe.onload=function(){
+                    //这个地方需要做处理，防止出现死循环
+                    iframe.src='B.html#msg=123'
+            }
+            function func(res){
+                    console.log(res)
+            }
+
+        //B.html
+            //监听A传来的hash值改变
+            window.onhashchange = function(){
+                iframe.src ='c.html'+location.hash
+            }
+
+        //c.html
+            //监听B传来的hash
+                window.onhashchange = function(){
+            window.parent.parent.func(location.hash)
+    }
+
+  </script>
+</body>
+</html>

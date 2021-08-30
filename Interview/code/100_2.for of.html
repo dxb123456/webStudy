@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 1.for of
+    //
+    var arr = [1,2,3,4];
+    for(const item of arr){
+        console.log(item)
+    }
+
+    var arr1 = [
+        {
+            name:'1',
+            age:2,
+            aa:'2'
+        },
+        {
+            name:'2',
+            age:4
+        }
+    ];
+    for(const {name,age} of arr1){
+        console.log(name,age)
+    }
+
+
+    // 与 for in 和forEach对比
+
+    // 1.forEach  不能中断循环(使用break语句或使用return语句
+    // 2.for–in是用来循环带有字符串key的对象,不推荐数组使用
+    // 3. for-of 既能使用key，value 也能使用终断语句,数组中无法拿到index
+    arr1.forEach((item,index)=>{
+        console.log(item)
+        return item
+    })
+
+    for(let key in arr1[0]){
+        console.log(key)
+        if(key==='name'){
+            break;
+        }
+    }
+    // for(const [key,value] of [[1,2],[2,3]]){
+    //     console.log(key,value)
+    // }
+    for (let [index, value] of [100,200,300,400].entries()) {
+        console.log(index, value);
+    }
+
+
+</script>
+</body>
+</html>

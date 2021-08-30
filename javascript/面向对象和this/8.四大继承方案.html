@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+    <!--    封装：低耦合、高内聚-->
+    <!--    多态：重载和重写-->
+    <!--         重载(js不存在真正的重载)：方法名相同,形参个数或者类型（publick，private）不一样；；js中的重载指同一个方法根据传入参数不通呈现不一样的效果-->
+    <!--          重写：在类的继承中 子类重写父类方法-->
+
+
+    <!--    如何理解面向对象-->
+    <!--        1.面向对象是一种编程思想，js本身就是面向对象构建的（例如：js中有很多内置类，像Promise，可以基于new Promise来创建一个实例，来管理异步编程。）-->
+    <!--        2.js中的类和实例是基于原型和原型链机制，js中类的重载、重写、继承也和其他语言不一样-->
+</p>
+<script>
+
+
+    //继承：子代继承父代的属性和方法，目的是让子类实例能够调用父类的实例和方法。
+
+
+    //1.原型链继承
+    //1）让父的属性和方法在子类实例的原型链上。
+    //2）其他语言的继承是copy继承，子类会把父类的方法都copy给子类一份。js中是改变原型链的指向。
+    //3）子类可以重写父类中的方法，也会使其他的子类也受影响。一般不会去变更父类的方法；
+    //4)父类中私有或者公有的属性和方法，最后都会变成子类中共有的属性和方法
+    // function A() {
+    //     this.name = '老王';
+    // }
+    //
+    // A.prototype.getName = function () {
+    //     return this.name
+    // }
+    //
+    // function B() {
+    //     this.bb = '100'
+    // }
+
+    //两种写法：1
+    // B.prototype = new A();
+    // B.prototype.constructor = B;  //保证完整性添加构造函数
+
+    //两种写法：2
+    // B.prototype.__proto__ = new A();
+
+    // B.prototype.geBb = function () {
+    //     return this.aa
+    // }
+
+
+    //2.call 继承 ：在子方法中，将parent当做普通函数执行，改变this指向。
+        //特点：
+            //1.只能继承父类的私有属性和方法(因为把parent当做普通函数执行，和其原型上的属性和方法没关系)
+            //2.父类私有的变成子类私有的
+    // function A() {
+    //     this.name = '老王';
+    // }
+    //
+    // A.prototype.getName = function () {
+    //     return this.name
+    // }
+    //
+    // function B() {
+    //     A.call(this);
+    //     this.bb = '100'
+    // }
+    //
+    // B.prototype.geBb = function () {
+    //     return this.aa
+    // }
+    // console.log(new B())
+
+
+
+
+    //3.寄生组合继承  :使用原型继承和call组合
+        //特点:父类中的私有属性和公有属性也是子类实例的私有和公有属性
+    // function A() {
+    //     this.name = '老王';
+    // }
+    // A.prototype.getName = function () {
+    //     return this.name
+    // }
+    // function B() {
+    //     A.call(this);
+    //     this.bb = '100'
+    // }
+    // //    B.prototype = Object.create(A.prototype,{ p: { value: 42 } })  //create的第二个参数可以给创建的对象添加属性
+    // B.prototype = Object.create(A.prototype,{ p: { value: 42 } })
+    // B.prototype.constructor = B;
+    // B.prototype.geBb = function () {
+    //     return this.aa
+    // }
+    // console.log(new B())
+
+    //4.ES6中class继承 extends，这个操作后的结果=>
+        //    B.prototype.__proto__ = A.prototype
+        //es6 中class创建出来的类不能当做普通函数继承
+        //子类继承父类，可以不写constructor，如果写了必须要写super，类似call，如果没有写constructor 会默认闯进 constructor (...args){super(...args)}
+    class A{
+        constructor(x){
+            this.x=x
+        }
+        getX(){
+            console.log(this.x)
+        }
+    }
+    class B extends A{
+        constructor(y){
+            super('1');
+            this.y=y
+        }
+        getY(){
+            console.log(this.y)
+        }
+    }
+
+    console.log(new B())
+
+
+    //手写create()方法
+    // Object.create = function(obj){
+    //     function Fn(){};
+    //     Fn.prototype = obj;
+    //     return new Fn()
+    // }
+</script>
+</body>
+</html>

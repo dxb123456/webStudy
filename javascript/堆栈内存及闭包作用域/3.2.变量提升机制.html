@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // function(){
+    //     console.log(arguments[0]+arguments[1]);
+    // }(5,6);  //function statement requires a name
+
+
+    // --------------
+    function add(x, y) {
+        console.log(x + y);
+    }
+
+    (5, 6);  // 无任何数据
+
+    var qqqq = 100
+    console.log(mmm)
+    if (qqqq > 0) {
+
+        function mmm() {
+            console.log('mmm')
+        }
+
+    }
+
+    // -------------
+    //加号
+    +function () {
+        console.log("+" + arguments[0] + arguments[1]);
+    }(5, 6);
+    //减号
+    -function () {
+        console.log("-" + arguments[0] + arguments[1]);
+    }(5, 6);
+    //感叹号
+    !function () {
+        console.log("！" + arguments[0] + arguments[1]);
+    }(5, 6);
+    //括号
+    (function () {
+        console.log("（）" + arguments[0] + arguments[1]);
+    })(5, 6);
+
+    // --------------
+    var aa = 10
+
+    function ff() {
+        console.log(add)
+
+        let aa = 3;
+        aa = 1;
+        console.log(window.aa)
+
+        function kk() {
+            function mm() {
+                console.log('我是mm');
+            }
+        }
+    }
+
+    ff();
+
+    const w = 100, v = {a: 100}
+    v.a = 1000
+    console.log(w, v)
+
+
+    // -------------
+    f = function () {
+        return true;
+    };
+    g = function () {
+        return false;
+    };
+    console.log(g);
+    (function () {
+        //这里g会被变量提升，为g=undefined
+        if (g() && [] == ![]) {
+            var vvv1 = 0;
+            f = function f() {
+                return false;
+            };
+
+            function g() {
+                return true;
+            }
+        }
+    })();
+    alert(f());   //g is not a function
+</script>
+</body>
+</html>

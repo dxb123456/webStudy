@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hooks</title>
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <!-- 生产环境中不建议使用 -->
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<div id="example"></div>
+
+
+<script type="text/babel">
+    //useRef 不能直接绑定组件，组件需要通过React.forwardRef 来绑定；
+
+
+    function MyInp(props,ref){
+        //使用forwardRef 时 ref需要单独接收
+        console.log(props,ref)
+        let [number,setNumber] = React.useState('11')
+        const kk = (e)=>{
+            setNumber(e.target.value)
+        }
+        return (
+            <input type="text" ref={ref}  value={number} onChange={kk}/>
+        )
+    }
+
+    const MyInput = React.forwardRef(MyInp)
+    function Counter(props) {
+        let [number1,setnum] =React.useState('1');
+        const myref = React.useRef();
+        const myInputRef =  React.useRef();
+        const handle = () => {
+            setnum(()=> ++number1);
+            console.log(myref.current)
+            console.log(myInputRef.current)
+        }
+        React.useEffect(()=>{
+        })
+        return (<div >
+            <p ref={myref}>{number1}</p>
+            <MyInput ref={myInputRef} title="2000"></MyInput>
+            <button onClick={handle}>+</button>
+        </div>)
+    }
+
+    ReactDOM.render(
+        <Counter  title="100"/>,
+        document.getElementById('example')
+    );
+</script>
+
+</body>
+</html>

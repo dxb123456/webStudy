@@ -1,0 +1,143 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.first {
+  overflow: hidden;
+  .header {
+    width: 100%;
+    height: 65px;
+    background-color: #56817A;
+  }
+
+  .main {
+    padding: 0 200px 0 150px;
+  }
+
+  .center {
+    width: 100%;
+    height: 300px;
+    background-color: lime;
+  }
+
+  .float {
+    float: left;
+  }
+
+  .left {
+    width: 150px;
+    background-color: #f0f0f0;
+    height: 300px;
+    margin-left: -100%;
+    position: relative;
+    left: -150px;
+  }
+
+  .right {
+    width: 200px;
+    background-color: #999999;
+    height: 300px;
+    margin-left: -200px;
+    position: relative;
+    left: 200px;
+  }
+}
+
+.seconed{
+  overflow: hidden;
+  .header {
+    width: 100%;
+    height: 65px;
+    background-color: #56817A;
+  }
+
+  .main {
+    width: 100%;
+  }
+
+  .center {
+    width: calc(100% - 350px);
+    height: 300px;
+    margin-left: 150px;
+    margin-right: 200px;
+    background-color: lime;
+    float: left;
+  }
+  .left {
+    width: 150px;
+    background-color: #f0f0f0;
+    height: 300px;
+    margin-left: -100%;
+    float: left;
+  }
+  .right {
+    width: 200px;
+    background-color: #999999;
+    height: 300px;
+    margin-left: -100%;
+    float: right;
+  }
+}
+
+.three{
+  .header {
+    width: 100%;
+    height: 65px;
+    background-color: #56817A;
+  }
+
+  .main {
+    width: 100%;
+    display: flex;
+  }
+
+  .center {
+    flex: 1 auto;
+    height: 200px;
+  }
+  .left {
+    flex: 0 0 150px;
+    background-color: #f0f0f0;
+    order: -1;
+    height: 200px;
+  }
+  .right {
+    flex: 0 0 200px;
+    background-color: #999999;
+    height: 200px;
+
+  }
+}
+.double{
+  .header {
+    width: 100%;
+    height: 65px;
+    background-color: #56817A;
+  }
+
+  .main {
+    width: 100%;
+    float: left;
+  }
+
+  .center {
+    height: 200px;
+    margin-left: 150px;
+    margin-right: 200px;
+  }
+  .left {
+    width: 150px;
+    background-color: #f0f0f0;
+    height: 200px;
+    margin-left: -100%;
+    float: left;
+  }
+  .right {
+    width:200px;
+    background-color: #999999;
+    height: 200px;
+    margin-left: -100%;
+    float: right;
+  }
+}

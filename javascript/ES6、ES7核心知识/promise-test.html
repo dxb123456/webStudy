@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="my_promise.js"></script>
+</head>
+<body>
+
+
+<script>
+    var promise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('失败')
+        }, 2000)
+    }).then(
+        value => console.log(value,'then1'),
+        reason => console.log(reason,'then11'),
+    ).then(
+        value => console.log(value,'then2'),        // 不管上个then处理结果如何，第二个then都是处理成功的
+    ).then(
+        value=>{
+             let kk =new Promise((resolve,reject)=>{
+                setTimeout(()=>{
+                    resolve('1000')
+                },500)
+
+            })
+            return kk
+        }
+    ).then(value=>{
+        console.log(value)
+    })
+</script>
+</body>
+</html>

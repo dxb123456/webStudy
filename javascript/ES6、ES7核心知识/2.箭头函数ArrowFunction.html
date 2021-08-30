@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p>
+    1.相当于匿名函数，不能使用new
+    2.不绑定arguments
+    3.箭头函数的this 取决于执行上下文的this
+    4.箭头函数的作用域会继承外界的作用域
+    5.call，bind，apply对其无效
+
+</p>
+
+
+<script>
+
+    //arguments 测试
+    // 箭头函数没有自己的arguments，下面的arguments是fn的arguments
+    obj = {}
+
+    function fn(a, b) {
+        let aa = () => {
+            console.log(arguments)
+            console.log(this)
+        }
+        aa()
+    }
+
+    // fn(100,200)
+
+
+    // window下声明，window下调用func
+    // 注意：不能直接使用call 改变箭头函数的this,想要改变其this,只能改变他的上下文this
+    // let c = {a:123};
+    // let m = {a:'woshi'}
+    // window.a = 321
+    // let func = ()=>{console.log(this.a)}
+    // c.b = function(){
+    //     console.log(this)
+    //     let func = ()=>{
+    //         console.log(this.a)
+    //     }
+    //     func();
+    // }
+    // c.b.call(m);   //woshi
+
+
+    //其他对象下声明，window下调用func
+    // let  c = {a:123};
+    // let  func
+    //1.自执行;
+    // c.b = ~function(){
+    //     console.log(this)
+    //     func = ()=>{
+    //         console.log(this.a)
+    //     }
+    // }()         //自执行函数的 this 都指向window
+    // func()     //undefined
+
+    //2.通过外部调用
+    // c.b = function(){
+    //     console.log(this)
+    //     func = ()=>{
+    //         console.log(this.a)
+    //     }
+    // }
+    // c.b();
+    // func()  //123
+
+
+    //其他对象下申明调用func
+    // let c = {a:123};
+    // let b = {a:331};
+    // c.f=function(){
+    //     b.func=()=>{
+    //         console.log(this.a)
+    //     }
+    // }
+    // c.f();
+    // b.func()   //123
+
+
+    //循环箭头函数
+    let a = {
+        b:{
+            c:{}
+        }
+    }
+    a.b.c.funcC = function () {
+        console.log('c', this)   //this是c
+        a.funcA = () => {
+            // this是c
+            console.log('a', this)
+            a.b.funcB()
+        }
+        a.funcA()
+    }
+    a.b.funcB = () => {
+        //this是window
+        console.log('b', this)
+    }
+    a.b.c.funcC()
+
+</script>
+</body>
+</html>

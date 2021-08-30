@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+        <p class="p1 p2">
+            classList
+        </p>
+<script>
+    //BOM 操作
+
+    //1.window对象
+    // window.innerWidth  //窗口宽度
+    // window.innerHeight //窗口高度
+    // window.open('https://www.baidu.com/','_blank')  //默认新窗口打开
+    // window.opener    可以获取打开窗口的源窗口
+    // window.close()   关闭当前窗口
+
+    //openWin()
+    function openWin(){
+        myWindow=window.open('','','width=200,height=100');
+        myWindow.document.write("<p>这是我的窗口</p>");
+        myWindow.focus();
+        myWindow.opener.document.write("<p>这个是源窗口!</p>");
+    }
+
+    //2.window.navigator
+
+    //  window.navigator.appName  //app名称
+    //  window.navigator.appVersion //浏览器版本
+    //  window.navigator.userAgent   //浏览器型号
+    //  window.navigator.platform    //平台型号
+
+    function Check_browser(){
+        let ua = navigator.userAgent.toLowerCase();
+        let browserName = '';
+        let ie = ua.indexOf("compatible") > -1 && ua.indexOf("msie") > -1,edge = ua.indexOf("edge") > -1,ie11 = ua.indexOf('trident') > -1 && ua.indexOf("rv:11.0") > -1;
+        if (ie || edge || ie11){
+            browserName = 'IE浏览器'
+        } else if (ua.indexOf('firefox') > -1) {
+            browserName = '火狐浏览器'
+        } else if (ua.indexOf('metasr') > -1) {
+            browserName = '搜狗浏览器'
+        }else if (ua.indexOf('qqbrowser')>-1) {
+            browserName = 'QQ浏览器'
+        } else if (ua.indexOf('ubrowser') > -1) {
+            browserName = 'UC浏览器'
+        } else if (ua.indexOf('lb') > -1) {
+            browserName = '猎豹浏览器'
+        } else if (ua.indexOf('safari') > -1 && ua.indexOf("version") > -1) {
+            browserName = 'Safari浏览器'
+        } else if (window.navigator.mimeTypes[40] || !window.navigator.mimeTypes.length) {
+            browserName = '360浏览器'
+        } else if (ua.indexOf("chrome") > -1 && window.chrome) {
+            browserName = 'Chrome浏览器'
+        }
+        return browserName
+    }
+
+    //3.window.history 路由记录
+    // history.go(-2);//后退两次
+    // history.go(2);//前进两次
+    // history.back(); //后退
+    // history.forward(); //前进
+    //方法：window.history.replaceState(data, title, targetURL)
+    //方法：window.history.pushState(data, title, targetURL)
+    window.onpopstate = function(event){
+        console.log(event.state)
+        if(event.state && event.state.color === 'red'){
+            document.body.style.color = 'red';
+        }
+    }
+
+
+    //4.location 对象
+    //location.href  当前地址
+    //location.hash  hash地址
+    //location.host  url主机名和端口
+    //location.hostname  URL主机名
+    //location.pathname  url路径名
+    //location.search    返回url查询部分
+
+    //location.assign() 载入新页面
+    //location.reload() 刷新页面
+    //location.replace() 地址替换
+
+    console.log(location.href)
+    console.log("hash："+location.hash)
+    console.log("host："+location.host)
+    console.log(location.hostname)
+    console.log(location.pathname)
+    console.log(location.search)
+
+
+    //5.弹框
+    // window.alert(111)   //警示框
+    // window.confirm()     //确认框
+    //window.prompt()       //提示框
+    // confirmTest();
+    // promptTest()
+    function confirmTest(){
+        var isConfirm = window.confirm('你要确认吗？')
+        if(isConfirm){
+            console.log('确认')
+        }else{
+            console.log('取消')
+        }
+    }
+
+    function promptTest(){
+        let prompt = window.prompt('请输入你的名字','张三');
+        console.log(prompt)
+    }
+
+
+    //6.定时器
+
+    //setTimeout
+    //setInterval
+    //clearTimeout
+    //clearInterval   //两个清除方法可以混用
+
+
+    //DOM操作
+
+
+    // 1.获取dom节点：
+        //1）.document.getElementById('id_name')   //
+        //2）.document.getElementsByClassName('class_name') //返回的是数组
+        //3) .document.getElementsByTagName('tag_name')     //返回数组
+        //4) .document.querySelector('jq规则')                //返回第一个元素
+        //5) .document.querySelectorAll('jq规则')             //返回数组
+
+    //2.查找关联标签
+        //1) dom.parentElement       //返回父元素
+        //2) dom.children            //返回子标签数组，
+        //3) dom.firstElementChild   //获取第一个子标签
+        //4) dom.lastElementChild    //获取最后一个子标签
+
+        //5) dom.nextElementSibling    //获取下一个标签
+        //6) dom.previousElementSibling //获取前一个元素
+
+    //3.节点操作
+        //1) dom.createElement('Tag')  //创建标签
+        //2) dom.setAttribute('a1','100')  //设置标签自定义属性
+        //3) dom.getAttribute('a1')   //获取自定义属性
+        //4) dom.removeAttribute('a1') //删出自定义属性
+        //添加标签
+        //5) parent.appendChild(newDom)   //最后添加dom
+        //6) parent.insertBefore(newDom,child) //在child前面添加标签
+        //删除标签
+        //7) parent.removeChild(child)   //移出child标签
+        //8) parent.replaceChild(newDom,child) //新dom 替换child
+
+        //获取值：
+        // 获取输入数据：
+        // 9) dom.value     //获取value值
+        // 获取上传文件数据：
+        //10) inputDom.files[0]   // 获取files中的第0个就是上传的数据
+
+    // 4.class操作
+
+        let p = document.getElementsByClassName('p1')[0]
+        console.log(p.classList)
+        //1) dom.classList     //返回值数组，获取class列表
+        //2) dom.classList.remove('p1')  //移出 p1
+        //3）dom.classList.add('p3')   //添加p3
+        //4) dom.classList.contains('p1') //验证是否包含某个类
+        console.log(p.classList.contains('p1'))
+        //5) dom.classList.toggle('p1')   //有p1 删除，没有p1 添加p1，处理完后返回dom.classList.contains('p1')
+        console.log(p.classList.toggle('p3'))
+</script>
+</body>
+</html>

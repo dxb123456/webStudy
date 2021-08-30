@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/promise.js"></script>
+</head>
+<body>
+<script>
+    //promise
+    // 1.微任务和宏任务   ；相对而言微任务要先宏任务执行,
+    //promise 是微任务，定时器是宏任务
+    // setTimeout(_ => {
+    //     console.log(1,'out')
+    // }, 0)
+
+    // new Promise(resolve => {
+    //     resolve();
+    //     console.log(1.5)
+    // }).then(value => {
+    //     console.log(2)
+    // }).then(value => {
+    //
+    // }).then(console.log(4));
+    // console.log('5')
+
+    // let  p1=new Promise((resolve,reject)=>{
+    //     // resolve('12345');
+    //     reject('错误')
+    // }).then(null,_=>{})
+    // new Promise((resolve,reject) => {
+    //     setTimeout(()=>{
+    //         // resolve(p1);         //这里的p1 = 12345
+    //         reject(p1);
+    //         console.log(1)
+    //     })
+    // }).then(
+    //     msg => {
+    //         console.log(msg)       //这里value输出 12345
+    //     },
+    //     error =>{
+    //         console.log(error,'错误')
+    //     }
+    // ).then(value => {
+    //     console.log(value)
+    // }).then(console.log(4));
+    // console.log('5')
+
+
+    // let p1=new Promise((resolve,reject)=>{
+    //     console.log(1)
+    //     // resolve('111')
+    //     reject('失败')
+    // })
+    // let p2 = p1.then(
+    //     msg=>console.log(msg),
+    //     // error=>console.log(error),
+    //     bb=>console.log(bb,'我是bb')
+    // ).then(
+    //     msg=>console.log('成功2',msg),
+    //     value=>console.log('失败2',value)
+    // )
+    // setTimeout(_=>{
+    //     console.log(p1,p2)
+    // })
+
+    //封装promise
+    // function request() {
+    //     return new Promise((resolve, reject) => {
+    //         // setTimeout(()=>{
+    //         //     resolve('成功')
+    //         // },2000)
+    //
+    //         //下面两种错误都会被接收到
+    //         throw new Error('11')
+    //         // reject(new Error('bb'))
+    //
+    //         //另一种
+    //         // try {
+    //         //     hg + 1;
+    //         // } catch (e) {
+    //         //     resolve('是啊比')
+    //         // }
+    //     })
+    // }
+    //
+    // request()
+    //     .then(
+    //     value => console.log(value))
+    //     .catch(error => { //catch 能捕获到链式中的错误
+    //         console.log(error,'我是catch中的')
+    //     })
+    //     .finally(()=>{  //finally  无论成功还是失败都会执行
+    //        console.log('我会一直执行')
+    //     })
+    // var map = new Map();
+    // map.set('name','我是name');
+    // // console.log(map.get('name'))
+    //
+    //
+    // Promise.resolve('1000').then(value=>console.log(value))
+    //
+    //
+    // let  hd= {
+    //     then(resolve,reject){
+    //         resolve('后蹲人')
+    //     }
+    // }
+    // Promise.resolve(hd).then(value=>console.log(value))
+
+    //批量处理all 已经解决的可以处理
+
+    // const hdcms = new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         resolve('第一个异步处理')
+    //     }, 1000)
+    // }).catch(error => {
+    //     console.log(error)
+    // })
+    //
+    // const hdcms1 = new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         resolve('第二个异步处理')
+    //     }, 1000)
+    // })
+    //
+    // //如果promise已经解决过error,all中获取的是处理过的数据
+    // Promise.all([hdcms, hdcms1]).then(result => {
+    //     console.log(result)            //['第一个异步处理','第二个异步处理]
+    // }).catch(error => console.log(error))
+    //
+    //
+    // //allSettled 没有解决也可以处理
+    // const pl1 = new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         reject('第一个异步处理')
+    //     }, 1000)
+    // }).catch(error => {
+    //     console.log(error)
+    // })
+    //
+    // const pl2 = new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         reject('第二个异步处理')
+    //     }, 1000)
+    // })
+    //
+    // Promise.allSettled([pl1, pl2]).then(results => {
+    //     console.log(results)
+    //     //返回：[{
+    //     //      status: "fulfilled",   //这个是已解决的
+    //     //      value: undefined
+    //     // },
+    //     // {
+    //     //      status: "rejected",
+    //     //      value: 第二个异步处理
+    //     // },
+    //     // ]
+    // })
+    //
+    // //.race 哪个先返回就用这个
+    // const ps1 = new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         reject('第一个异步处理')
+    //     }, 2000)
+    // })
+    //
+    // const ps2 = new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         reject('第二个异步处理')
+    //     }, 1000)
+    // })
+    // Promise.race([ps1, ps2]).then(results => {
+    //     console.log(results)
+    // }).catch(error => console.log(error))
+
+
+    //promise 队列原理
+    //  let promise = Promise.resolve(); promise.then()会直接按照完成状态 直接执行
+
+    // promise = promise.then(_ => {          // 这里先走promise.then => promise=新的promise，待resolve()后，后面的代码才会执行
+    //     return new Promise(resolve => {}
+    // })
+
+
+    // function querys(num) {
+    //     console.log(num)
+    //     let promise = Promise.resolve();
+    //     // num.map(v => {
+    //     //     promise = promise.then(_ => {
+    //     //         return new Promise(resolve => {
+    //     //             setTimeout(_ => {
+    //     //                 console.log(v)
+    //     //                 resolve()
+    //     //             }, 1000)
+    //     //         })
+    //     //     })
+    //     // })
+    //
+    //     // 等价于：
+    //
+    //
+    //
+    //
+    //     promise = promise.then( _ => {
+    //         console.log('我是1')
+    //         return new Promise(resolve => {
+    //             setTimeout( _ => {
+    //                 console.log(1)
+    //                 resolve()
+    //             }, 1000)
+    //         })
+    //     })
+    //
+    //     promise = promise.then( _ => {
+    //         console.log('我是2')
+    //         return new Promise(resolve => {
+    //             setTimeout( _ => {
+    //                 console.log(2)
+    //                 resolve()
+    //             }, 1000)
+    //         })
+    //     })
+    //     promise = 100;
+    //     console.log(promise)
+    // }
+    // querys([1,2])
+
+    //封装队列
+
+    // class Queue {
+    //     constructor(ary){
+    //         this.ary = ary;
+    //         this.init();
+    //     }
+    //     init() {
+    //         this.ary.reduce((promise, item) => {
+    //             return promise.then(_=>{
+    //                     return new Promise(resolve => {
+    //                         setTimeout(()=>{
+    //                             resolve(item)
+    //                         },1000)
+    //                     }).then(value=>{
+    //                         return this.view(value)
+    //                     })
+    //                 }
+    //             )
+    //
+    //         }, Promise.resolve())
+    //     }
+    //     view(value){
+    //         return new Promise(resolve=>{
+    //             let h4=document.createElement('h4');
+    //             h4.innerHTML=value;
+    //             document.body.appendChild(h4)
+    //             resolve()
+    //         })
+    //     }
+    //
+    // }
+    // new Queue(['张三', '李四'])
+    //
+    //
+    // //promise 语法糖  async 相当于创建了Promise，await 相当于then
+    // async function as(){
+    //     return 'aaa'
+    // }
+    // as().then(value=>console.log(value))
+    //
+    // // 实现延迟函数
+    // async function sleep(delay=2000){
+    //     return new Promise(resolve=>{
+    //         setTimeout(()=>{
+    //             resolve()
+    //         },delay)
+    //     })
+    // }
+    // async function show(){
+    //     for (const user of ['李四','王五']){
+    //         await sleep()
+    //         console.log(user);
+    //     }
+    // }
+    // show()
+
+
+
+    // class 与await结合
+    class User{
+        constructor(name){
+            this.name = name;
+        }
+        then(resolve,reject){
+            setTimeout(()=>{
+                resolve(1000)
+            },1000)
+        }
+    }
+    async function ajx(){
+        let myuser = await new User('my')
+        console.log(myuser)
+    }
+    //ajx();
+
+    //对象的形式
+    let obj={
+        async aj(){
+            return new Promise((resolve,reject)=>{
+                setTimeout(_=>{
+                    reject(100)
+                },2000)
+            })
+        }
+    }
+    // obj.aj().then(value=>{
+    //     console.log(value)
+    // })
+    //
+    // //错误处理
+    // obj.aj().then(value=>{
+    //     console.log(value)
+    // }).catch(error=>{
+    //     console.log(error,'cuowu')
+    // })
+
+    //await 错误处理
+    async function cc(){
+        try{
+            let aa= await obj.aj()
+            let bb= await obj.aj()
+            console.log(aa,bb)
+        } catch(e){
+            console.log(333)
+        }
+    }
+    //cc();
+
+
+    //await 并行
+    let obj11={
+        async aj(){
+            return new Promise((resolve,reject)=>{
+                setTimeout(_=>{
+                    resolve(110)
+                },1000)
+            })
+        },
+        async aj2(){
+            return new Promise((resolve,reject)=>{
+                setTimeout(_=>{
+                    resolve(120)
+                },1000)
+            })
+        }
+    }
+
+    async function hd(){
+        // let p1 = await obj11.aj();
+        // let p2 = await obj11.aj2();
+
+        // let p1 =  obj11.aj();
+        // let p2 =  obj11.aj2();
+        // console.log(p1, p2);
+        // setTimeout(()=>{
+        //     console.log(p1, p2);
+        // },2000)
+
+        let arr = await Promise.all([obj11.aj(),obj11.aj2()])
+        console.log(arr)
+    }
+    hd();
+</script>
+</body>
+</html>

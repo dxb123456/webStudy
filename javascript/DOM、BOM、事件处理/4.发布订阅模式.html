@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://resource-sdk.bbwc.cn/js/lib/jquery/jquery_3.1.1.min.js"></script>
+</head>
+<body>
+<button id="btn">点我</button>
+<button id="btn1">点我</button>
+<!--    发布订阅模式-->
+<p>
+    1.用容器将所有的监听某个事件的订阅方法搜集起来，发布者只要触发该的事件，会让容器中所有的订阅方法依次执行。是一种设计模式
+</p>
+<script>
+
+    //jq中的发布的订阅模式
+    let fn1 = function(a,b){
+        console.log('fn1',a,b)
+    }
+    let fn2 = function(){
+        console.log('fn2')
+    }
+    let fn3 = function(){
+        console.log('fn3')
+    }
+    // $('#btn').click(()=>{
+    //     fn1();
+    //     fn2();
+    //     fn3();
+    // })
+
+    // $.Callbacks() 创建一个事件池
+    let $pond1 = $.Callbacks();
+    $('#btn1').click(function(){
+        $pond1.fire(100,200)    //fire 通知事件池中的方法依次执行，而且能给每个方法传递参数
+    })
+        //$pond.add(fun) /$pond.remove(fun)  添加和移出函数
+    $pond1.add(fn1)
+    $pond1.add(fn2)
+    $pond1.add(fn3)
+    $pond1.add(fn1)   //jq中没有做去重处理
+
+    let fn4 = function(){
+        console.log('fn4')
+    }
+
+
+
+
+    //es6 的发布订阅模式
+    ~function(){
+       // 发布订阅类
+       class Sub{
+            constructor(){
+                // =>创建一个事件池，用来存储后期需要执行的方法
+                this.$pond=[]
+            }
+            add(func){
+                let flag = this.$pond.some(item=>{
+                    return item === func
+                })
+                !flag ? this.$pond.push(func):null
+            }
+           remove(func){
+               let index = this.$pond.indexOf(func);
+
+               if(index>-1){
+
+                   //slice 和 splice 的区别：
+                    // slice(start,end) start:开始位置，end：结束位置, 返回截取的数组，原数组不变，没有取到返回[];
+                   //  splice() //删除，插入，替换可以 ，改变原数组，返回原数组
+                        // splice删除：color.splice(1,2) （删除color中的1、2两项）；
+                        //splice插入：　　color.splice(1,0,'brown','pink') （在color键值为1的元素前插入两个值）；
+                        //splice替换：　　color.splice(1,2,'brown','pink')  （在color中替换1、2元素）；
+                   // this.$pond.splice(index,1)
+                   this.$pond[index] =null
+
+               }else {
+                   throw new Error('没有发现可删除的函数')
+               }
+
+           }
+           fire(...args){
+                //该方法应该使用for循环
+                this.$pond.map((item,index)=>{
+                    if( typeof item =='function' ){
+                        item.call(this,...args)
+                    }else if(item === null){
+                         //this.$pond.splice(index,1)   //也会造成数组塌陷
+                    }
+                })
+
+           }
+        }
+        let aaa = new Sub();
+       function fn1(a,b){
+            console.log(a,b)
+       }
+        function fn2(){
+            console.log('fn2')
+        }
+        function fn3(){
+            console.log('fn3')
+        }
+        aaa.add(fn1);
+        aaa.add(fn2);
+        aaa.add(fn3);
+        aaa.remove(fn1);
+        aaa.fire(100,200,300)
+    }()
+
+
+    // let arr = [1,2,3,4];
+    // let arr2=[5,6]
+    // arr.splice(0,0,...arr2)
+    // console.log(arr)
+</script>
+</body>
+</html>

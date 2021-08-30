@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+    set 存储中没有重复的值，对象存储的是内存地址
+</p>
+
+<script>
+    var set1 =new Set([1,2,3,4,{obj:100},{obj:100}]);
+    set1.add('1');
+    set1.add(1);
+    console.log(set1)
+
+    set1.delete(1)
+    console.log(set1)
+    console.log(set1.has(1))
+    console.log(set1.size) //设置size无效，只能获取
+    // set1.clear();
+    console.log('-------------');
+
+
+    for (let item of set1){
+        console.log(item)
+    }
+    console.log('-------------');
+    set1.forEach((value,index)=>
+        console.log(value,index)   //发现value和index 返回的值是一样的
+    )
+
+
+    // 应用
+    // 1.数组去重
+    var arr = [1,2,3,4,5,3,4,5];
+    var  myset =new Set(arr);
+    console.log(myset)
+    var newArr = Array.from(myset)
+    console.log(newArr);
+
+    //2.取交集
+    var ary1 = [1,2,3,4,5];
+    var ary2 = [2,3,4,5,6];
+    // var jiaoji = ary1.filter(item=>ary2.includes(item))
+    // console.log(jiaoji)
+    let mysets = new Set(ary2);
+    var jiaoji = ary1.filter(item=>mysets.has(item))
+    console.log(jiaoji)
+
+    //3.取并集
+    let myset_1 = new Set([...ary1,...ary2]);
+    console.log(myset_1)
+
+    //4.差集
+    let mysets11 = new Set(ary2);
+    var chaji = ary1.filter(item=>!mysets11.has(item))
+    console.log(chaji)
+
+</script>
+</body>
+</html>

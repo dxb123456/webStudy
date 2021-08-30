@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<p>
+    var声明的结构赋值，有变量提升
+</p>
+<script>
+    var arr1 = [1, 2, 3];
+    var arr2 = [4, 5];
+    let arr3 = [...arr1]
+    //splice 的返回值为[] , 不要对splice进行赋值操作
+    arr3.splice(1, 0, ...arr2);  // [1,4,5,2,3]
+    console.log(arr3)
+
+
+    //1.数组解构
+    console.log(my)  //undefined  有变量提升
+    let [a, b, c] = [1, 2, 3];
+    let [x, ...y] = [4, 5, 6]
+    console.log(a, b, c, x, y)   //1 2 3 4 [ 5,6 ]
+    let [foo] = [];
+    var [my] = [12]
+    console.log(foo)  //赋值不成功给undefined
+    // 可以设置默认值
+    let [foo1 = 1] = []
+    console.log(foo1)  //1
+
+    //如果右边不是数组，或者没有可遍历的结构（是否有iterator接口），将报错
+    // let [a] = 1;
+    // let [a] = false;
+    // let [a] = NaN;
+    // let [a] = null;
+    // let [a] = undefined;
+    // let [a] = {};
+    // let [foo2] ={"0":'00','1':'11'}
+    //   console.log(foo2)   //({0:"00", 1:"11"}) is not iterable
+
+
+    //2.对象的结构赋值  ，左边的变量名必须和右边的属性对应,没有的话赋值为undefined
+    var {name, age, age1} = {name: '张三', age: 13}
+    console.log(name, age, age1) //张三 13 undefined
+    //将原生方法赋值给一个变量
+    let {random, floor, ceil} = Math
+    let {log} = console;
+    log(random())    //生成一随机数
+    log(100)          //100
+    //可以给属性值赋值
+    console.log(xx)  //变量提升， undefined
+    let pp = {name: {a: 200}}
+    var {name: xx} = pp
+    xx.b = 100
+    console.log(xx)  //张三
+    console.log(pp.name)   //{a:200,b:100}   结构赋值只是简单地赋值
+
+    //也可以设置默认值, 只有右边的值是绝对等于undefined的时候才可以
+    // var { x1 = 1 } = {};
+    // var { x2 = 1, y2 = 2 } = {x2:3}
+    // var { x3:xx3 = 1 } = {x3:2}
+
+
+    // 测试类的结构赋值
+    //  原型链上的属性和方法也能找到
+    function test() {
+        console.log(1)
+    }
+
+    test.prototype.say = function () {
+        console.log(100)
+    }
+    var mytest = new test()
+    let {say} = mytest
+    console.log(say)
+
+    //函数的解构赋值
+    function tests([x, y]) {
+        console.log(x, y)  //1 2
+    }
+
+    tests([1, 2])
+
+
+    //解构赋值的应用
+    //1)交换变量
+    let x11 = 1;
+    let y11 = 2;
+    [x11, y11] = [y11, x11]
+    console.log(x11, y11)  //2 1
+
+    //从函数中返回多个值
+    function test2() {
+        let arr = [1, 2, 3, 4]
+        return arr
+    }
+
+    var [q1, q2, q3, q4] = test2()
+    log(q1, q2, q3, q4)  //1 2 3 4
+    //也可以使用扩展运算符
+    var q5 = test2();
+    console.log(...q5) //1 2 3 4
+
+    //提取JSON数据更方便
+    var json = {
+        id: 2,
+        status: "ok",
+        data: [{name: "lxc", age: 20}]
+    }
+    var {id, status, data} = json;
+    console.log(id, status, data) // 2  "ok"   [{name:"lxc",age:20}]
+
+    //遍历map，使用结构赋值更方便
+    const map = new Map()
+    map.set('name', 'xxx')
+    map.set('age', 12)
+    for (let [key, value] of map) {
+        console.log(key, value)   // name xxx
+        // age 12
+    }
+
+
+    //扩展运算符
+    let _arr = [12, 14, 16];
+    console.log(..._arr); //12 14 16
+    //[...document.getElementByClassName(div)] //[ div , div , div ]把类数组转化为数组
+    function test5(x, y) {
+        console.log(x + y) //3
+    }
+
+    test(...[1, 2])
+
+    //只有函数调用时，扩展运算符才能放在括号中，其他情况会报错
+    //console.log((...[1,2,3]))
+
+    //数组合并
+    var array1 = [1, 2];
+    var array2 = [3, 4, {a: 100}];
+    //es5这样实现
+    // [].push.apply(array1,array2)         //array2
+    let newArray = array1.concat(array2)   //concat 返回新数组
+    let newArray2 = [...array1, ...array2]
+    newArray2[4].b = '200';
+    // console.log(newArray,array2);  都含有b:200
+
+    //es6实现
+    console.log(newArray2[4], array2)  //都含有b:200
+
+    //字符串转数组
+    var str = 'hello';
+    console.log([...str])   //[ "h", "e", "l", "l", "o" ]
+    log(str.split(''))      //[ "h", "e", "l", "l", "o" ]
+    log(array1.join(''))      //12
+    log(array1.join(','))      //1,2
+    log(array1.join('-'))      //1-2
+
+
+    //ES8 引入了对对象的扩展
+    let {...obj} = {a: 1, b: 2, c: 3}
+    console.log(obj) //{a:1,b:2,c:3}
+    let {a1, b1, ...c1} = {a1: 1, b1: 2, c1: 3, d1: 4};
+    console.log(a1, b1, c1) //1 2 { c1: 3, d1: 4 }
+    //let { ...a,b,c } = { a:1,b:2,c:3 } //报错,解构赋值必须是最后一个参数
+
+    //对象的扩展运算符等同于使用了Object.assign()方法
+    let clone = {...a};
+    // 等同于
+    //let clone33 = Object.assign({},a)
+
+
+    //合并两个对象
+    let obj33 = {...a,...b}
+    //等同于
+    //let obj33 = Object.assign({},a,b)
+
+
+
+    // 二维对象中深度克隆问题
+    var objTest ={
+        name:'张三',
+        age:20,
+        address:{
+            city:'天津'
+        }
+    }
+    let cloneObj = {
+        ...objTest,
+        address:{
+            ...objTest.address
+        }
+    }
+    objTest.address.city='河南';
+    console.log(cloneObj)
+</script>
+</body>
+</html>

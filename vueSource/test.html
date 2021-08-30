@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="vue.js"></script>
+    <title>Title</title>
+
+</head>
+<body>
+<div id="root">
+    <input type="text" v-model="value" ref="myinput">
+    <button @click="click">点我</button>
+</div>
+<script>
+
+
+    var myVue = new Vue({
+        el: '#root',
+        props:['a-b'],
+        data() {
+            return {
+                value: 1111,
+            }
+        },
+        methods:{
+            click(){
+                this.value = 2000;
+                console.log(this.$refs.myinput.value)
+            }
+        },
+        mounted() {
+            console.log(100)
+        }
+    })
+    console.log(myVue)
+
+
+</script>
+</body>
+</html>

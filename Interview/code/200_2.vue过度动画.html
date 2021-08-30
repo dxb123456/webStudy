@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="//resource-sdk.bbwc.cn/js/lib/vue/vue_2.5.16.min.js"></script>
+    <!--    <style>-->
+    <!--        /*元素 动画*/-->
+    <!--        div {-->
+    <!--            font-size: 20px;-->
+    <!--        }-->
+
+    <!--        @keyframes active {-->
+    <!--            50% {-->
+    <!--                transform: translateX(-5%);-->
+    <!--            }-->
+    <!--            100% {-->
+    <!--                transform: translateX(-10%);-->
+    <!--            }-->
+    <!--        }-->
+
+    <!--        .animate {-->
+    <!--            animation: active 3s infinite;-->
+    <!--        }-->
+
+    <!--        .yellow {-->
+    <!--            background-color: yellow;-->
+    <!--            opacity: 0.5-->
+    <!--        }-->
+
+    <!--        .red {-->
+    <!--            background-color: red;-->
+    <!--            opacity: 0.2-->
+    <!--        }-->
+
+    <!--        .tran {-->
+    <!--            transition: background-color 1s;-->
+    <!--        }-->
+    <!--    </style>-->
+
+
+    <!--    <style>-->
+    <!--        /*单组建动画、入场和出场*/-->
+    <!--        /* 入场相关    */-->
+    <!--        .v-enter{-->
+    <!--            /*定义进入过渡的开始状态*/-->
+    <!--            opacity: 0;-->
+    <!--        }-->
+    <!--        .v-enter-active{-->
+    <!--            /*定义进入过渡生效时的状态。*/-->
+    <!--            transition: opacity 0.5s linear;-->
+    <!--            animation: move 0.2s ease;-->
+
+    <!--        }-->
+    <!--        .v-enter-to{-->
+    <!--            /*定义进入过渡结束的状态。*/-->
+    <!--            opacity: 1;-->
+    <!--        }-->
+
+    <!--        .v-leave{-->
+    <!--            /*离开过度时的状态*/-->
+    <!--            opacity: 1;-->
+    <!--        }-->
+    <!--        .v-leave-active{-->
+    <!--            /*定义离开过渡生效时的状态。*/-->
+    <!--            transition: opacity 1s linear;-->
+    <!--        }-->
+    <!--        .v-leave-to{-->
+    <!--            /*离开过的结束状态*/-->
+    <!--            opacity: 0;-->
+    <!--        }-->
+    <!--        .hello0{-->
+    <!--            opacity: 0.5;-->
+    <!--        }-->
+    <!--        .hello{-->
+    <!--            transition: opacity 3s linear;-->
+    <!--        }-->
+    <!--        .hello1{-->
+    <!--            opacity: 0;-->
+    <!--        }-->
+    <!--        @keyframes move{-->
+    <!--            0%{-->
+    <!--                transform: translateX(-100%);-->
+    <!--            }-->
+    <!--            100%{-->
+    <!--                transform: translateX(0);-->
+    <!--            }-->
+    <!--        }-->
+    <!--    </style>-->
+
+
+    <style>
+        .v1-enter {
+            opacity: 0;
+        }
+
+        .v1-enter-active, .v1-leave-active {
+            transition: opacity 1s;
+        }
+
+        .v1-enter-to {
+            opacity: 1;
+        }
+
+        .v1-leave-to {
+            opacity: 0;
+        }
+
+        .group-enter{
+            transform: translateY(-10px);
+            opacity: 0;
+        }
+        .group-enter-active{
+            transition: all 1s;
+        }
+        .group-enter-to{
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .group-move{
+            transition: all 0.5s;
+        }
+    </style>
+</head>
+<body>
+<div id="root">
+
+</div>
+<script>
+    const compontentA = {
+        template: '<div>我是外部组件A</div>'
+    }
+    const compontentB = {
+        template: '<div>我是外部组件B</div>'
+    }
+    const app = new Vue({
+        components: {
+            "com-a": compontentA,
+            "com-b": compontentB
+        },
+        data() {
+            return {
+                //元素动画
+                animate: {
+                    animate: true,
+                    tran: true,
+                    yellow: false,
+                    red: true
+                },
+                //
+                singleShow: false,
+                //多元素切换
+                moreTagShow: false,
+                list:[2,3,4]
+            }
+        },
+        //元素动画
+        // template:
+        //     `
+        //         <div :class="animate" @click="handerClick">
+        //             我是div
+        //         </div>
+        //        <button @click="handerSingleShow">交互</button>
+        //     `,
+
+        //单组建动画
+        // template: `
+        //         <div>
+        //                     <transition name="v" type="animation">
+        //                         <div v-if="singleShow" >
+        //                             我是v-if
+        //                         </div>
+        //
+        //                     </transition>
+        //
+        //                     <transition name="v" :duration="1000">
+        //                         <div v-if="singleShow" >
+        //                             我是v-show
+        //                             duration将动画运时间强制设置成500
+        //                         </div>
+        //                     </transition>
+        //                     <transition name="v" :duration="{enter:2000,leave:100}">
+        //                         <div v-if="singleShow" >
+        //                             我是v-if
+        //                             可以传入一个对象，enter和leave
+        //                         </div>
+        //                     </transition>
+        //                     <transition name="v"
+        //                         enter-class="hello0"
+        //                         enter-active-class="hello"
+        //                         enter-to-class="hello1"
+        //                         leave-active-class="hello"
+        //                     >
+        //                         <div v-if="singleShow" >
+        //                             我是v-show
+        //                         </div>
+        //                     </transition>
+        //                     <transition  :css=false
+        //                     @before-enter='beforeEnter'
+        //                     @enter='enterActive'
+        //                     @after-enter='enterAfter'
+        //                     >
+        //                         <div  v-if="singleShow" style="background-color: lime">
+        //                             使用js动画
+        //                         </div>
+        //                     </transition>
+        //                     <button @click="handerSingleShow">交互</button>
+        //         </div>
+        //
+        // `,
+
+
+        //多标签，多组件动画切换
+        //    mode:out-in  先出再进
+        //    mode:in-out  先进再出去
+        //    appear 初始化就执行动画
+        template:
+            `
+                <div>
+                    <transition name="v1" mode="out-in" appear>
+                        <div v-if="moreTagShow" key="11">
+                            我是第一个标签
+                        </div>
+                        <div v-else key="12">
+                            我是第二个标签
+                        </div>
+
+
+                    </transition>
+
+                    <transition name="v1"  appear>
+                         <com-a v-if="moreTagShow" ></com-a>
+                         <com-b v-else ></com-b>
+</transition>
+
+                    <button @click="handerMoreTagShow">交互</button>
+
+
+
+                    <div>
+                        <h3>列表动画:</h3>
+                        <transition-group tag="ul" name="group">
+                            <li v-for = 'item in list' :key =item>{{item}}</li>
+                        </transition-group>
+                        <button @click="()=>{this.list.unshift(this.list.length+1)}">交互</button>
+                    </div>
+                </div>
+            `,
+        methods: {
+            handerMoreTagShow() {
+                this.moreTagShow = !this.moreTagShow;
+            },
+            handerSingleShow() {
+                this.singleShow = !this.singleShow
+            },
+            handerClick() {
+                this.animate.yellow = !this.animate.yellow
+                this.animate.red = !this.animate.red
+            }
+            ,
+            beforeEnter(el) {
+                console.log(1)
+                el.style.width = '100px';
+            },
+            enterActive(el, done) {
+                console.log(200)
+                setTimeout(() => {
+                    // 1s 之后改变颜色
+                    el.style.transition = 'width 5s'
+                    el.style.width = '500px';
+                    setTimeout(() => {
+                        done()
+                    }, 4990)
+
+                }, 10)
+
+
+            },
+            enterAfter(el) {
+                console.log(1000)
+                el.style.color = 'red'
+            }
+        }
+    })
+    app.$mount(root)
+</script>
+
+</body>
+</html>

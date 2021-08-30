@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            width: 660px;
+            height: auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .box li {
+            margin-bottom: 20px;
+            list-style: none;
+            width: 100px;
+            height: 200px;
+            margin-right: 10px;
+            border: 1px solid #333;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        /*第一种 ：box：   {flex：auto}*/
+        /*.box::after{*/
+        /*    content: '';*/
+        /*    flex:auto*/
+        /*}*/
+        .box::after{
+            content: '';
+            flex-grow:1
+        }
+
+        /* 第二种：若每行只有三个  box::after{} */
+        /*.box {*/
+        /*    width: 330px;*/
+        /*    height: auto;*/
+        /*    display: flex;*/
+        /*    justify-content: space-between;*/
+        /*    flex-wrap: wrap;*/
+        /*}*/
+        /*.box::after{*/
+        /*    content: '';*/
+        /*    width: 100px;*/
+        /*    margin-right: 10px;*/
+        /*}*/
+
+
+        /* 第三种：如果是4个*/
+        /*.box {*/
+        /*    width: 440px;*/
+        /*    height: auto;*/
+        /*    display: flex;*/
+        /*    justify-content: space-between;*/
+        /*    flex-wrap: wrap;*/
+        /*}*/
+        /*li:last-child:nth-child(4n-1){*/
+        /*    content: '';*/
+        /*    !*width: 100px;*!*/
+        /*    margin-right: 120px;*/
+        /*}*/
+        /*li:last-child:nth-child(4n-2){*/
+        /*    content: '';*/
+        /*    !*width: 100px;*!*/
+        /*    margin-right: 230px;*/
+        /*}*/
+
+
+        /*第四种: 添加空标签 */
+        /*i{*/
+        /*    display: inline-block;*/
+        /*    width: 100px;*/
+        /*    margin-right: 10px;*/
+        /*}*/
+    </style>
+</head>
+<body>
+
+<ul class="box">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+    <li>9</li>
+    <li>10</li>
+    <li>11</li>
+<!--    <i></i><i></i><i></i><i></i><i></i>-->
+</ul>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p>
+    set中不能有重复的值,===号的判断
+</p>
+
+<script>
+    //test ，对象中的key值如果不是字符串类型，保存和取值的时候会默认进行.toString()操作。
+    // var obj ={
+    //     name:'张三'
+    // }
+    // var obj2 ={
+    //     name:'李四2'
+    // }
+    // let myobj = {
+    //     [obj]:'李四',
+    //     [obj2]:'李四2',
+    // }
+    // console.log(myobj[obj2])
+    // console.log(myobj[obj.toString()])
+
+    //1.set 基本创建
+    var set = new Set()
+    // var set1 = new Set([1,2,3,4,5,])
+    var set1 = new Set('hello')  //[ "h", "e", "l", "o" ]
+    console.log(set1)
+
+    //2. add 添加
+    set.add(1);
+    set.add('1');
+    set.add(1);
+    console.log(set)
+
+    //3. has 判断有无
+    //console.log(set.has(1))  //true
+
+    //4.delete 删除元素
+    //console.log(set.delete(1))  //会返回boolean，删除是否成功
+
+    //5.size 长度
+    console.log(set.size)
+
+    //6.values() 与 keys() 与 entries() 返回一致
+    console.log(set.keys())   //返回的是Iterator
+    console.log(set.values())   //返回的是Iterator
+    console.log(set.entries())  //返回有键值对的Iterator
+    //7.clear()  清空
+    //console.log(set.clear())    //返回undefined
+
+
+    //8.forEach 和for of
+    set.forEach((value, key, arr) => {
+        console.log(value, key, arr)  //value 和 key 指向同一个
+    })
+
+    for (let key of set) {
+        console.log(key)
+    }
+
+
+    //并集、交集、差集
+    //并集：a∪b 两个集合组合在一起
+    let a = [1, 2, 4, 6, 8, 3];
+    let b = [2, 3, 6, 7, 9];
+    let aUb = new Set([...a,...b]);
+    console.log(aUb)
+
+
+    // 交集：  anb 两个集合的共同部分
+    // let anb = new Set(a.filter((item)=>{
+    //     return b.includes(item)
+    // }))
+    //使用Set
+    let a1 = new Set(a);
+    let b1= new Set(b);
+    let anb = new Set([...a1].filter((item)=>{
+        return b1.has(item)
+    }))
+    console.log(anb)
+
+    //差集： 一方有，另一方没有
+    let aCb = new Set([...a1].filter((item)=>{
+        return !b1.has(item)
+    }))   //a1中有，b1中没有的
+    console.log(aCb)
+
+
+
+    //other.一些类型转换
+    console.log(Array.from(set)) //把类数组转换成数组
+    console.log([...set])  //把类数组转换成数组
+
+
+    var hh = new Set('123456789');    //将小于5的删除
+    let arr = [...hh].filter(item => item >= 5).join('');
+    console.log(new Set(arr))
+
+    //去重
+    let arr1 = [1, 2, 4, 5, 8, 3, 5, 2, 1]
+    console.log([...new Set(arr1)])
+
+
+    //WeakSet()    只能添加引用类型的 ，弱引用类型，for of，keys(),values(), size 都不能使用，详见weakmap
+    let weakset = new WeakSet()
+    //weakset.add(123) //WeakSet value must be an object, got 123
+    weakset.add([1,2,3])
+
+    console.log(weakset)
+</script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--this 总结-->
+<p>
+    this指向跟函数的声明位置没有直接关系
+</p>
+<ul>
+    <li>1. 函数中this的指向指向他的调用者，即"."前面的对象，如果函数前面没有".",那么默认指向window</li>
+    <li>2.定时器和自执行函数的this指向window</li>
+    <li>3.事件绑定函数中的this，指向被绑定的元素</li>
+    <li>4.constructor生成的实例对象中的this指向这个实例</li>
+    <li>5.call，apply，bind 可以改变函数this指向</li>
+    <li>6.箭头函数没有自己的this，继承所在执行上下文的this，而且也不能直接改变this指向，只能改变执行上下文的this改变其this指向</li>
+</ul>
+
+<ol>
+    注意：
+    <li>
+        数组方法回调函数中的this指向window
+    </li>
+    <li>
+        在使用严格模式下，除了外界window 和对象的调用者的this有指向外，其他都是undefined
+    </li>
+</ol>
+
+<div>
+
+</div>
+<script>
+    // 'use strict'
+    // console.log(this)
+    //第一题：
+    // var name ='小红';
+    // function  a(){
+    //     var name = '小白';
+    //     console.log(this.name)
+    // }
+    // function d(i){
+    //     return i();
+    // }
+    // var  b={
+    //     name:'小黄',
+    //     detail:function(){
+    //         console.log(this.name)
+    //     },
+    //     bibi:function () {
+    //         return function(){
+    //             console.log(this.name)
+    //         }
+    //     }
+    // }
+    // var  c = b.detail;
+    // b.a=a;
+    // var e=b.bibi();
+    // a();
+    // c();
+    // b.a();
+    // d(b.detail)
+    // e()
+
+
+    //第二题
+
+    // var a = 5;
+    // function fn1() {
+    //     var a = 6;
+    //     console.log(a);
+    //     console.log(this.a);
+    // }
+    // function fn2(fn) {
+    //     var a = 7;
+    //     fn();
+    // }
+    // var obj = {
+    //     a: 8,
+    //     getA: fn1
+    // }
+    // fn2(obj.getA);
+
+
+    //第三题
+    // function fn() {
+    //     'use strict';  //严格模式下 fn下的this为undefined
+    //     var a = 1;
+    //     var obj = {
+    //         a: 10,
+    //         c: this.a + 20  //undefined.a 报错
+    //     }
+    //     return obj.c;
+    // }
+    // console.log(fn())
+
+    //第四题
+    // var obj = {
+    //     foo: "test",
+    //     fn: function(){
+    //         var mine = this;       this=>obj
+    //         console.log(this.foo);
+    //         console.log(mine.foo);
+    //
+    //         (function(){
+    //             console.log(this.foo);
+    //             console.log(mine.foo);
+    //         })();
+    //     }
+    // };
+    // obj.fn();
+
+    //第五题  做题要细心 一步一步走
+    // function test(arg) {
+    //     this.x = arg;
+    //     return this;
+    // }
+    // var x = test(5);
+    // var y = test(6);
+    // console.log(x.x);
+    // console.log(y.x);
+
+    //第6题
+    //数组方法回调函数中的this指向window
+    var obj = {
+        data: [1,2],
+        data2: [1,2],
+        fn: function () {
+            console.log("--test--");
+            console.log(this);   //this=>obj
+            return this.data.filter(function (item) {
+                console.log(this);  //this=>window
+                return item * 2;
+            }.bind(this));
+        },
+        fn2: function () {
+            console.log("---test2---");
+            console.log(this);   //this=>obj
+            return this.data2.map(item=>{
+                console.log(this);   //this=>obj
+                return item * 2;
+            });
+        }
+    };
+    obj.fn();
+    obj.fn2();
+
+    var Bob={
+        sname:"鲍勃",
+        friends:["Jack","Rose","Tom","Jerry"],
+        intr(){
+            // this.friends.forEach(function(friend){
+            //     console.log(this)
+            // });
+            this.friends.forEach(function(friend){
+                console.log(this)
+            }.bind(this));
+
+            for(let key of this.friends){
+                console.log(this)    //this =>Bob对象
+            }
+        }
+    }
+    Bob.intr();
+
+</script>
+</body>
+</html>

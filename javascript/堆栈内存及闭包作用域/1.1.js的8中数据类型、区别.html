@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js的8中数据类型、区别</title>
+</head>
+<body>
+
+<script>
+    //八种类型：
+
+    //基础类型:
+    //1. Number (包含NaN)
+    //2. String (字符串)
+    //3. Boolean (布尔值)
+    //4. Undefined (未定义)
+    //5. Null (空对象)
+    //6. Symbol (ES6 独一无二的值)
+    //7. BigInt (大整行数，能够表示超过 Number 类型大小限制的整数)
+
+    //复杂数据类型：
+    //8. Object (包含：[] he function)
+
+
+    //一.Number 类型； 范围 ±（2^53-1）;超出会转换 ±Infinity；
+    //1) 八进制：第一位必须是0，后面每一位数的范围在0-7，如果后面超过范围，则被转换成十进制；
+    let octalNum1 = 070;    //56
+    let octalNum2 = 078;    //78
+    console.log(octalNum2)
+    //2)十六进制：前了两位必须是0x，后面每一位的范围是0~9和A-F 之间(不区分大小写)；
+    let hexNum1 = 0xA;  //10
+    let hexNum2 = 0x1f;  //f*16^0+1*16^1 = 32
+    console.log(hexNum1)
+    //3) 浮点型 ；最高精度为17位小数，运算有误差
+    let floatNum1 = 1.;   //会被解析成1
+    let floatNum2 = 10.0;   //会被解析成10
+    let floatNum3 = 3e-17; //等于0.00000000000000003
+    let a = 0.1;
+    let b = 0.2;
+    console.log(a + b, floatNum3);//0.30000000000000004
+    console.log(37246236462364623654235);//3.724623646236462e+22
+    //可使用
+    let a1 = 0.1;
+    let b1 = 0.2;
+    console.log((a1 * 10 + b1 * 10) / 10);
+    //4) NaN
+    //任何涉及 NaN 的操作（例如 NaN/10）都会返回 NaN。
+    console.log(NaN / 100)   //NaN
+    //NaN 与任何值都不相等，包括 NaN 本身。
+    console.log(NaN == NaN)  //false
+    console.log(NaN === NaN)  //false
+    //5) 数值转换
+    // Number()
+    // parseInt()
+    // parseFloat()
+
+
+    //二.String 类型；三种声明方式： let name1 = "小明";let name2 = '小明';let name3 = `小明`;
+    //1） 几个转义字符
+    // \n:换行  \t: tab健  \b：空格 \r:回车 \f:换页  \\:反斜杠  \' \" \`  三个反引号
+    //2) 转换字符串
+    //toString()
+    //String()
+    //3) 模板字符换
+    //let s3 = `我今年${2020-2010}岁`;
+    //console.log(s3);
+    // 三.Boolean
+    //转换成false的值: ''(空串)、0、NaN、null、undefined
+
+    // 四.undefined  声明变量但是没有赋值就是undefined
+    console.log('undefined', undefined == 0)  //false
+    console.log('undefined', undefined == null)  //true   undefined 只和 null相等
+    console.log('undefined', undefined == undefined)   //true ndefined 只和 undefined 相等
+    console.log('undefined', undefined == NaN)   //false
+    // 五.Null    空对象指针
+    let car = null;
+    console.log(typeof car)  //"object"
+    console.log(null == undefined)  //true
+    console.log(null == null)       //true
+    console.log(null == 0)          //false
+    console.log(null == false)      //false
+    console.log(null == '')         //false
+    console.log(null == [])            //false
+    console.log(null == {})             //false
+    // 六.Symbol Symbol 值通过 Symbol() 函数生成
+    let s = Symbol();
+    console.log(typeof s) // "symbol"
+
+    let s1 = Symbol('foo');
+    let s2 = Symbol('bar');
+    let s3 = Symbol({a: 1})
+
+    console.log(s1) // "Symbol(foo)"
+    console.log(s3) // Symbol("[object Object]")
+    console.log(s1 == s2)   //false
+    if (s1.toString() === "Symbol(foo)") {
+        console.log('我是string', 1111)   //条件成立
+    }
+    if (s3.toString() == 'Symbol([object Object])') {
+        console.log('我是string', 22)    //条件成立
+    }
+
+    // 1) Symbol.for(key)  //Symbol.for() 调用不会直接生成新的 Symbol ，它会先从注册表中搜索给定的key是否存在。如果存在，那么返回的是同一个 Symbol，否则生成新的
+    let ss1 = Symbol.for('foo');
+    let ss2 = Symbol.for('foo');
+
+    console.log(ss1 === ss2) // true
+    // 2) Symbol.keyFor(symbol)  返回注册的key值
+    // 创建一个 symbol 并注册，key 为 "foo"
+    let s11 = Symbol.for("foo");
+    Symbol.keyFor(s11) // "foo"
+
+    // 创建一个 symbol 但不注册，注册表中找不到该symbol 的 key
+    let s12 = Symbol("foo");
+    Symbol.keyFor(s12) // undefined
+
+    //七.BigInt 能够创建任意长度的整数，突破number的限制，两种创建方式：n和BigInt() 函数
+    let b2 = 9007n;  //不能与number类型直接运算
+    let b3 = BigInt(Number.MAX_SAFE_INTEGER);
+    console.log(b2 + 1n, b3)  //9008n 9007199254740991n
+    console.log(5n / 2n); // 2n, 而非2.5
+    //console.log(+10n); //内部为：0+10n  报错 can't convert BigInt to number
+
+    //注意点：
+    //1.不能使用Math方法
+    //2.不能与number混合运算
+    //3.可以使用比较运算符
+    //4.BigInt 转 Number可能会损失精度
+    console.log(1000000000000000000000n == 1000000000000000000000); //true
+
+    //八. Object ：一组数据和方法的集合
+    //1）必须适应中括号：
+    //a.通过变量访问
+    //b.属性名中可能存在语法错误的字符：如：关键字/保留字/空格
+    //c.属性名是数值
+    // let propertyName = "name";
+    // console.log(person[propertyName]); // "小明"
+    //
+    // person["my name"] = "小明";
+    //
+    // person[5] = false;
+
+    //2) 拓展 :对象的种类
+
+    //ECMAScript 内置对象：Math，Array,Date
+    //自定义对象，有构造函数或者字面量创建的对象
+    //宿主对象:由执行环境提出的对象，如：浏览器中的DOM和BOM 对象
+    //3) 属性和方法
+    //constructor  构造函数
+    //hasOwnProperty(propertyName) 检查某个属性是否在当前对象实例中（而不是在实例的原型中）。参数必须为字符串形式
+    //isPrototypeOf(Object) 用于检查调用对象是否是传入对象的原型
+    //propertyIsEnumerable(propertyName)  用于检查某个属性是否能够使用 for-in 语句来枚举
+    //toLocaleString() //返回对象的字符串表示，该字符串与执行环境的地区对应。JavaScript 的一些内置对象都重写了该函数，以实现更适合自身的功能需要
+    //toString()：返回对象的字符串表示
+    //valueOf()：返回对象的字符串、数值或布尔值表示。通常与 toString()方法的返回值相同
+
+
+    let num = 12345678;
+    console.log(num.toLocaleString()); // 12,345,678
+    console.log(num.toString());   //"12345678"
+
+    var d = new Date();
+    var n = d.toLocaleString();  // 2021/6/21 下午4:31:54
+    console.log(d.toString())  //Mon Jun 21 2021 16:31:54 GMT+0800 (中国标准时间)
+    console.log([].toString())
+    console.log(new Number(100).toString())
+
+
+    // js的强制类型转换
+    console.log('强制类型转换--------Boolean');
+    console.log(Boolean(""));  //false
+    console.log(Boolean("hi")); //true
+    console.log(Boolean(100));  //true
+    console.log(Boolean(null)); //false
+    console.log(Boolean(0));    //false
+    console.log(Boolean([]));   //true
+    console.log(Boolean(Symbol())); //true
+    console.log(Boolean(new Object())); //true
+
+    console.log('强制类型转换--------number');
+    console.log(Number(false));      //0
+    console.log(Number(true));     //1
+    console.log(Number(undefined));//NAN
+    console.log(Number(null));     //0
+    console.log(Number([]));       //0
+    console.log(Number("5.5 "));  //5.5
+    console.log(Number("56 "));   //56
+    console.log(Number("5.6.7 "));//NAN
+    console.log(Number(new Object()));//NaN
+    console.log(Number(100));         //100
+    console.log(Number('null'));         //NaN
+
+    console.log('强制类型转换--------string');
+    console.log(String(false));      //'false'
+    console.log(String(true));     //'true'
+    console.log(String(undefined));//'undefined'
+    console.log(String(null));     //'null'
+    console.log(String([]));       //''
+    console.log(String("5.5 "));  //"5.5 "
+    console.log(String("56 "));   //"56 "
+    console.log(String("5.6.7 "));//"5.6.7 "
+    console.log(String(new Object()));//'[object Object]'
+    console.log(String(100));         //"100"
+    //运算相关的
+    console.log("----------");
+    console.log([] == ![])   //true ![]：进行boolean运算[]为true，取反为false ，==时要进行值运算，false转数字为0，
+    console.log(false == ![]) //true
+
+    console.log(null == 'null') //false null 转换成数字是NAN，NaN 跟谁都不相等
+    console.log(String(null))
+</script>
+</body>
+</html>

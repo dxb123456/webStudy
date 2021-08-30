@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <p>Count numbers: <output id="result"></output></p>
+    <button onclick="startWorker()">Start Worker</button>
+    <button onclick="stopWorker()">Stop Worker</button>
+    <input type="text" value=""/>
+<script>
+    var worker = new Worker('js/worker.js');
+    // worker.addEventListener('message', function (event) {
+    //     console.log(1);
+    //     self.postMessage('ready');
+    //     console.log(event.data);
+    // });
+    // console.log(0)
+    // worker.postMessage('Hello World');
+    // console.log(0.1)
+    // worker.onmessage = function (event) {
+    //     console.log(0.2)
+    //     console.log('Received message ' + event.data);
+    //     console.log(0.3)
+    // };
+    function startWorker(){
+        worker.postMessage('start');
+    }
+    function stopWorker(){
+        worker.terminate()
+        // worker.postMessage('stop');
+    }
+    worker.onmessage = function (event) {
+        document.getElementById("result").innerHTML = event.data;
+    };
+</script>
+</body>
+</html>

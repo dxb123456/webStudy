@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+    obj中的key都是字符串
+</p>
+<p >
+    Map支持所有类型的键名,map中有size属性(长度)
+    <button id="btn">按钮</button>
+</p>
+
+
+
+<script>
+    //1.添加数据
+    let map=new Map();
+    map.set('name','老王');
+    map.set({},1)
+    map.set(function(){},100)
+    map.set(1,22);
+    map.set(1,200);  //存储相同的key值 会被覆盖
+    console.log(map)
+
+    //2.批量添加数据 ,
+    let map2 =new Map([['name','李四'],['age','12']])
+    //也支持链式操作
+    map2.set('size','2222').set('qq','22')
+    console.log(map2)
+
+    //3.获取属性值 get
+    console.log(map2.get('size'))  //2222
+
+    //4.删除 delete
+    map2.delete('qq')
+    console.log(map2)
+
+    //5.清空 clear
+    // map2.clear()
+    // console.log(map2)
+
+    //6.检测是否存在 has
+    console.log(map2.has(1))  //true
+
+    //7.获取键 keys()
+    console.log(map2.keys())
+
+    //8.获取键的值 values()
+    console.log(map2.values())
+
+    //9.获取键值对 entries()
+    console.log(map2.entries())
+
+    // for ( [key,value] of map2.entries()) {
+    //     console.log(key,value)
+    // }
+    // map2.forEach((value,key)=>{
+    //     console.log(value,key)
+    // })
+
+
+    //10.Map类型转换
+    //转数组
+    console.log([...map2])
+    console.log([...map2.keys()])
+    //筛选
+    // let newArr = [...map2].filter(item=>item[1].includes('2222'))
+    //使用解构赋值
+    let newArr = [...map2].filter(([key,value]) =>value.includes('2222'))
+    console.log(new Map(newArr))
+
+    //11.使用map 管理dom元素  可以将dom作用key值，添加相应的属性
+
+
+
+    //WeakMap  是弱引用类型， 添加的key必须是对象,weakMap无法使用keys()，values()，size，for of 都没法使用
+
+    //弱引用：弱引用建立的引用关系，会被垃圾回收机制忽略。会导致无法引用断裂。
+    // 下面的解释 不正确，可以作为了解用
+        // 跟垃圾回收机制有关，正常的对象引用，引用计数器会+1,如果引用计数器的值为0时 会被垃圾回收机制回收，但是弱引用类型的引用不会使 引用计数器+1，如果内存地址的引用计数器为0，会被垃圾回收机制清除，造成无法找到相应的引用对象。
+    var weakmap=new WeakMap()
+    //weakmap.set('z','1111')
+    //console.log(weakmap)  //WeakMap key must be an object, got "z"
+
+
+
+    //对比下面两个this指向
+    btn.addEventListener('click',function (){
+        console.log(this)
+    },false)
+    btn.addEventListener('click',(e)=>{
+        console.log(this)
+    },false)
+</script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据类型的判断和原理</title>
+</head>
+<body>
+<script>
+
+    //1.typeof 原理：通过不同的数据类型存储的底层机器码不同实现 ；目前能返回string，number，boolean，symbol，bigint，undefined，object，function这八种判断类型
+    //缺点：无法检出null 和 object中的具体类型（除function）
+    console.log(typeof 'abc')       //string
+    console.log(typeof 123)         //number
+    console.log(typeof true)        //boolean
+    console.log(typeof Symbol('1')) //symbol
+    console.log(typeof 100n)        //bigint
+    console.log(typeof undefined)   //undefined
+
+    console.log(typeof null)        //object
+    console.log(typeof {})          //object
+    console.log(typeof [])          //object
+    console.log(typeof function a(){console.log(11)}) //function
+
+   // 但是对于 undefined 和 null 来说，这两个值的信息存储是有点特殊的。
+    //null：所有机器码均为0
+    //undefined：用 −2^30 整数来表示
+    //所以，typeof 在判断 null 的时候就出现问题了，由于 null 的所有机器码均为0，因此直接被当做了对象来看待
+
+
+    //2. classA instanceof funB  检测实例是否属于某个类   原理：判断funB的prototype 在classA的原型链上即可判断为true,
+    //缺点：无法检测不是用构造函数的生成的基本数据类型，如果修改原型链的指向，可能会导致检测不准确
+    console.log(new Date('2019/01/05') instanceof Date)   //true
+     console.log([1,2,3] instanceof Array)
+    let animal = function () {
+    }
+    let monkey = new animal()
+    monkey instanceof animal   // true
+
+
+    //3.constructor  右侧为函数名；  原理：函数被创建时,会生成prototype，prototype中会生成constructor，当类创建时原型链__proto__ 指向prototype。类的constructor 就等于上面的函数；
+    console.log('abc'.constructor == String)
+    console.log(new Number(1).constructor == Number)
+    console.log(true.constructor == Boolean)
+    console.log(new Function().constructor == Function)
+    console.log(new Date().constructor == Date)
+    console.log(new Error().constructor == Error)
+    console.log([].constructor == Array)
+    console.log(document.constructor == HTMLDocument)
+    console.log(window.constructor == Window)
+    console.log({}.constructor == Object)
+    //console.log(undefined.constructor)  //undefined has no properties
+    //console.log(null.constructor) //null has no properties
+    //注意点:
+        //1)null 和 undefined 没有constructor  需要使用其他方式判断
+        //2)js对象的constructor 不稳定，会被重新定义，会造成误判
+
+
+
+
+    //4. Object.prototype.toString   //原理：Object.prototype.toString() 方法能够返回类型； 对于其他的对象数据类型如：new Date()，常理上也能通过 .toString()来调用Object.prototype.toString()，实际上，大部分类都有自己的toString方法，这里通过call强制调用最原始的toString方法（Object.prototype.toString）。
+        console.log('adb'.toString(),'--------')
+
+    console.log(Object.prototype.toString.call('abc'))    //[object String]
+    console.log(Object.prototype.toString.call( 123 ))         //[object Number]
+    console.log(Object.prototype.toString.call( true ))        //[object Boolean]
+    console.log(Object.prototype.toString.call( Symbol('1') )) //[object Symbol]
+    console.log(Object.prototype.toString.call( 100n ))        //[object BigInt]
+    console.log(Object.prototype.toString.call( undefined ))   //[object Undefined]
+
+    console.log(Object.prototype.toString.call( null ))        //[object Null]
+    console.log(Object.prototype.toString.call( {} ) )        //[object Object]
+    console.log(Object.prototype.toString.call( function a(){console.log(11)})) //[object Function]
+
+    Object.prototype.toString.call(new Date()) ; // [object Date]
+    Object.prototype.toString.call([]) ; // [object Array]
+    Object.prototype.toString.call(new RegExp()) ; // [object RegExp]
+    Object.prototype.toString.call(new Error()) ; // [object Error]
+    Object.prototype.toString.call(document) ; // [object HTMLDocument]
+    Object.prototype.toString.call(window) ; //[object global] window是全局对象global的引用
+
+</script>
+</body>
+</html>

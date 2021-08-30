@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p> Map对象：键值对的集合</p>
+<h2> Object 和 Map 对象的对比：</h2>
+<p>
+    相似点： 都允许你按键存取一个值、删除键、检测一个键是否绑定了值。
+</p>
+<p>
+    不同点：
+</p>
+<p>
+    1.Object 只能存储字符串或者symbol,Map对象能存储任意值
+</p>
+<p>
+    2.Object 中插入的键值对是无序的,Map对象插入的键值对事有序的,循环时先插入的先循环到
+</p>
+<p>
+    3.Object 需要手动计算size，Map对象可以直接获取size，也可设置
+</p>
+<p>
+    4.而 Object 的迭代需要先获取它的键数组然后再进行迭代，Map 是可迭代的
+</p>
+<p>
+    5.在频繁的添加，删除键值对的操作中，使用Map函数更有优势
+</p>
+<script>
+    //map 可以将任意值当做键，
+    //  1).set(ley value) 设置键值对
+    //  2).get(key)       获取value
+    //  3).has(key)       检查是否有值
+    //  4).delete(key)    删除key 和value
+    //  5).keys()         获取所有键的迭代对象
+    //  6).values()       获取所有键值的迭代对象
+    //  7).entries()      返回一个类数组迭代对象
+    //  8).clear()        清除所有的键值对，无返回值
+    const map= new Map();
+    map.set('id',100)    //设置
+    var obj = {'id':100}
+    map.set(obj,1)
+    map.size = 10;
+    console.log(map.get(obj))       //获取值
+    console.log(map.has('id'))     //查询是否有该值    true
+    map.delete('id')                //删除id
+    console.log(map.keys())         //返回键值对的伪数组
+    console.log(map.values())       //返回value的键值对的伪数组
+    for(const key of map.keys()){
+        console.log(key)
+    }
+    for(const [key,value] of map){    //map.entries() 返回一个数组迭代对象，
+        console.log(100,key,value)                // 这里的arr是Array
+    }
+    console.log(map.entries())
+
+    //使用map数组去重
+    let arr=[12,28,33,44,28,33,11,44,55,66];
+    let arr_map=new Map();
+    arr.forEach((item,index)=>{
+        arr_map.set(item,'')
+    })
+    console.log(Array.from(arr_map.keys()).sort((a,b)=>{return a-b}))
+
+    //已知数组 [2,7,1,6,5] target=9，返回2和7的下标
+    let arr1 = [2,7,1,6,5];
+    let target = 9;
+    let arr1_map = new Map();
+    // arr1.forEach((item,index)=>{
+    //     let a = target - item ;
+    //     if(arr1_map.has(a)){
+    //         console.log('下标是:'+index+","+arr1_map.get(a))
+    //     }else{
+    //         arr1_map.set(item,index)
+    //     }
+    // })
+    for (const [index,item] of arr1.entries()){
+        let a = target - item ;
+        console.log(a)
+        if(arr1_map.has(a)){
+            console.log('下标是:'+index+","+arr1_map.get(a))
+            break;
+        }else{
+            arr1_map.set(item,index)
+        }
+    }
+
+
+
+    let mymap = new Map([[1,2],[3,4]])
+    console.log(mymap)
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+    //new Function的用法: 参数写在最前面，有一个带return 的字符串
+    let str = 'return ' + '`Hello ${name}:${age}!`';
+    let  clone = new Function("name",'age',str)
+    console.log(clone('李四',14))
+
+
+    //1.复制一个函数 通过new Function 实现
+    function func(a,b,c){
+        return a * b * c
+    }
+    console.log(func.toString())
+    let cloneFunc = new Function('return '+func.toString())()
+    console.log('return '+func.toString())
+
+    //2.通过bind实现  测试无效
+    console.log(func.prototype)
+    // var closeFunc = func.prototype.bind({})
+    // console.log(closeFunc)
+</script>
+</body>
+</html>

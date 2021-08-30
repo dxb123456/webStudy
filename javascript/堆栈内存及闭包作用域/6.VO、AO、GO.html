@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+//GO : 全局对象（Global Object）
+  var globalObject = {
+      Math:{},
+      String:{},
+      document:{},
+      ...,
+      window:this
+  }
+
+//ESStack:Execution Context Stack 执行环境栈
+//EC :执行环境（执行上下文）（Execution Context）：当执行一个函数的时候，就会创建一个执行上下文，并且压入执行环境栈，当函数执行完毕的时候，就会将函数的执行上下文从栈中弹出。
+    //VO : 变量对象(Varibale Object)
+            //在每一个执行上下文中，都会有一个vo对象，这个vo对象主要包换：变量声明、函数声明两部分组成，在函数的执行上下文中，vo也会将Arguments 列表包含进去。变量对象与当前作用域息息相关。
+
+    //AO :活动对象（Activation Object），函数的叫做AO，理解为VO的一个分支
+         //当一个函数被激活时，会创建一个默认的Ao = [arguments]，随后Ao会被vo拿去初始化vo。此时的vo对象包含[var变量、function变量、arguments变量]。
+    //Scope:作用域：代码中定义变量的区域。创建函数的时候就赋予的。
+    //Scope Chain :作用域链，每个执行环境的作用域链由当前环境的变量对象及父级环境的作用域链构成
+</script>
+
+</body>
+</html>

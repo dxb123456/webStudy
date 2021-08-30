@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .parent {
+            background: pink;
+            width: 300px;
+        }
+        .child1, .child2 {
+            font-size: 20px;
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            margin: 100px;
+            border: 1px solid #606fd9;
+        }
+        .child1 {
+            color: #fff;
+            background: #000;
+        }
+        .child2 {
+            color: #000;
+            background: #fff;
+        }
+        .container {
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+<body>
+
+    <p>
+        BFC(块级格式化上下文)，创建一个BFC相当于新建一个容器，在容器内部的元素布局不会影响到外部的布局，所以当两个处于同一BFC的box在垂直方向上发生重叠时，可以在其中一个box的外面包裹一个容器，并使用其触发一个BFC，这样两者就处于不同的BFC中，也就不会相互影响了。
+    </p>
+    <div class="parent">
+        <div class="child1">我是白云</div>
+<!--        <div class="child2">我是黑土</div>-->
+        <div class="container"><div class="child2">我是黑土</div>
+        </div>
+    </div>
+</body>
+</html>

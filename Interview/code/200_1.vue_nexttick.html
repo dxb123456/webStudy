@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="//resource-sdk.bbwc.cn/js/lib/vue/vue_2.5.16.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <p @click="aa" id="p">{{a}}</p>
+    </div>
+    <script>
+        //nexttick原理
+
+
+
+
+
+
+
+
+        var vm = new Vue({
+            el:'.app',
+            data:()=>{
+                return {
+                    a:'1',
+                    b:'2',
+                    c:'3'
+                }
+            },
+            lazy:true,
+            methods:{
+                aa(){
+
+                    this.a =20;
+                    vm.$nextTick(()=>{
+                        console.log(document.getElementById('p').innerHTML,1)
+                    })
+                    this.a=30;
+                    vm.$nextTick(()=>{
+                        console.log(document.getElementById('p').innerHTML,2)
+                    })
+                    // for(let i =0;i<1000;i++){
+                    //     this.$nextTick(()=>{
+                    //         while(this.a<1000){
+                    //             this.a ++;
+                    //         }
+                    //     })
+                    // }
+                    // let timer=setInterval(()=>{
+                    //     if(this.a<1000){
+                    //         this.a ++;
+                    //     }else{
+                    //         clearInterval(timer)
+                    //     }
+                    //     this.$nextTick(()=>{
+                    //         console.log(this.a)
+                    //     })
+                    // })
+
+                }
+            },
+            mounted(){
+                // console.log(1111)
+            },
+            created(){
+                // console.log(1)
+            }
+        })
+    </script>
+</body>
+</html>

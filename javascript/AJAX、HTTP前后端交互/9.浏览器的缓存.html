@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>缓存</title>
+</head>
+<body>
+
+<script>
+    //缓存的分类
+    //1.强缓存
+        //1) 不会向服务器发送请求，直接从本地获取数据
+        //2) 状态码为200(from memory cache)
+
+    //2.弱缓存
+        //1) 向服务器发送请求，服务器会根据请求头的资源判断是否命中协商缓存
+        //2) 如果命中，则返回304，表示从缓存中读取资源数据
+
+    //共同点：都是从缓存中读取数据
+    //不同点：强缓存不进行网络链接，直接读缓存
+
+
+
+    //一。强缓存的实现：
+        //当浏览器第一次发送请求时，会通过header 将expires（GTM格式的过期时间） 或者cache-control：max-age=number （number是一个保存期）
+        //只有expires时：如果再次发送请求在expires 之前 则使用缓存数据
+        //只有cache-control：如果再次发送请求在第一次请求时间+number 之前，则使用缓存
+            //cache-control还有其他的值：（了解）
+                //no-cache:不使用缓存
+                //no-store:禁止缓存
+                //public ：可以被所有用户缓存包含cdn
+                //private:允许终端缓存，不允许cdn等中继缓存服务器缓存
+        // 当两个都存在时，cache-control的优先级更高
+    //为什么要引用Cache-Control；
+        //expires失效的时间是一个绝对时间，当服务器与客户端时间偏差较大时，会导致缓存混乱
+
+
+
+    //二。协商缓存 last-Modifiled/if-Modifiled-Since；Etag/IF-None-Match
+        //A. last-Modifiled/if-Modifiled-Since:二者是GMT格式的字符串
+        // 1）浏览器第一次请求数据后，会在返回的header中携带Last-Modifiled,表示这个资源在服务器上的最后修改时间
+        //2) 浏览器第二次请求资源时，在请求的header中加上if-Modifiled-Since字段，携带的是第一次请求返回的Last-Modifiled
+        //3) 服务器收到if-Modifiled-Since字段和资源在最后修改时间对比是否有变化，若无变化返回304 Not Modifiled，资源从浏览器缓存中取，此时返回的header中不会再返回Last-Modifiled字段；若有变化正常返回资源，重复走浏览器的第一次请求数据操作。
+
+        //B. Etag/IF-None-Match
+            //第一次请求时，header中返回Etag ，这是返回的文件的唯一标识符，当文件有轻微变化，Etag也会改变。
+            //IF-None-Match 会在第二次请求时携带过去，跟if-Modifiled-Since用法相似
+
+        //为什么要使用Etag？
+        //1.Last-Modifiled 有些服务器并不能拿到精确的文件修改时间，有些只能精确到秒
+        //2. 当1秒内变换了n次，则使用Last-Modifiled不准确
+        //3.有一些文件会周期性的更改但是他的文件内容没有变换，这时候使用Last-Modifiled会被当成文件已变更需要重新get
+</script>
+</body>
+</html>

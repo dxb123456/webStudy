@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script>
+
+    //new Fun后：
+        //1.Fun 函数执行：创建Ec->形成变量AO对象(arguments,赋值)->声明this指向->初始化作用域链->变量提升(代码执行)
+        //2. 代码执行前默认创建一个对象,这个对象就是类的对象
+        //3. 声明this指向这个对象
+        //4. 代码执行
+        //5. return 默认返回这个对象 ， 如果代码中有return 引用数据类型 则返回引用数据类型
+
+    function qq(){
+        console.log(1111)
+    }
+    function person(){
+        let x=1;        //x是AO中的私有变量
+        this.a=1;       //只有跟this相关的数据才能被实例访问，
+        this.b=1;
+        // return Symbol(1)
+        // return 10
+        // return {a:100}
+        return qq
+    }
+    let  ff=new person()
+    console.log(ff)
+    console.log(ff instanceof person)
+    console.log(ff instanceof person)
+
+
+    class OO {
+        constructor(name){
+            this.name= name
+        }
+    }
+    console.log(new OO('oo'))
+
+    //重写new
+
+    function Dog(name){
+        this.name=name;
+    }
+    Dog.prototype.bark=function(){
+        console.log("wangwang")
+    }
+    Dog.prototype.sayName=function(){
+        console.log('名字'+this.name)
+    }
+    console.log(new Dog('name'))
+    function _new(Fun,...args){
+        let object = {
+            __proto__:Fun.prototype
+        }
+        Fun.call(object,...args)
+        return object
+    }
+    let sanmao=_new(Dog,'三毛');
+    console.log(sanmao)
+    sanmao.bark();
+    sanmao.sayName();
+    console.log(sanmao instanceof Dog)
+</script>
+</body>
+</html>

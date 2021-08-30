@@ -3,37 +3,39 @@
  * (c) 2014-2019 Evan You
  * Released under the MIT License.
  */
+/*
+* 这里的源码阅读 by dxb  2021-08-30
+*/
+
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
     (global = global || self, global.Vue = factory());
   }(this, function () { 'use strict';
-  
-    /*  */
-  
+
     //创建一个空冻结对象，这个对象不能被修改
     var emptyObject = Object.freeze({});
-  
+
     // These helpers produce better VM code in JS engines due to their
     // explicitness and function inlining.
-    
+
     function isUndef (v) {
       return v === undefined || v === null
     }
-  
+
     //判断是否有值
     function isDef (v) {
       return v !== undefined && v !== null
     }
-  
+
     function isTrue (v) {
       return v === true
     }
-  
+
     function isFalse (v) {
       return v === false
     }
-  
+
     /**
      * Check if value is primitive.
      * 检查是否为基本数据类型
@@ -47,7 +49,7 @@
         typeof value === 'boolean'
       )
     }
-  
+
     /**
      * Quick object check - this is primarily used to tell
      * Objects from primitive values when we know the value
@@ -56,18 +58,18 @@
     function isObject (obj) {
       return obj !== null && typeof obj === 'object'
     }
-  
+
     /**
      * Get the raw type string of a value, e.g., [object Object].
      * 最原始的toString 方法
      */
     var _toString = Object.prototype.toString;
-  
+
     //检查原生类型
     function toRawType (value) {
       return _toString.call(value).slice(8, -1)
     }
-  
+
     /**
      * Strict object type check. Only returns true
      * for plain JavaScript objects.
@@ -76,12 +78,12 @@
     function isPlainObject (obj) {
       return _toString.call(obj) === '[object Object]'
     }
-  
+
     //一个正则表达式
     function isRegExp (v) {
       return _toString.call(v) === '[object RegExp]'
     }
-  
+
     /**
      * Check if val is a valid array index.
      * 检测一个合法的数组索引
@@ -90,7 +92,7 @@
       var n = parseFloat(String(val));
       return n >= 0 && Math.floor(n) === n && isFinite(val)
     }
-  
+
     //判断是不是一个promise
     function isPromise (val) {
       return (
@@ -99,7 +101,7 @@
         typeof val.catch === 'function'
       )
     }
-  
+
     /**
      * Convert a value to a string that is actually rendered.
      * 将一个值转换成字符串
@@ -111,24 +113,24 @@
           ? JSON.stringify(val, null, 2)
           : String(val)
     }
-  
+
     /**
      * Convert an input value to a number for persistence.
      * If the conversion fails, return original string.
      * 将值转换成数字，转换失败返回原值
      */
-  
+
     function toNumber (val) {
       var n = parseFloat(val);
       return isNaN(n) ? val : n
     }
-  
+
     /**
      * Make a map and return a function for checking if a key
      * is in that map.
      * 返回一个函数，用来判断用于判断value是否在map中
      */
-    function makeMap (  
+    function makeMap (
       str,    //接受一个字符串
       expectsLowerCase  //期望小写字母
     ) {
@@ -141,19 +143,19 @@
         ? function (val) { return map[val.toLowerCase()]; }
         : function (val) { return map[val]; }
     }
-  
+
     /**
      * Check if a tag is a built-in tag.
      * isBuiltInTag是一个函数，用来判断是否是内置标签
      */
     var isBuiltInTag = makeMap('slot,component', true);
-  
+
     /**
      * Check if an attribute is a reserved attribute.
      * isReservedAttribute是一个函数，用来判断会否是保留属性；
      */
     var isReservedAttribute = makeMap('key,ref,slot,slot-scope,is');
-  
+
     /**
      * Remove an item from an array.
      * 数组中移除一个元素
@@ -166,7 +168,7 @@
         }
       }
     }
-  
+
     /**
      * Check whether an object has the property.
      * 检测一个值是不是他的自身属性。
@@ -175,7 +177,7 @@
     function hasOwn (obj, key) {
       return hasOwnProperty.call(obj, key)
     }
-  
+
     /**
      * Create a cached version of a pure function.
      * 创建一个纯函数的缓存版本
@@ -187,7 +189,7 @@
         return hit || (cache[str] = fn(str))
       })
     }
-  
+
     /**
      * Camelize a hyphen-delimited string.
      * 驼峰化命名
@@ -196,7 +198,7 @@
     var camelize = cached(function (str) {
       return str.replace(camelizeRE, function (_, c) { return c ? c.toUpperCase() : ''; })
     });
-  
+
     /**
      * Capitalize a string.
      * 大驼峰命名
@@ -204,7 +206,7 @@
     var capitalize = cached(function (str) {
       return str.charAt(0).toUpperCase() + str.slice(1)
     });
-  
+
     /**
      * Hyphenate a camelCase string.
      * 将驼峰命名转换成用“-”链接的字符串
@@ -213,17 +215,17 @@
     var hyphenate = cached(function (str) {
       return str.replace(hyphenateRE, '-$1').toLowerCase()
     });
-  
+
     /**
      * Simple bind polyfill for environments that do not support it,
      * e.g., PhantomJS 1.x. Technically, we don't need this anymore
      * since native bind is now performant enough in most browsers.
      * But removing it would mean breaking code that was able to run in
      * PhantomJS 1.x, so this must be kept for backward compatibility.
-     * 
-     * 
+     *
+     *
      */
-  
+
     /* istanbul ignore next */
     //这里是对bind的兼容， polyfillBind是做兼容处理的，可以不用管.
     function polyfillBind (fn, ctx) {
@@ -235,20 +237,20 @@
             : fn.call(ctx, a)
           : fn.call(ctx)
       }
-  
+
       boundFn._length = fn.length;
       return boundFn
     }
-  
+
     function nativeBind (fn, ctx) {
       return fn.bind(ctx)
     }
-  
+
     //
     var bind = Function.prototype.bind
       ? nativeBind
       : polyfillBind;
-  
+
     /**
      * Convert an Array-like object to a real Array.
      * 讲一个 类数组 转换成数组
@@ -262,7 +264,7 @@
       }
       return ret
     }
-  
+
     /**
      * Mix properties into target object.
      * 将一些属性绑定到另一个对象身上
@@ -273,7 +275,7 @@
       }
       return to
     }
-  
+
     /**
      * Merge an Array of Objects into a single Object.
      * 将数组中所有对象中的key，value 绑定到一个新对象中
@@ -287,32 +289,32 @@
       }
       return res
     }
-  
+
     /* eslint-disable no-unused-vars */
-  
+
     /**
      * Perform no operation.
      * Stubbing args to make Flow happy without leaving useless transpiled code
      * with ...rest (https://flow.org/blog/2017/05/07/Strict-Function-Call-Arity/).
      */
-  
+
     //声明了一个根函数，没有返回值
     function noop (a, b, c) {}
-  
+
     /**
      * Always return false.
      * 声明了一个根函数，返回false
      */
     var no = function (a, b, c) { return false; };
-  
+
     /* eslint-enable no-unused-vars */
-  
+
     /**
      * Return the same value.
      * 声明了一个根函数，返回传入值
      */
     var identity = function (_) { return _; };
-  
+
     /**
      * Generate a string containing static keys from compiler modules.
      * 从编译器模块生成包含静态键的字符串
@@ -322,7 +324,7 @@
         return keys.concat(m.staticKeys || [])
       }, []).join(',')
     }
-  
+
     /**
      * Check if two values are loosely equal - that is,
      * if they are plain objects, do they have the same shape?
@@ -2443,7 +2445,7 @@
         var invoker;
         var oldHook = def[hookKey];
 
-        function wrappedHook() {    
+        function wrappedHook() {
             hook.apply(this, arguments);
             // important: remove merged hook to ensure it's called only once
             // and prevent memory leak
@@ -2794,7 +2796,7 @@
         }
         // avoriaz seems to mock a non-extensible $scopedSlots object
         // and when that is passed down this would cause an error ；avoriaz似乎模仿了一个非可扩展的$scopedSlots对象，当它被传递时将会导致一个错误
-        if (slots && Object.isExtensible(slots)) {   
+        if (slots && Object.isExtensible(slots)) {
             (slots)._normalized = res;
         }
         def(res, '$stable', isStable);

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--    Dom0和Dom2-->
+<p id="p">qweqwe</p>
+<script>
+    // 1.语法上的区别
+        // dom0:  div.onclick = function(){}
+        // dom2: div.addEventListener('click',function(){},false)
+    // 2.运行机制不同
+        //dom0:只能绑定一个，后绑定的覆盖前面的
+        //dom2:基于事件池机制，每添加一个绑定方法，都会事件池中存放一个，当事件触发时会一次执行事件池中的事件，(有存储去重机制)
+    // 3.DOM2中可以给一些特殊的时间类型绑定，DOM0中不支持
+        //DOMContentLoaded:dom结构加载完会触发
+        //transitionend : 动画结束
+        //...
+
+
+    //dom2 事件池机制：
+        //1.基于addEventListener/attachEvent(IE6-8) 向事件池中追加方法，新版本浏览器 会根据元素和事件类型对新增的方法做重复校验（IE6-8不可以）。
+        //2.当事件行为触发，会把事件池中的方法依次执行(ie6-8执行顺序不固定)
+
+
+
+
+    //比较
+    //$(document).ready() => $(function(){})   ：dom结构加载完会触发
+    // vs
+    //window.onload
+
+
+
+
+    function aa(){
+        console.log(100)
+    }
+
+    p.addEventListener('click',aa,false)
+    p.addEventListener('click',aa,false)
+    p.addEventListener('click',function(){
+        console.log(200)
+    },false)
+    p.addEventListener('click',function(){
+        console.log(200)
+    },false)
+</script>
+</body>
+</html>

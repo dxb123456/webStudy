@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding:0;
+            font-size: 0;
+        }
+        p{
+            font-size: 14px;
+        }
+        div{
+            font-size: 10px;
+        }
+
+
+        .blue{
+            width: 100px;
+            height: 100px;
+            background-color: #666666;
+        }
+        .lime{
+            width: 50px;
+            height: 50px;
+            background-color: lime;
+        }
+
+        /*1.通过line-height*/
+        .p{
+            line-height: 100px;
+            font-size: 20px;
+            text-align: center;
+        }
+        /*2.通过line-height，vertical-align*/
+        .div1{
+            text-align: center;
+            line-height: 100px;
+        }
+        .div11{
+            display: inline-block;
+            vertical-align: middle;
+        }
+    /*3.使用display：flex实现  */
+        .div2{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    /*    4.使用table-cell*/
+        .div3{
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .div33{
+            display: inline-block;
+        }
+    /*    5.使用position实现*/
+        .div4{
+            position: relative;
+        }
+        .div44{
+            position: absolute;
+            top:0;
+            left:0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    /*   6. 使用transform*/
+        .div5{
+            position: relative;
+        }
+        .div55{
+            width: 10px;
+            height: 40px;
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+        }
+
+    /*    7.图片在div中垂直居中*/
+        .div6{
+            position: relative;
+        }
+        .div6 img{
+            position: absolute;
+            top:0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<body>
+ <p class="p">1.通过line-height让行内元素垂直居中的</p>
+ <p >2.通过line-height  + vertical-align让行内元素垂直居中的</p>
+    <div class="div1 blue">
+        <div class="div11 lime">
+            asdas
+        </div>
+    </div>
+<p>3.使用display：flex实现</p>
+ <div class="div2 blue">
+     <div class="div22 lime">
+         adja
+     </div>
+ </div>
+<p>4.使用table-cell</p>
+ <div class="div3 blue">
+     <div class="div33 lime">
+         ajdjsaj
+     </div>
+ </div>
+<p>5.使用position：absolute</p>
+ <div class="div4 blue">
+     <div class="div44 lime">
+         ajdjsaj
+     </div>
+ </div>
+ <p>6.使用定位和transform</p>
+ <div class="div5 blue">
+     <div class="div55 lime">
+         ajdjsaj
+     </div>
+ </div>
+
+<p>扩展：图片在div中垂直居中</p>
+<div class="div6 blue">
+    <img src="./img/WechatIMG1.jpeg" alt="">
+</div>
+</body>
+
+
+<script>
+
+
+</script>
+</html>

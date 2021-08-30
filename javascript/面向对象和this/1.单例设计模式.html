@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    //单例设计模式：一个类只能有一个实例:实例只会创建一次，以后每次创建都是原实例
+        //作用：减少不必要的内存开销，减少全局的函数和变量冲突也具有重要的意义
+
+    //懒汉式：外界调用创建,不调用不创建
+    //饿汉式：
+
+
+
+    class SingleObject {
+        login() {
+            console.log("login..."+Math.random())
+        }
+        static a=Math.random();
+        static getInstance(){
+            let instance;
+            return function () {
+                if(!instance) {
+                    instance = new SingleObject();
+                }
+                return instance;
+            }
+        }
+    }
+    // 测试，注意这里只能使用静态函数 getInstance, 不能 new SingleObject() !!!
+    // SingleObject.getInstance = (function () {
+    //     let instance;
+    //     return function () {
+    //         if(!instance) {
+    //             instance = new SingleObject();
+    //         }
+    //         return instance;
+    //     }
+    // })()
+
+
+    // 类内部的static指的是    类.getInstance
+    // 类内部不带static的是    实例.prototype[方法]
+
+    SingleObject.getInstance();
+    console.log(SingleObject)
+    let obj1 = SingleObject.getInstance()
+    console.log(obj1)
+    // obj1.login();
+    let obj2 = SingleObject.getInstance()
+    console.log(obj1,obj2)
+    obj2.login();
+    console.log(obj1 === obj2)  // true  两者必须完全相等
+
+    // 区分
+    let obj3 = new SingleObject();
+    console.log(obj1 === obj3);  // false 这里就不是单例模式了。
+</script>
+</body>
+</html>

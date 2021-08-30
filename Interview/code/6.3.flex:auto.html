@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            width: 500px;
+            height: auto;
+            display: flex;
+            justify-content: space-between;
+            /*flex-wrap: wrap;*/
+        }
+
+        .box li {
+            /*margin-bottom: 20px;*/
+            list-style: none;
+            width: 120px;
+            height: 200px;
+            border: 1px solid #333;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            flex:1 1 100%;
+        }
+
+    </style>
+</head>
+<body>
+<h5> 正确区分：flex的值；默认值，none，auto，0，1，0%,(0,1),(1,200px)</h5>
+<script>
+    //1）flex-grow: 默认为0，不长大，非0 的参与分配，（剩余空间/grow总数）*当前grow值
+    //2）flex-shrink:默认是1  会缩小,flex-shrink:0  不缩小；
+    // 元素超出空间:不缩小总元素-剩余空间
+    // 计算缩小份数：所有的flex-shrink相加
+    // 计算比例：空间/缩小份数
+    // 盒子宽度：元素设置带下 - 计算比例 * flex-shrink值
+
+    //3) flex-basis:auto 默认是auto，5%:表示外部盒子的5%宽度固定，flex-basis为0则宽度以内部内容为准
+</script>
+<ul class="box">
+    <li >1</li>
+    <li >2</li>
+    <li >3</li>
+    <li >4</li>
+    <li>5</li>
+    <li>6</li>
+<!--    <li>7</li>-->
+<!--    <li>8</li>-->
+<!--    <li>9</li>-->
+<!--    <li>10</li>-->
+<!--    <li>11</li>-->
+</ul>
+
+
+
+
+
+
+<ol>
+    <li>
+        一个参数：0 或者1 ,代表 grow和shrink为0 或者1 ，basis：0%
+
+    </li>
+    <li>
+        一个参数：百分比或者长度，代表basis为百分比，growhe shrink为1
+    </li>
+    <li>
+        两个参数：两个数字，一个grow 一个shrink，basis为0%
+    </li>
+    <li>
+        两个参数有：一个数字，一个百分比或者长度，数字表示grow 、百分比或者长度表示basis,shrink 默认值是缩放
+    </li>
+</ol>
+
+<p>
+    flex 是flex-grow、flex-shrink、flex-basis的缩写；
+</p>
+<p>
+    flex:none == 0 0 auto
+</p>
+<p>
+    flex:auto == 1 1 auto
+</p>
+<p>
+    1个非负数字， flex:0 == 0 0 0%
+</p>
+<p>
+   1个非负数字，flex:1 == 1 1 0%   效果与auto类似
+</p>
+<p>
+    1个长度或者百分比
+    flex：0% === 1 1 0%
+</p>
+
+<p>
+    两个非负数数字
+    flex:2 3 === 2 3 0%
+</p>
+
+<p>
+    一个非负数字 和 一个长度或者百分比
+    flex:10 333px == 10 1 333px
+</p>
+
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--    <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>-->
+    <!--    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>-->
+    <!-- 生产环境中不建议使用 -->
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+    <script>
+        const NoMode = 0;
+        //react 17 新版并发模式
+        const ConCurrentMode = 1;
+        //类组件的fiber
+        const ClassComponent = 1;
+
+        //根Fiber的tag
+        const HostRoot = 3;
+
+        //原生Fiber的Tag
+        const HostComponent = 5;
+
+        //事件优先级 这里模拟点击事件为1，0为空闲
+
+        const SyncLane = 1;
+        const NoLane = 0;
+    </script>
+    <script>
+        let classComponentUpdater = {
+            enqueueState(inst, payload,callback) {
+                let fiber = get(inst);                      //获取当前实例fiber
+                let eventTime = requestEventTime();         //获取到当前程序运行的时间
+                let lane = requestUpdateLane(fiber);        //计算任务的优先级
+                let update = createUpdate(eventTime, lane); //创建更新任务
+                update.payload = payload;  //payload是用户写的函数或者对象
+
+                // 下面两个if 为自己手写
+                if(!inst.updateCallbackList){
+                    inst.updateCallbackList = []
+                }
+                if(callback){
+                    inst.updateCallbackList.push(callback);
+                }
+
+                //将当前创建的任务放入fiber的updateQueue链表中
+                enqueueUpdate(fiber, update);
+
+                //开始调度执行更新
+                scheduleUpdateOnFiber(fiber)
+            }
+        }
+
+        function enqueueUpdate(fiber, update) {
+            fiber.updateQueue.push(update); //源码中是链表
+        }
+
+        function createUpdate(eventTime, lane) {
+            return {eventTime, lane}
+        }
+
+        function requestUpdateLane(fiber) {
+            console.log(fiber)
+            //按照当前事件的优先级来返回 lane值；这里模拟返回1
+            return SyncLane
+        }
+
+        //优先级高的会打断优先级低的
+        function requestEventTime() {
+            return performance.now(); //获取程序启动到现在的时间
+        }
+
+        function get(inst) {
+            return inst._reactInteral
+        }
+
+
+    </script>
+</head>
+<body>
+<img src="img/setstate.png" alt="" style="width: 200px">
+
+<script>
+    var SyncLanePriority = 12;  //最高优先级
+    var NoLanePriority = 0;     //最低优先级
+    let syncQueue = [];         //模拟事件队列
+    let NoContext = 0;          //非并发模式
+    let BatchedContext = 1;     //并发模式
+    let executionContext = NoContext;//默认是非批量模式
+
+
+    //执行调度更新
+    function scheduleUpdateOnFiber(fiber) {
+        //找到根节点
+        let root = markUpdateLaneFromFiberRoot(fiber)
+        //开始创建一个任务，从根节点开始进行更新（从根节点调度）
+        ensureRootIsScheduled(root)
+
+        //如果当前的执行上下文环境是NoContext（非并发模式的话），直接执行异步更新
+        if (executionContext === NoContext && (fiber.mode & ConCurrentMode) === NoMode) {
+            flushSyncCallbackQueue()
+        }
+
+    }
+
+    //reactDom.unstable_batchedUpdate 调用的就是这个函数
+    function batchedUpdate(fn) {
+        let prevExecutionContext = executionContext;
+        executionContext |= BatchedContext;
+        fn();
+        executionContext = prevExecutionContext
+    }
+
+    function ensureRootIsScheduled(root) {
+        //1.先将所有赛道的任务跑一遍看看有没有过期的，有过期的标记，准备执行,没有的话等于优先赛道的lan值
+        //2.通过lane值获取优先级。
+        let nextLanes = SyncLane; //  1    //这里是模拟值
+        let newCallbackPriority = SyncLanePriority;//这里的优先级是当前nextLanes计算出来的，这里也是模拟值
+
+        var existingCallbackPriority = root && root.callbackPriority  //当前根节点正在执行更新任务的优先级
+
+        if (newCallbackPriority === existingCallbackPriority) {
+            //并发模式中，setTimout中也是批量处理的原因
+            return  //如果这个新的更新和当前根节点已经调动的更新优先级相等，直接返回上次的更新
+        }
+
+        //将函数添加到队列等待执行。
+        scheduleSyncCallback(performSyncWorkOnRoot.bind(null, root))
+
+        //添加微任务,当主线程执行完成后执行flushSyncCallbackQueue
+        queueMicrotask(flushSyncCallbackQueue);
+
+        //将算出的新的优先级给root
+        root.callbackPriority = newCallbackPriority;
+    }
+
+    function flushSyncCallbackQueue() {
+        syncQueue.forEach(cb => cb())
+        syncQueue.length = 0
+    }
+
+
+    //把参数传到队列等待执行
+    function scheduleSyncCallback(callback) {
+        syncQueue.push(callback)
+    }
+
+    //执行渲染任务,比较新老节点，更新Dom；
+    function performSyncWorkOnRoot(workInProgress) {
+        let root = workInProgress;
+        console.log('开始调和任务')
+        while (workInProgress) {
+            if (workInProgress.tag === ClassComponent) {
+                let inst = workInProgress.stateNode;
+                inst.state = processUpdateQueue(inst, workInProgress)
+                inst.render(); //得到最新状态后,就可以调用render方法通过最新的虚拟dom，通过diff更新
+
+                //后面这个是自己家的用来执行回调
+                if(inst.updateCallbackList && inst.updateCallbackList.length){
+                    inst.updateCallbackList.forEach(cb=>cb())
+                    inst.updateCallbackList.length = 0;
+                }
+
+            }
+            workInProgress = workInProgress.child
+        }
+        commitRoot(root)
+    }
+
+    function commitRoot(root) {
+        console.log(200000)
+        //所有的任务结束之后 将优先级给0，表示目前空闲
+        root.callbackPriority = NoLanePriority
+    }
+
+
+    //根据老状态和更新队列计算状态
+    function processUpdateQueue(inst, fiber) {
+        return fiber.updateQueue.reduce((state, {payload}) => {
+            if (typeof payload == 'function') {
+                payload = payload(state);
+            }
+            return {...state, ...payload}
+        }, inst.state)
+    }
+
+    function markUpdateLaneFromFiberRoot(fiber) {
+        let parent = fiber.return;
+        while (parent) {
+            fiber = parent;
+            parent = parent.return
+        }
+        if (fiber.tag === HostRoot) {
+            return fiber
+        }
+        return null
+    }
+</script>
+
+<script type="text/babel">
+    class Component {
+        constructor() {
+            this.updater = classComponentUpdater;
+        }
+        setState(partialState,callback) {
+            this.updater.enqueueState(this, partialState,callback)
+        }
+    }
+
+    class Count extends Component {
+        state = {
+            number: 0,
+        }
+        handle = (e) => {
+            // console.log(e)
+            //回调函数是在更新之后执行的
+            this.setState({number: this.state.number + 1}, () => {
+                console.log('我是回调函数1',this.state.number)
+            })
+            console.log(this.state.number)
+            this.setState({number: 100}, () => {
+                console.log('我是回调函数2',this.state.number)
+            })
+            console.log(this.state.number)
+            // setTimeout(() => {
+            //     this.setState({number: this.state.number + 1})
+            //     console.log('kk0', this.state.number)     //4
+            //     this.setState({number: this.state.number + 1})
+            //     console.log('kk0', this.state.number)
+            //     // batchedUpdate(()=>{
+            //     //     this.setState({number: this.state.number + 1})
+            //     //     console.log('kk1', this.state.number)     //4
+            //     //     this.setState({number: this.state.number + 1})
+            //     //     console.log('kk1', this.state.number)    //5
+            //     // })
+            // })
+        }
+
+        render() {
+            console.log(this.state)
+        }
+
+        // <!--render() {-->
+        // <!--    return (-->
+        // <!--        <div>-->
+        // <!--            <p>{this.state.number}</p>-->
+        // <!--            <button onClick={this.handle}>+</button>-->
+        // <!--        </div>-->
+        // <!--    )-->
+        // <!--}-->
+    }
+</script>
+
+<script type="text/babel">
+    // import Count from './4.1.Counter'
+    // import {NoMode, ConCurrentMode} from './4.2.ReactTypeOfMode'
+    // import {ClassComponent, HostRoot, HostComponent} from './4.3.ReactWorkTags'
+
+    //创建实例
+    let counterInstance = new Count();
+    //渲染模式
+    let mode = NoMode;
+    //异步模式
+    // let mode = ConCurrentMode;
+    let rootFiber = {
+        tag: HostRoot, mode,
+        updateQueue: [],  //此处源码中是个链表
+    }
+    let counterFiber = {
+        tag: ClassComponent, mode,
+        updateQueue: [],//此处源码中是个链表
+    }
+    counterFiber.stateNode = counterInstance;
+    counterInstance._reactInteral = counterFiber;//将node绑定Fiber
+    rootFiber.child = counterFiber;
+    counterFiber.return = rootFiber;
+
+    document.addEventListener('click', (event) => {
+        let syntheticEvent = {native: event}
+        batchedUpdate(()=>counterInstance.handle(syntheticEvent))
+
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    body{
+        font-size: 0;
+        margin-bottom: 100px;
+    }
+    h6{
+        font-size: 30px;
+    }
+
+    .div{
+        width: 600px;
+        font-size: 20px;
+    }
+    .p0{
+        width: 200px;
+        background-color: red;
+    }
+    .p00{
+        width: 200px;
+        background-color: aqua;
+    }
+    /*第一种*/
+    .div1{
+        overflow: hidden;
+    }
+    .p1{
+        float: left;
+        display: inline-block;
+
+        padding-bottom: 10000px;
+        margin-bottom: -10000px;
+    }
+    .p11{
+        float: left;
+        background-color: aqua;
+    }
+    /*第二种*/
+    .div2{
+        display: flex;
+    }
+    /*第三种*/
+    .div3{
+        width: 600px;
+    }
+    .p3{
+        width: auto;
+    }
+    .p3 p{
+        display: inline-block;
+        width: 100px;
+    }
+    .p3,.p33{
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+    }
+    /*  第四种 */
+    .div4{
+        position: relative;
+    }
+    .p4{
+        position: absolute;
+        top:0;
+        bottom:0;
+    }
+    .p44{
+        margin-left: 200px;
+    }
+    /*第五种*/
+    .div5{
+        position: relative;
+    }
+    .p5{
+        position: absolute;
+        height: 100%;
+        top: 0;
+        left:0;
+    }
+    .p55{
+        margin-left: 200px;
+    }
+</style>
+
+<body>
+    <h6>使用margin-bottom,padding-bottom 和父元素overflow：hidden 实现</h6>
+    <div class="div div1 ">
+        <p class="p0 p1">我是测试</p>
+        <p class="p00 p11">我是测试2开始大V是大V那么久科技的凤山街道放假时间就爱睡觉觉啥等级四大皆空缴费的圣诞节旷视科技思考法撒旦借款方会计师的科技开发绝对是咖啡机撒可富就开始跌九分裤SDK缴费卡四大皆空</p>
+    </div>
+    <br>
+    <h6>使用flex布局</h6>
+    <div class="div div2">
+        <p class="p0">我是测试</p>
+        <p class="p00">我是测试2开始大V是大V那么久科技的凤山街道放假时间就爱睡觉觉啥等级四大皆空缴费的圣诞节旷视科技思考法撒旦借款方会计师的科技开发绝对是咖啡机撒可富就开始跌九分裤SDK缴费卡四大皆空</p>
+    </div>
+    <br>
+
+    <h6>table-cell</h6>
+    <div class="div div3">
+        <div class="p0 p3">
+            <p >
+                我是测试
+            </p>
+        </div>
+
+        <p class="p00 p33">
+            我是测试2开始大V是大V那么久科技的凤山街道放假时间就爱睡觉觉啥等级四大皆空缴费的圣诞节旷视科技思考法撒旦借款方会计师的科技开发绝对是咖啡机撒可富就开始跌九分裤SDK缴费卡四大皆空
+        </p>
+    </div>
+    <br>
+
+    <h6>使用absolute,top:0;bottom:0;</h6>
+    <div class="div div4">
+        <p class="p0 p4">我是测试</p>
+        <p class="p00 p44">我是测试2开始大V是大V那么久科技的凤山街道放假时间就爱睡觉觉啥等级四大皆空缴费的圣诞节旷视科技思考法撒旦借款方会计师的科技开发绝对是咖啡机撒可富就开始跌九分裤SDK缴费卡四大皆空</p>
+    </div>
+    <h6>absolute,height:100%</h6>
+    <div class="div div5">
+        <p class="p0 p5">我是测试</p>
+        <p class="p00 p55">我是测试2开始大V是大V那么久科技的凤山街道放假时间就爱睡觉觉啥等级四大皆空缴费的圣诞节旷视科技思考法撒旦借款方会计师的科技开发绝对是咖啡机撒可富就开始跌九分裤SDK缴费卡四大皆空</p>
+    </div>
+</body>
+</html>

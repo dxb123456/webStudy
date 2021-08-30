@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+    }
+</style>
+<body>
+    <div style="width:calc(100vw);height:calc(100vh);position: relative">
+        <div id="d1" style="position:absolute;bottom:-20px;left:0;width: 200px;height: 200px;background-color: yellow">
+
+        </div>
+
+    </div>
+    <script>
+        var di = document.getElementById('d1')
+        d1.onclick=function(){
+            console.log(this)
+            d1.style.display='none';
+        }
+    </script>
+<script>
+    // 1）浏览器是多线程的，js是单线程的，js在浏览器中可以是多线程的
+    // 2)浏览器在内核控制下 相互配合以保持同步，至少有三个常驻线程：javascript引擎线程，GUI渲染线程，浏览器时间触发线程
+        // js引擎：基于事件驱动单线程执行；
+        // GUI渲染线程和js互斥，当js执行时GUI线程会挂起，GUI的更新会保存在一个队列中，等待js引擎空闲时才有机会执行，这也就是js阻塞页面加载
+        //事件触发线程：当事件被触发时，该线程会把事件添加到任务队列的队尾，等待js引擎处理；     （排队执行，后进后出）
+
+    //浏览器 的界面有哪些特征：
+        //UI界面、浏览器引擎、渲染引擎、网络、ui后端接口、js解析器、数据存储
+        // 常用内核：
+            // ie ：Trident内核
+            //Chrome、safari：webkit内核
+            //fireFox:Gecko内核  （壁虎）
+            //Opera: presto(已废弃)
+
+    //html文件渲染过程：
+    //html -> 构建dom树 -> cssom -> 呈现树 ->布局处理（位置坐标，大小）-> 绘制
+
+    //解析过程：
+    // 语法分析:将输入内容分割成大量标记的过程
+    // 词法分析：根据不同的语法（html或者css）规则，构建解析树
+
+    //移位归约解析器（了解）
+
+    //dom树的创建有两个阶段：标记化和树的构建  ；通过其他方式添加的元素，算法使用状态机来描述，俗称插入模式
+
+
+
+    //创建图层的条件
+        // 1.拥有3d变换的css属性
+        // 2.使用加速视频解码的video节点
+        // 3.canvas 节点
+        // 4.css3 动画节点
+        // 5.拥有css加速属性的元素（will-change）
+
+
+
+
+    //回流（reflow）和重绘（repaint） ：是否渲染树的流式结构发生变化
+
+    //回流：页面渲染完毕后，对dom进行操作时，使渲染树的结构或者尺寸发生变化，浏览器重新渲染或者部分渲染的过程叫做回流。
+     //可能会导致回流的操作：
+        //1.首次渲染
+        //2.浏览器窗口改变
+        //3.内容变化
+        //4.删除、添加节点
+        //5.激活css伪类
+        //6.clientWidth
+    //以下操作成本较高：
+        //1.添加、修改、删除dom
+        //2.移动dom位置
+        //3.修改css样式
+        //4.窗口变化
+        //5.修改默认字体
+        //6.获取元素的宽高位置
+        //7.display:none
+
+    //重绘：当页面中元素的样式改变不影响它在文档流中的位置，浏览器会将新样式复制给元素，这个过程叫做重绘。
+    //重绘重排的最小单元是图层
+    //可能会导致重绘的操作：
+        //1.background
+        //2.visibility
+        //3.opacity
+
+    //性能影响：
+        //回流的性能消耗更大
+
+        //css:
+            //避免使用table布局
+            //避免设置多层内联样式
+        //javascript:
+            //频繁添加dom
+            //大量插入dom操作，建议使用文档片段 documentFragment
+
+    //思考：定位元素会不会引起回流？
+
+    //优化：
+        //1）动画时尽量使用transform 代替left、top
+        //2)opacity 代替visibility  （直接使用opacity，会使用触发重绘和重排），需要配合will-change 不触发重排和重绘（以前不触发，现在会触发重绘）
+        //3)不是用table布局
+        //4)多次修改样式合并成一次  使用calss
+        //5)将dom离线后再修改：先将都dom隐藏，修改后在展示
+        //6)文档碎片 documentFragment
+        //7)尽量将获取 元素的style属性，各个值保存，不循环获取offsetTop，offsetWidth ...
+        //8)动画实现过程招聘哪个，启用硬件加速，transform:translateZ(0);
+        //9)为动画元素新建图层，提高动画的等级
+        //10)使用动画 questAnimationFrame；在浏览器下次绘制前执行回调
+
+
+
+
+
+
+    //css样式渲染
+        //1) style 样式表
+        // <style>
+        //      a{
+        //          font-size:20px
+        //       }
+        //      </style>
+        //style样式表由html解析器解析
+        //页面style标签中的内部样式是异步解析的，容易产生闪屏（结构先展示，style是异步解析）
+        //浏览器加载资源是异步的
+
+
+        //2)link 样式表 (推荐)
+        // <link href='a.css' style='text/css' rel='stylesheet'>
+        // link引入的样式表 是由css解析，是同步解析的
+        // css解析会阻塞页面的渲染，
+
+        //3）css阻塞
+            //只有link引入的外部css才会产生阻塞
+            //a.style标签中的样式有html解析器负责解析，不阻塞浏览器的渲染，(会噪声闪屏),也不影响dom的解析
+            //b.link引入的外部样式是有css解析器解析，阻塞页面的渲染，阻塞后面js的执行,不阻塞dom的解析。
+        //4) js阻塞
+            //a.阻塞后面dom的解析
+            //b.阻塞页面的渲染
+            //c.阻塞后面js的执行
+
+
+
+</script>
+</body>
+</html>

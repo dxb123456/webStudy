@@ -1,0 +1,28 @@
+module.exports={
+    roomList:[
+        {
+            roomId:1,
+            name:'第一个房间',
+            createName:'admin',
+            list:[],
+        },
+        {
+            roomId:2,
+            name:'第二个房间',
+            createName:'admin',
+            list:[],
+        },
+        {
+            roomId:3,
+            name:'第三个房间',
+            createName:'admin',
+            list:[],
+        },
+        {
+            roomId:4,
+            name:'第四个房间',
+            createName:'admin',
+            list:[],
+        },
+    ]
+}

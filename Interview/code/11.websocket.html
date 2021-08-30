@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="//resource-sdk.bbwc.cn/js/lib/vue/vue_2.5.16.min.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0
+        }
+        #app{
+            padding-left: 50px;
+        }
+        header {
+            margin-left: -50px;
+            height: 60px;
+            text-align: right;
+            padding-right: 100px;
+            line-height: 60px;
+            background-color: #f1f1f1;
+        }
+
+        ol {
+            display: flex;
+            width: 440px;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            list-style: none;
+        }
+
+        ol li {
+            width: 100px;
+            height: 100px;
+            margin-left: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #333;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        ol li span {
+            font-size: 14px;
+        }
+
+        ol li button {
+            font-size: 16px;
+            padding: 1px 2px;
+        }
+
+        ol::after {
+            content: '';
+            flex: auto;
+        }
+        ul{
+            padding: 5px;
+            width: 400px;
+            height: 200px;
+            overflow: auto;
+            border: 1px solid #999999;
+        }
+        ul li{
+            font-size: 12px;
+            line-height: 1.5
+        ;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <header>
+        游客{{chat_id}}
+    </header>
+    <div v-if="!enterRoom">
+        <h4>
+            房间列表
+        </h4>
+        <ol>
+            <li v-for="item,index in roomList" :key="item.roomId">
+                <span>{{item.name}}</span>
+                <button @click="enter(item.roomId,index)" >进入</button>
+            </li>
+
+        </ol>
+    </div>
+
+    <div v-else>
+        <h4>
+            房间信息：
+        </h4>
+        <p>房间id:{{enterRoom.roomId}};房间名称:{{enterRoom.name}}</p>
+        <p>所有人员:
+            <span v-for="item,index in roomUserList" :key = index>
+                游客{{item.chat_id}}
+            </span>
+        </p>
+        <ul>
+           <li v-for="item,index in chatList" :key = index>
+               {{item}}
+           </li>
+        </ul>
+        <p>
+            <input type="text" v-model="input" @keydown.enter="submit">
+            <button @click="submit" >提交</button>
+        </p>
+
+    </div>
+
+</div>
+
+
+<!--    //服务在javascript/_server/public/socket_server.js-->
+<!-- port :8002-->
+<script>
+
+    var chat_name = '';
+    var chat_id = '';
+
+    if (chat_name && chat_id) {
+        var str = `?chat_name=${chat_name}&chat_id=${chat_id}`
+    } else {
+        var str = ''
+    }
+    var ws = new WebSocket(`ws://192.168.0.121:8002${str}`)
+    ws.onopen = function () {
+        // ws.send('来自客户端的信息')
+    }
+    //监听服务端消息
+    ws.onmessage = function (e) {
+        const {data} = e;
+        var json = JSON.parse(data);
+        if (json.type === 0) {
+            if (chat_name != json.chat_name || chat_id != json.chat_id) {
+                // chat_name = localStorage.setItem('chat_name',json.chat_name);
+                // chat_id = localStorage.setItem('chat_id',json.chat_id) ;
+                vm.chat_name = json.chat_name;
+                vm.chat_id = json.chat_id;
+                vm.roomList = json.roomList
+            }
+        }
+        if(json.type === 200){
+            //进入
+            vm.chatList.push(json.msg);
+            vm.roomUserList =json.allUser;
+        }
+        if(json.type === 202){
+            //对话
+            let newMsg = vm.chat_id == json.say_chat_id ? `我 说 ： ${json.msg}` : `游客${json.say_chat_id} 说 ： ${json.msg}`
+            vm.chatList.push(newMsg)
+        }
+        if(json.type === 201){
+            //离开
+            vm.chatList.push(json.msg)
+            console.log(json.chat_id)
+            var index = vm.roomUserList.findIndex(value=>value.chat_id == json.chat_id);
+            vm.roomUserList.splice(index,1)
+        }
+    }
+
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            chat_name: chat_name,
+            chat_id: chat_id,
+            roomList: [],
+            enterRoom: null,
+            input:'',
+            chatList:[],
+            roomUserList:[],
+        },
+
+        //方法
+        methods: {
+            enter(roomid,index) {
+                ws.send(JSON.stringify(
+                    {
+                        type: 1,
+                        roomId: roomid,
+                        chat_id: this.chat_id
+                    }
+                ))
+                this.roomId = roomid;
+                this.enterRoom = this.roomList[index];
+            },
+            submit(){
+                ws.send(JSON.stringify(
+                    {
+                        type: 2,
+                        roomId: this.enterRoom.roomId,
+                        chat_id: this.chat_id,
+                        input: this.input
+                    }
+                ))
+                this.input = ''
+            }
+        },
+
+        //钩子函数，钩子函数在Vue创建实例时调用
+        mounted: function () {
+            // alert(this.count);
+        },
+
+    })
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    //1. var声明的变量会变量提升，会挂载到window上，let声明的不会挂载到window上 ;在私有变量中不会给fn添加属性；
+    var x=100;
+    console.log(window.x);          //100
+    let y =100;
+    console.log(window.y);          //undefined
+    function fn(){
+        var x1= 100;
+        yy=200
+        console.log(fn.x1)          //undefined
+        console.log(window.yy)      //200
+    }
+    fn();
+
+    //2.let 不能重复声明
+
+    for (var i =0;i<5;i++){
+        +function(i){
+            setTimeout(_=>{       //setTimeout 的第一个函数如果是直接写的不能放参数,使用外部参数
+                console.log(i)
+            },0)
+        }(i)
+        // setTimeout( function pp(i){            //不能给内部传参
+        //     console.log(i,this)
+        // },0)
+    }
+    console.log(window.i,'1')
+</script>
+
+</body>
+</html>

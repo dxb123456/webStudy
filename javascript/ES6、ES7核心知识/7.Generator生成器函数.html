@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+    generator 异步任务容器，主要用来控制迭代器，能够是迭代器暂停和开始，使用yield返回值。
+    1.*号和yield是他的特征
+    2.yield 的打打印值 格式为{value:xxx,done:boolean},注意：yield 是没有返回值的，yield的返回值需要外界传入。
+</p>
+
+<script>
+    // 使用es5 创建模拟一个generator函数
+
+    function generator(items){
+        var i = 0;
+        return {
+            next(){
+                var done = (i>=items.length);
+                var value = !done ? items[i++] : undefined
+                return {
+                    value,
+                    done
+                }
+            }
+        }
+    }
+    var gener =generator([1,2,3,4,5])
+
+    console.log(gener.next())
+    console.log(gener.next())
+    console.log(gener.next())
+    console.log(gener.next())
+    console.log(gener.next())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //1.定义
+    function* aa(){
+        yield 'a';
+        yield 'b';
+        yield 'c';
+        return 'end..d';
+    }
+    console.log(aa)
+    //aa(); //这样无法启动
+
+    //.next() 启动方法，作用分阶段执行Generator函数
+    //每次调用会返回一个对象，包含value、和done属性,done为false 表示函数没有执行完，done为true表示函数执行完了
+    let result = aa()  //这是一个迭代器的引用
+    console.log(result.next());  //{value: "a", done: false}
+    console.log(result.next());
+    console.log(result.next());
+    console.log(result.next());
+    console.log(result.next());//若执行完了会返回,只有value为undefined，done才为true   {value: undefined, done: true}
+    console.log(result.next());
+
+    //例子
+    function* xxnf(){
+        let a=1;
+        yield ++a;
+        yield ++a;
+        yield ++a;
+    }
+    var a1=xxnf()   // a1 和下面的a2 时不同的迭代器
+    var a2=xxnf()   //
+
+    console.log(a1.next()) //2
+    console.log(a1.next()) //3
+    console.log(a1.next()) //4
+    console.log(a1.next()) //undefined
+    console.log(a2.next()) //2
+    console.log('-----------')
+
+    //参数问题   .next(参数)，这个参数会覆盖删一个yield的值。
+    function* xfun(){
+        var n=1;
+        var v =  yield n+10;  //遇到yield 会暂停，然后 返回后面的值
+        console.log('a----:'+ v);
+        console.log('100');
+        yield undefined;
+        yield ++n;
+        yield ++n;
+    }
+    let _xfun = xfun()
+    console.log('我是next中的参数')
+    console.log(_xfun.next())   //{value:11,done:false}
+    console.log(_xfun.next('500')) //这里的500会赋值给v  //{value:undefined,done:false}
+    console.log(_xfun.next())       //{value:3,done:false }
+    console.log(_xfun.next())       //{value:undefined,done:true }
+
+
+    //for of 方法
+    console.log(xfun())
+    for(let key of xfun()){
+        console.log(key)    //能把yield 的返回值全部输出数来
+    }
+</script>
+</body>
+</html>

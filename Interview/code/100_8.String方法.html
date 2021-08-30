@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script>
+  // 1. length   返回字符串的长度
+
+
+  //数组和字符串不一致
+  // 2.indexOf(searchStr,formIndex)   返回首次出现的索引值，没有找到返回-1;
+  //                                  fromIndex的合法取值为0-str.length
+  //
+  //
+  // 如果索引大于或等于数组的长度，则将搜索整个数组。如果是负数，为0
+  let str2 = 'abcdeddfg';
+  console.log(str2.indexOf('b'))     // 1
+  console.log(str2.indexOf('f'))     //  7
+  console.log(str2.indexOf('d',4))  //=> ddfg    // 5
+  console.log(str2.indexOf('a',-1)) //=>整个字符串  //0
+
+
+  //数组的indexOf  可取值为负
+  console.log(str2.split('').indexOf('b',1)) //=> bcdeddfg //1
+  console.log(str2.split('').indexOf('e',-5)) //=> eddfg //4
+  console.log(str2.split('').indexOf('e',-4)) //=> ddfg //-1
+  console.log(str2.split('').indexOf('e',-1),'--------') //=>从后往前数1个=> abcdeddf  //-1
+
+
+  // 3.lastIndexOf(searchStr,startIndex)  返回最后一次出现的索引，没有返回-1 ;合法取值为0-str.length
+
+  // 数组的 startIndex为证则从前往后，为负责从后往前数
+  let str3 = 'abcadeafg';
+  console.log(str3.lastIndexOf('a'))     // 6
+  console.log(str3.lastIndexOf('m'))     //-1
+
+  console.log(str3.split('').lastIndexOf('e',5))   // => abcade=>  // 5
+  console.log(str3.split('').lastIndexOf('e',4))   // => abcad=>  //-1
+  console.log(str3.split('').lastIndexOf('e',5))   // => abcade=>  // 5
+  console.log(str3.split('').lastIndexOf('e',4))   // => abcad=>  //-1
+  console.log(str3.split('').lastIndexOf('a',2))   // => abc=>  //0
+  console.log(str3.split('').lastIndexOf('b',6))   // => abcadea=>  //1
+  console.log(str3.split('').lastIndexOf('a',5),'--------')   // => abcade=>  //3
+
+
+  // var numbers=[1,2,3,4,5,4,3,2,1];
+  // alert(numbers.indexOf(4,4)); //5
+  // //第二个参数则表示从第4个位置开始向后查询（即该题中表示从数字5开始向后查询），于是查询到第一次出现数字4就在数字5的后面,该数字在数组中的第5个位置，即 结果为5
+  // alert(numbers.lastIndexOf(4,4)); //3
+  // // 第二个参数表示 从第四个位置开始向前查询，（即该题中表示从数字5开始向前查询），于是查询到第一次出现数字4就在数字5的前面,该数字在数组中的第3个位置，即 结果为3
+
+  // var numbers=[1,2,3,4,5,4,3,2,1];
+  // alert(numbers.indexOf(4,-3)); //-1
+  // //从后往前数的三个数中，（即在3,2,1中查询）没有数字4，则返回-1
+  // alert(numbers.indexOf(4,-4)); //5
+  // // 从后往前数的4个数中，（即在4,3,2,1中查询数字4，从前往后数），则存在数字4，且在数组中的位置为5 则返回5
+  // alert(numbers.indexOf(4,-6)); //3
+  // // 从后往前数的6个数中，（即在4,5,4,3,2,1中查询数字4 从前往后数），则存在数字4的第一个位置且在数组中的位置为3 则返回3
+
+
+
+  //4.search() 返回索引，没有返回-1
+  let str4 = 'ssaaddmm';
+  console.log(str4.search('kk'))
+
+    //5.slice(startIndex, endIndex)
+        // 如果某个参数为负，则从字符串的结尾开始计数
+        //如果省略第二个参数，则该方法将裁剪字符串的剩余部分
+          let str = 'abcd'
+          let res = str.slice(0, 2) // ab
+          // str abcd
+          let ret = str.slice(-2, -1) // c
+          let req = str.slice(1) // bcd
+
+    //6.substring(startIndex, endIndex)   与slice类似 但是无法接收负值
+
+    //7.substr(start,length)     //length 没有表示截取到结束
+
+    //8.replace(str|reg,'str')   使用str替换前面匹配到的内容，返回新的字符换，原串不变
+      let str8 = 'Abcd'
+      str8.replace(/a/i, 'hi,') // hi,bcd
+
+
+    //8.2.replaceAll()
+    //9.toUpperCase()
+
+    //10.concat()
+
+    //11.trim()
+    console.log(' asdasd '.trim())
+
+    //12.charAt()    //返回字符串中指定下标（位置）的字符串
+
+    //13.charCodeAt() //返回字符串中指定索引的字符 unicode 编码
+
+    //14.match     //检查一个字符串匹配一个正则表达式内容，如果么有匹配返回 null。
+      var re = new RegExp(/^\w+$/);
+      var is_alpha1 = 'wssahhasda'.match(re);
+
+
+</script>
+</body>
+</html>

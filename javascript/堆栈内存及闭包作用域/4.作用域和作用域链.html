@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    //作用域：  全局作用域，私有作用域，块级作用域(大括号)    作用：隔离变量
+        // 代码的执行环境，全局执行环境就是全局作用域，函数的作用域属于私有作用域，他们都属于栈内存，浏览器全局执行环境是window对象，所有的全局变量和全局函数都是window的属性和方法。node中的执行环境是global；某个执行环境的代码执行完毕后会被销毁，里面的变量也会销毁（全局作用域不会销毁，当浏览器关闭会销毁）；每个函数都有自己的执行环境，当执行流中进入一个函数时，该函数的环境就会被推入一个环境栈中，在函数执行完成后，环境栈被环境弹出，把控制权返还给之前的执行环境
+
+    //作用域链：
+        //每个函数在创建的时候就生成了一个 [[scopes]]对象，scopes对象中包含自身所处环境的作用域。当有嵌套作用域时就会由内向外形成作用域链。查找规则是：内部作用域->外部作用域->...->全局作用域
+
+    //注意：
+        //函数作用域是在函数被创建时产生，只会创建一次
+        //函数的执行上下文是在函数被调用时创建的，执行上下文可以有多个。
+    function B(){
+        console.log(111);
+        let a11=1;
+        b12=2;
+        function aa(){
+            console.log(this)
+            // let  cc=1;
+            // function bb(){
+            //     return bb
+            // }
+            // return bb()
+        }
+        aa()
+    }
+    B.a=100;
+    B.prototype.a=100;
+    console.log(B.a)
+    debugger
+    console.dir(B)
+    let a=12;b=12;
+    function kk(){
+        console.log(b)
+        let a= b =13
+
+    }
+    kk();
+
+    // ++i 先对i+1，再使用i
+    // i++ 先使用i，再对i+1;
+    let i=1;
+    let fn=(i)=>(n)=>console.log(n+(++i));
+    let f= fn(1);
+    f(2);
+    fn(3)(4);
+    f(5);
+
+    console.log(i)
+
+</script>
+</body>
+</html>

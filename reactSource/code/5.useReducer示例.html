@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hooks</title>
+    <script src="./react.development.js"></script>
+    <script src="./react-dom.development.js"></script>
+    <!-- 生产环境中不建议使用 -->
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<div id="example"></div>
+
+
+<script type="text/babel">
+    const reducer = (state,action) => {
+        if(action.type ==='add'){
+            return state+1
+        }else{
+            return state
+        }
+    }
+    reducer.id=100
+    function Counter() {
+        let mm = React.useReducer(reducer,0)   //返回[0,function]
+        let [number, dispatch] =mm;
+        const handle = () => {
+            dispatch({type:'add1'})
+        }
+        return (<div>
+            <p>{number}</p>
+            <button onClick={handle}>+</button>
+        </div>)
+    }
+
+    ReactDOM.render(
+        <Counter/>,
+        document.getElementById('example')
+    );
+</script>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hooks</title>
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <!-- 生产环境中不建议使用 -->
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<div id="example"></div>
+
+
+<script type="text/babel">
+    //React.memo 和 React.useCallback 一定记得需要配对使用，缺了一个都可能导致性能不升反“降”，毕竟无意义的浅比较也是要消耗那么一点点点的性能
+    // useCallback 的真正目的还是在于缓存了每次渲染时 inline callback 的实例，这样方便配合上子组件的 shouldComponentUpdate 或者 React.memo 起到减少不必要的渲染的作用。需要不断提醒自己注意的是，在大部分 callback 都会是 inline callback 的未来，。
+
+    // useCallback 返回的是一个函数，
+    // useMemo  返回的是函数的值,会在渲染阶段执行函数，请不要执行导致死循环或者无关的
+    // memo    会浅比较props，没有变化就不重新渲染。
+    const Child = ({show}) => {
+        //子组件中不管是list 还是str改变子组件都会刷新
+        const [list1, setList1] = React.useState([]);
+
+        //不使用依赖
+        // React.useEffect(()=>{
+        //     const [newlist1] = typeof show ==='function' ? show() :show;
+        //     setList1(newlist1)   //这里按说会一直执行下去，但是newlist1 两次是相同的，这里被中断了
+        //     console.log('我更新了')
+        // })
+
+        //使用依赖
+        React.useEffect(() => {
+            console.log(show)
+            const [newlist1] = typeof show === 'function' ? show() : show;
+            setList1(newlist1)   //这里按说会一直执行下去，但是newlist1 两次是相同的，这里被中断了
+            console.log('我更新了')
+        }, [show])
+
+        return (
+            <ul>
+                {
+                    list1.map(item => {
+                        return <li key={item.id}>{item.txt}</li>
+                    })
+                }
+            </ul>)
+
+    }
+
+
+    const Child2 = React.memo(
+          (show) => {
+            const [list1, setList1] = React.useState('122');
+            React.useEffect(()=>{
+                console.log(1000)
+            })
+            return (
+                <ul>
+                    {list1}
+                </ul>)
+        }
+    )
+
+    function Counter(props) {
+        const [str, setStr] = React.useState('100');
+        const [list, setlist] = React.useState([
+            {
+                id: 1,
+                txt: '我是1'
+            },
+            {
+                id: 2,
+                txt: '我是2'
+            }
+        ]);
+        const handleList = () => {
+            const item = {
+                id: list.length + 1,
+                txt: '我是' + (list.length + 1)
+            }
+            setlist([...list, item])
+        }
+        const handleStr = () => {
+            setStr(str + '100')
+        }
+
+        //不使用hook
+        // const show = ()=>{
+        //     return [list]
+        // }
+        //使用useCallback
+        // const show = React.useCallback(() => {
+        //     return [list]
+        // }, [list]);
+
+        //使用useMemo
+        const show = React.useMemo(() => {
+            return [list]
+        }, [list]);
+
+        React.useEffect(() => {
+            console.log(111)
+        })
+        return (
+            <div>
+                <button onClick={handleList}>添加list</button>
+                <button onClick={handleStr}>添加str</button>
+                <Child show={show}></Child>
+                <Child2 show={show}></Child2>
+            </div>)
+    }
+
+    ReactDOM.render(
+        <div>
+
+            <Counter/>
+        </div>
+
+        ,
+        document.getElementById('example')
+    );
+</script>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .div1{
+            width: 300px;
+            height:300px;
+            background-color: lime;
+
+        }
+        .div2{
+            width: 200px;
+            height: 200px;
+            background-color: #999999;
+        }
+        .div3{
+            width: 100px;
+            height: 100px;
+            background-color: lime;
+        }
+    </style>
+</head>
+<body>
+<div class="div1" id="div1">
+    div1
+    <div class="div2" id="div2">
+        div2
+        <div class="div3" id="div3">
+            div3
+        </div>
+    </div>
+</div>
+<ul id="ul">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+</ul>
+<!--dom2 事件中才有-->
+1、事件捕获：通俗的理解就是，当鼠标点击或者触发dom事件时，浏览器会从根节点开始由外到内进行事件传播，即点击了子元素，如果父元素通过事件捕获方式注册了对应的事件的话，会先触发父元素绑定的事件。
+
+2、目标阶段：事件对象传递到事件目标。如果事件的type属性表明后面不会进行冒泡操作，那么事件到此就结束了。
+
+3、事件冒泡：与事件捕获恰恰相反，事件冒泡顺序是由内到外进行事件传播，直到根节点。
+<script>
+    div1.addEventListener('click',function(){
+        console.log('div1')
+    })  //第三个参数默认为false即在冒泡阶段执行
+    div2.addEventListener('click',function(){
+        console.log('div2')
+    })
+    div3.addEventListener('click',function(){
+        console.log('div3')
+    })
+
+
+    ul.onclick=function(e){
+        console.log(e.target)
+        console.log(e.currentTarget)
+    }
+</script>
+
+
+
+
+<p>
+    e.target  是当前点击的元素;
+    e.currentTarget
+</p>
+</body>
+</html>

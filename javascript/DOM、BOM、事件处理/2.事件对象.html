@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+事件：触发响应机制，事件三要素:事件源、事件类型、事件处理程序
+事件对象：e || window.event
+
+
+<div class="p1" style="width: 300px;height: 300px;background-color: #999999">
+
+    <div class="p2" style="width: 300px;height: 100px;background-color: #ff0000"></div>
+</div>
+
+<div>
+    <input type="text" id="input">
+    <div tabindex="0" id="div" style="width: 50px;height:50px;background-color: #990099"></div>
+    <select name="" id="select">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+</div>
+<ul id="ul">
+    <li>100</li>
+    <li>200</li>
+    <li>300</li>
+</ul>
+<script>
+    //js三大事件
+    //1.鼠标事件
+    // 1) click  单击
+    // 2) dblclick 双击
+
+    // 3）mousedown 鼠标按下
+    // 4) mousemove 鼠标被移动时触发    只要滑动就会触发
+    // 5) mouseup  鼠标抬起
+
+    // 6) mouseover：鼠标移入某个元素时触发
+    // 7）mouseout 鼠标移出某个元素时触发
+
+    // 8) mouseenter 鼠标进入某个元素时触发
+    // 9) mouseleave 鼠标离开某个元素时触发
+
+    //onwheel：鼠标滚轮滚动时触发
+    //oncontextmenu：点击鼠标右键时触发
+
+    // A) mouseover、mouseout   与 B)mouseenter、mouseleave 对比:
+    // A 的优先级 比 B高
+    // A 的子元素也能触发(子元素作为外部元素)，B的子元素不会触发
+
+
+    // let p1 = document.getElementsByClassName('p1')[0]
+    // p1.addEventListener('mouseover', function (e) {
+    //     console.log('mouseover', 'p1')
+    // }, false)
+    // p1.addEventListener('mouseout', function (e) {
+    //     console.log('mouseout', 'p1')
+    // }, false)
+    // p1.addEventListener('mouseenter', function (e) {
+    //     console.log('mouseenter', 'p1')
+    // }, false)
+    // p1.addEventListener('mouseleave', function (e) {
+    //     console.log('mouseleave', 'p1')
+    // }, false)
+
+    // document.addEventListener('wheel',(e)=>{
+    //     e = e || window.event   //window.event是老版ie
+    //     console.log(e)
+    // },false)
+    //
+    // document.addEventListener('contextmenu',(e)=>{
+    //     console.log(e)
+    //     if(e.defaultPrevented){
+    //         console.log(100)
+    //     }
+    //     e.stopPropagation();
+    //     e.preventDefault();
+    //
+    // },false)
+
+    // 阻止默认事件: e.preventDefault();
+    //阻止冒泡：e.stopPropagation();
+
+    //2.键盘事件：
+    //  onkeydown：键盘的键按下时触发
+    //  onkeyup：键盘的键放开时触发
+    //  onkeypress：按下或按住键盘键时触发   会一直触发
+    // 常见的keyCode码：
+        //Enter :13,
+        //空格：32
+        //ArrowLeft:37
+        //ArrowUp:38
+        //ArrowRight:39
+        //ArrowDown:40，
+        //Shift：16
+        //Control :17
+        //Alt:18
+        //Tab :9
+    // document.onkeydown = function(e){
+    //     console.log(e.key,e.keyCode)
+    // }
+    // document.onkeypress = function(e){
+    //     console.log(e.key,e.keyCode)
+    // }
+
+    //html事件：
+    //a.框架和对象事件
+    // 1)onresize :浏览器窗口大小改变时触发
+    // 2)onabort : 图片加载中断被触发
+    // 3)onload :元素加载完触发
+    // 4)onerror : 当加载文档或图片错误时触发
+    // 5)onscroll :文档滚动触发
+    // 6)onpageshow: 当用户访问页面时触发
+    // 7)onunload:用户退出页面时触发
+
+    // window.onresize=function(e){
+    //     console.log(e)
+    // }
+    // window.onload = function(e){
+    //     console.log(e)
+    // }
+    // window.onpageshow =function () {
+    //     console.log('onpageshow')
+    // }
+    // window.onbeforeunload=function(){
+    //     console.log(100)
+    //     return '确定要离开吗？'
+    // }
+    window.onunload = unloadPage;   //onunload 事件在chrome中无法弹出框
+    function unloadPage() {
+        alert("unload event detected!");
+    }
+
+
+    //b.表单事件
+    //1) onfocus:元素获得焦点时触发
+    //2) onblur:元素失去焦点时触发
+    //3) onchange: 元素的内容发生改变时触发
+    //4) oninput: 元素获取用户输入时触发
+    //5) onsubmit: 提交按钮时触发            //在form 表单中使用
+    //6) onreset: 重置按钮时触发             //在form 表单中使用
+    //7) onselect:文本被选中时触发            //input中的文本被选中时触发
+
+    // input.onfocus = function(){
+    //     console.log(this.value)
+    // }
+    // input.onblur = function(){
+    //     console.log(this.value)
+    // }
+    // input.onchange = function(){
+    //     console.log(this.value)
+    // }
+    // input.oninput =function(){
+    //     console.log(this.value)
+    // }
+    // input.onselect =function(){
+    //      console.log(this.value)
+    // }
+     select.onchange =function(){
+          console.log(this.value)
+     }
+    div.onfocus = function(){     //div 添加tabindex 属性可使用onfocus，onblur属性
+        console.log(this.value)
+    }
+    div.onblur = function(){
+        console.log(this.value)
+    }
+
+
+
+
+    //c.拖动事件 (查看拖拽相关)    // 链接和图片默认是可拖动的，不需要 draggable 属性
+    //1) ondragstart - 用户开始拖动元素时触发
+    //2) ondrag - 元素正在拖动时触发
+    //3) ondragend - 用户完成元素拖动后触发
+
+    //1) ondragenter - 当被鼠标拖动的对象进入其容器范围内时触发此事件
+    //2) ondragover - 当某被拖动的对象在另一对象容器范围内拖动时触发此事件
+    //3) ondragleave - 当被鼠标拖动的对象离开其容器范围内时触发此事件
+    //4）ondrop - 在一个拖动过程中，释放鼠标键时触发此事件
+
+
+
+    //d.多媒体事件 （详见音视频处理方案)
+    //1) onplay : 在视频/音频开始播放时触发
+    //2) onended: 在视频/音频播放结束时触发
+    //3) onpause: 在视频/音频暂停时触发
+
+
+    //事件委托
+    ul.onclick=function(e){
+        console.log(e.target)
+        console.log(e.currentTarget)
+    }
+
+</script>
+</body>
+</html>

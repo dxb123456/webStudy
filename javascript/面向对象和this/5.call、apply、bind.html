@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    // f1.call(f2) 让f1的this指向f2  ,传递的参数是字符串
+    // call : 1.改变this 指向
+    //       2.函数执行
+    function fn1(){
+        console.log('f1',this)
+        return '1111'
+    }
+    function fn2(){
+        console.log('f2')
+    }
+    //fn1.call(fn2)
+    Function.prototype.call = function mycall(context){
+
+        console.log(this,context)
+        context = context ? Object(context):window;
+        context.fn=this;
+        // console.log(arguments)
+        let args =[];
+        for(let i =1 ;i<arguments.length;i++){
+            args.push("arguments["+i+"]")
+        }
+
+        let r = eval('context.fn('+args+')')
+        // console.log(args)
+        delete context.fn
+        return r
+
+    }
+    //fn1.call.call(fn2)
+
+    // 第一次调用者是fn1.call 即mycall函数，context是fn2
+    //   第一步：this= fn1.call即mycall方法，context =fn2  -> context.fn = fn2.fn = mycall方法 ->args=[] -> fn2.fn = maycall()
+    // 第二次调用者是fn2函数，context为空。
+    // 第二步：this=fn2,context =window ->context.fn = window.fn=fn2 -> args=[] ->window.fn = fn2(); //
+
+    //apply方法    传递的参数是数组
+    Function.prototype.apply = function myapply(context,argus){
+        context = context ? Object(context):window;
+        context.fn=this;
+        console.log(argus)
+        if(!argus){
+            return context.fn()
+        }
+        let args =[];
+        for(let i =0 ;i<argus.length;i++){
+            args.push("argus["+i+"]")
+        }
+        let r = eval('context.fn('+args+')')
+        delete context.fn
+        return r
+    }
+    //fn1.apply('hello',[1,2,3])
+
+
+    //bind  接收字符串：
+    //      1.修改this方法
+    //      2.返回一个绑定后的函数
+    //      3.如果new了返回后的函数，则this指向这个函数
+    let objs = {
+        name:'jw',
+        age:'1'
+    }
+    function fn(name,age){
+        console.log(this)
+        console.log(`${this.name}养了一只 ${name} 猫${age}岁了`)
+    }
+
+
+
+    Function.prototype.bind = function mybind(context){
+
+        let that = this;
+        let argsP=Array.prototype.slice.call(arguments,1)
+        function myFn(){
+            console.log(this)
+            let args=Array.prototype.slice.call(arguments)
+            return  that.apply(this instanceof myFn ? this : context ,argsP.concat(args))   //instanceof 判断当前函数的this是否是构造函数
+        }
+
+        //绑定原型
+        function bb(){}
+        bb.prototype = this.prototype
+        myFn.prototype = new bb().__proto__;      // 绑定原型方法  （尽量不让两个方法指向同一个原型）
+
+        return myFn
+    }
+    console.log('bind--------');
+    fn.prototype.a ='毛';
+    let bindFn =fn.bind(objs,'小王');
+    let instance = new bindFn(9);     // fn 函数中的this是自身
+</script>
+</body>
+</html>

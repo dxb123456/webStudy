@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+    //1.
+    console.log(Function.toString())
+    function isNative(Ctor) {
+        return typeof Ctor === 'function' && /native code/.test(Ctor.toString())
+    }
+
+    //2.
+    var classifyRE = /(?:^|[-_])(\w)/g;
+    var classify = function (str) {
+        return str.replace(classifyRE,
+            function (c) {
+            console.log(c)
+                return c.toUpperCase();
+            }).replace(/[-_]/g, '');
+    };
+
+    console.log(classify(':a_-b'))
+
+    //3.
+    var noop =function(a,b,c){}
+    console.log( (noop))
+
+    //4
+    var repeat = function (str, n) {
+        var res = '';
+        while (n) {
+            if (n % 2 === 1) {
+                res += str;
+            }
+            if (n > 1) {
+                str += str;
+            }
+            n >>= 1;
+        }
+        return res
+    };
+
+    console.log(repeat('zhang',5))
+
+    //5.
+    function def(obj, key, val, enumerable) {
+        Object.defineProperty(obj, key, {
+            value: val,                 //值
+            enumerable: !!enumerable,   //是否可枚举
+            writable: true,             //是否可重写
+            configurable: true
+        });
+    }
+    var obj = {}
+    def(obj,'__ob__',{1:111,2:100})
+    console.log(obj);
+
+
+    //6.
+    // 新对象默认是可扩展的.
+    var empty = {};
+    console.log(Object.isExtensible(empty));; // === true
+
+    // ...可以变的不可扩展.
+    Object.preventExtensions(empty);
+    console.log(Object.isExtensible(empty));; // === false
+
+    // 密封对象是不可扩展的.
+    var sealed = Object.seal({});
+    console.log(Object.isExtensible(sealed));; // === false
+
+    // 冻结对象也是不可扩展.
+    var frozen = Object.freeze({});
+    console.log(Object.isExtensible(frozen));; // === false
+
+
+    //7.
+    console.log(! 1 || 0)
+
+    //8.
+    var object8 ={
+    }
+    Object.defineProperty(object8,'ss',{
+        get:()=>{
+            return 100
+        },
+        set:(value)=>{
+            object8['ss'] = 200
+        }
+    })
+    console.log(object8)
+    const descriptor1 = Object.getOwnPropertyDescriptor(object8, 'ss')
+    console.log(descriptor1.ss)
+
+    //9.
+    function getType(fn) {
+        var match = fn && fn.toString().match(/^\s*function (\w+)/);
+        return match ? match[1] : ''
+    }
+
+    console.log(getType(()=>{}))
+    //10.
+    function makeMap(
+        str,
+        expectsLowerCase
+    ) {
+        var map = Object.create(null);
+        var list = str.split(',');
+        for (var i = 0; i < list.length; i++) {
+            map[list[i]] = true;
+        }
+        return expectsLowerCase
+            ? function (val) {
+                return map[val.toLowerCase()];
+            }
+            : function (val) {
+                return map[val];
+            }
+    }
+    var allowedGlobals = makeMap(
+        'Infinity,undefined,NaN,isFinite,isNaN,' +
+        'parseFloat,parseInt,decodeURI,decodeURIComponent,encodeURI,encodeURIComponent,' +
+        'Math,Number,Date,Array,Object,Boolean,String,RegExp,Map,Set,JSON,Intl,' +
+        'require' // for Webpack/Browserify
+    );
+    console.log(allowedGlobals)
+
+    //11.
+    let test = {
+        name: "小红"
+    };
+    test = new Proxy(test, {
+        get(target, key) {
+            console.log('获取了getter属性');
+            return target[key];
+        }
+    });
+    console.log(test.name);
+    document.onclick = function (ev) {
+        console.log(ev)
+    }
+</script>
+</body>
+</html>

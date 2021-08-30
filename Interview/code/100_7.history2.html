@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>history</title>
+</head>
+<body>
+<script>
+
+    // history.go(-2);//后退两次
+    // history.go(2);//前进两次
+    // history.back(); //后退
+    // history.forward(); //前进
+    console.log(history)
+    history.pushState({color:'red'}, 'red', 'red')
+    //history.replaceState(data, title, targetURL)
+    history.back();
+    setTimeout(function(){
+        history.forward();
+    },0)
+    window.onpopstate = function(event){
+        console.log(event.state)
+        if(event.state && event.state.color === 'red'){
+            document.body.style.color = 'red';
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //1.继承
+    function Person(name){
+        this.name=name;
+    }
+    Person.prototype.say= function(){
+        console.log(this.name)
+    }
+    Person.prototype.show= function(){
+        return '我是show'
+    }
+    function Man(name){
+        Person.call(this,name)
+    }
+    //1.
+    // Man.prototype.__proto__ = Person.prototype;
+    // Man.prototype.look = function(){
+    //     console.log('我是man的look')
+    // }
+
+    //2.
+    Man.prototype = Object.create(Person.prototype);
+    Man.prototype.look = function(){
+        console.log('我是man的look')
+    }
+    //Man.prototype.constructor = Man;
+    Object.defineProperty(Man.prototype,'constructor',{
+        value:Man,            //值
+        enumerable:false,    //不可枚举，就是不能被for in 循环到
+        configurable:true,   //可操作，能够删除，查询等
+        writable:true,       //能改写
+    })
+    new Man('zh').say();
+    console.log(new Man('zh'))
+    //  使用这种方式弊端,给变了Man的prototype，可使用defineProperty 添加constructor
+
+    //3.重写方法和使用父类方法
+    Man.prototype.say = function(){
+        console.log(Person.prototype.show()+'110')
+    }
+    var mm= new Man('100');
+    console.log( mm instanceof Person )  //instanceof  能判断出函数是否在实例的原型链上
+
+    //4. 多态实现 ，初始化数据
+    function User(name,age){
+        // console.log(name,age)
+        this.name = name;
+        this.age = age;
+    }
+    User.prototype.show = function(){
+        this.say()
+    }
+    User.prototype.say = function(){
+        console.log(this.name,this.age)
+    }
+    function Admin(){};
+    Admin.prototype = Object.create(User.prototype)
+    Admin.prototype.say = function(){
+        console.log('我是admin')
+    }
+    function Student(...args){
+        // User.call(this,name,age)
+        User.apply(this,args)       //...args接收的是数组，需要会用apply传参
+    };
+    Student.prototype.__proto__ = User.prototype;
+    Student.prototype.say = function(){
+        console.log('我是学生')
+    }
+    new Admin().show();
+    new Student('小明',20).show();
+
+
+    //5.继承封装 （复习时编写）
+
+    //6.对象派生
+    function obj(name,age) {
+        let inst = Object.create(User.prototype)
+        //另一种写法
+        // let inst = {}
+        // inst.__proto__ = User.prototype;
+        User.call(inst,name,age)
+        return inst
+    }
+    obj('zan',10).say()
+
+    //7.使用mixin 继承,给对象 添加ajax方法和readme()方法
+    const aj = {
+        ajax(){
+            console.log("ajax")
+        },
+        hd(){
+            return 'aj名字'
+        }
+    }
+    const read ={
+        readme(){
+            console.log(100)
+        }
+    }
+    let mymixin = function(){}
+    // mymixin.prototype = Object.create(User.prototype);
+    // mymixin.prototype.ajax = aj.ajax;
+    // mymixin.prototype.readme = read.readme;
+    mymixin.prototype = Object.assign(Object.create(User.prototype),aj,read)
+    new mymixin().ajax();
+
+    //mixin 内部继承和super
+    const write = {
+        __proto__:aj,
+        readparent(){
+            //super = this.__proto__;
+            // console.log(this.__proto__.hd()+'1111')
+            console.log(super.hd()+'1111')
+        }
+    }
+    let mymixin1 = function(){}
+    // mymixin.prototype = Object.create(User.prototype);
+    // mymixin.prototype.ajax = aj.ajax;
+    // mymixin.prototype.readme = read.readme;
+    mymixin1.prototype = Object.assign(Object.create(User.prototype),write,aj)
+    new mymixin1().readparent()
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

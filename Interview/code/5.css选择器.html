@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html:root{
+            font-size: 30px;
+        }
+        /*跟child相关的都是先匹配位置，再匹配元素*/
+        /*li:nth-child(3){*/
+        /*    background-color: red;*/
+        /*    !* 属于其父元素的第三个子元素的每个 <li> 元素：先捕获所有父元素的所有第三个子元素，再匹配 <li>元素，若是<li>元素则命中，不是则不命中  *!*/
+        /*}*/
+        /*li:nth-last-child(2){*/
+        /*    background-color: blue;*/
+        /*    !*属于其父元素的 倒数二个子元素的每个 <li> 元素：先捕获所有父元素的所有倒数第二个子元素，再匹配 <li>，若是<li>元素则命中，不是则不命中   *!*/
+        /*}*/
+        /*li:nth-of-type(2){*/
+        /*    background-color: lime;*/
+        /*    !*属于其父元素第二个 <li> 元素 ; 匹配父元素下面的所有第二个<li>元素*!*/
+        /*}*/
+        /*li:nth-last-of-type(1){*/
+        /*    background-color: #666666;*/
+        /*    !*属于其父元素倒数第一个 <li> 元素 ; 匹配父元素下倒数第一的所有<li>元素*!*/
+        /*}*/
+        /*p:nth-last-of-type(2){*/
+        /*    background-color: #999;*/
+        /*    !*属于其父元素倒数第一个 <p> 元素 ; 匹配父元素下倒数第一的所有<p>元素*!*/
+        /*}*/
+        /*li:last-child{*/
+        /*    background-color: turquoise;*/
+        /*    !* 类似 nth-last-child(1)  *!*/
+        /*}*/
+        /*p:only-child{*/
+        /*    background: yellow;*/
+        /*    !*匹配父元素中只有一个子元素的元素，再判断标签是否为 <p>标签*!*/
+        /*}*/
+
+        /*p:only-of-type{*/
+        /*    background: #0000ff;*/
+        /*    !* 匹配父元素中只有一个<p>标签 的所有 <p>标签 *!*/
+        /*}*/
+
+
+        /*.myclass div:not(.my2){*/
+        /*    background-color: #56817A;*/
+        /*}*/
+        /*#zhangsan:target{*/
+        /*    !*锚点会激活该属性*!*/
+        /*    background-color: antiquewhite;*/
+        /*}*/
+
+        /*p~p{*/
+        /*    !*匹配p元素后的同级p元素*!*/
+        /*    color:#f00;*/
+        /*}*/
+
+        .div .myclass #mmy p::selection{
+            /*选中文本颜色*/
+            background-color: blue;
+        }
+        p:target
+        {
+            /*锚点会激活该属性*/
+            border: 2px solid #D4D4D4;
+            background-color: #e5eecc;
+        }
+        :valid{
+
+        }
+        /*.div .myclass #mmy p::after,.div .myclass #mmy p::before{*/
+        /*    content:'111';*/
+        /*    width: 10px;*/
+        /*    height: 10px;*/
+        /*    background-color: lime;*/
+        /*}*/
+
+        /*.div div#my .my1{*/
+        /*    background-color: bisque;*/
+        /*}*/
+        /*.div .myclass #mmy{*/
+        /*    background-color: red;*/
+        /*}*/
+
+
+    </style>
+</head>
+<body>
+
+<div class="div">
+    <div>
+        <p>我是测试</p>
+    </div>
+
+    <div >
+        <div>经开区就放假期间</div>
+        <div>我是上面额</div>
+        <p>我是测试</p>
+    </div>
+    <div class="div1">
+        <p><span>my</span>我是测试div1中的p</p>
+        <ul>
+            <p>wwwww</p>
+            <li>
+                我是li1
+                <ul>
+                    <li>
+                        我是li中的li2
+                    </li>
+                    <p>我是测试</p>
+                    <li>
+                        我是li中的li2
+                    </li>
+                    <li>
+                        111
+                    <li/>
+                </ul>
+            </li>
+            <li>我是2</li>
+            <li>我是3</li>
+            <li>我是4</li>
+            <li>我是5</li>
+            <p>W111</p>
+            <p>WOSH</p>
+        </ul>
+    </div>
+
+
+
+
+
+
+
+    <div class="myclass" id="my">
+        <div class="my1" id="mmy">
+            <p>p1</p>
+            <p>p11</p>
+
+            <p>p111</p>
+
+        </div>
+        <div class="my2">
+            <p>p2</p>
+            <p>p22</p>
+
+            <p>p222</p>
+        </div>
+        <div class="my3">
+            <p>p3</p>
+            <p>p33</p>
+
+            <p>p333</p>
+        </div>
+        <div class="my4">
+            <p>p4</p>
+            <p>p44</p>
+
+            <p>p444</p>
+        </div>
+    </div>
+    <div id="zhangsan">
+        我是about
+    </div>
+    <div>
+        <h3>这是一个标题</h3>
+        <p>这是一个文字段落</p>
+        <p>这是一个文字段落</p>
+        <h3>这是一个标题</h3>
+        <p>这是一个文字段落</p>
+        <h3>这是一个标题</h3>
+        <p>这是一个文字段落</p>
+        <p>这是一个文字段落</p>
+    </div>
+</div>
+</body>
+</html>

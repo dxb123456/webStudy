@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    //1. 关于css阻塞方面的优化
+        //1) 使用cdn节点使用外部资源优化
+        //2) 对css进行压缩
+        //3) 减少http请求
+        //4) 优化样式表的代码
+
+    //2.重绘（paint）重排（reflow）相关
+    //查看重绘重拍相关的
+    //3.函数防抖和函数节流
+        //防抖（debounce）：当有延迟要执行的动作，若在等待的这段时间内，再此触发了相同的事件，取消原来事件，重新计时。
+
+    var id=null;id1=null
+    document.addEventListener('click',function(){
+        fn();
+    })
+    function fn() {
+        id && clearTimeout(id);
+        id = setTimeout(()=>{
+            console.log(100)
+        },300)
+    }
+
+
+    //4.节流：设定一个特定的时间，让函数在特定的时间内只执行一次，不会频繁执行
+    document.addEventListener('click',function(){
+        fn1();
+    })
+    function fn1() {
+        if(id1){
+            return
+        }
+        id1 = setTimeout(()=>{
+            console.log(id1)
+            id1=null
+        },1000)
+    }
+
+
+
+    //5.跨页签通信(也叫数据同步)
+        //1)cookie
+        //2)sessionStorage 会话存储
+            //getItem(key)
+            //setItem(key,value)
+            //removeItem(key)
+            //clear()
+        //3)localStorage    本地存储
+            //getItem(key)
+            //setItem(key,value)
+            //removeItem(key)
+            //clear()
+        window.addEventListener('storage',function(event){
+            //给同样的值不会触发
+            console.log('100')
+        })
+    localStorage.setItem('b',2000)
+    document.addEventListener('click',function(){
+        console.log(100000)
+        localStorage.setItem('a',100)
+    })
+
+</script>
+</body>
+</html>

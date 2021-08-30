@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+    Ajax 是异步的javascript和xml。利用javascript 在保证页面不被刷新，链接不改变的情况下，与服务器进行交互。
+</p>
+<ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<script>
+
+//     xhr.open(method, url, async, user, password):
+//     作用: 通过XMLHttpRequest实例，打开一个请求。
+// 参数:
+//
+//     method(String): 请求所使用的HTTP方法; 例如 "GET", "POST", "PUT", "DELETE"等. 如果下个参数是非HTTP(S)的URL,则忽略该参数
+//     url(String): 请求访问的URL地址
+//     async(Boolean): 配置是否为异步执行，默认值为true; 如果想了解更多请点击ajax的同步与异步
+//     user(String): 授权参数
+//     password(String): 授权参数
+//     注意: 在未调用send()前, 再次调用open()方法等同于abort()
+
+   function Ajax_get(){
+       let  xmlHttp = new XMLHttpRequest();
+
+       xmlHttp.open('get','http://wthrcdn.etouch.cn/weather_mini?city=北京');
+       xmlHttp.send();   //get请求没有请求主题
+       xmlHttp.onreadystatechange =function () {
+           if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+               console.log('数据返回成功');
+               console.log(xmlHttp.responseText)
+           }
+       }
+    }
+   // Ajax_get();
+
+function Ajax_post(){
+    let  xmlHttp = new XMLHttpRequest();
+    console.log(xmlHttp)
+    // xmlHttp.open('post','https://admin-api-inhouse.bbwc.cn/admin/roleapp/getlist');
+    // xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+    // xmlHttp.send(JSON.stringify({   "uid":"MbQ9O0O0O1O0O0Ob",  "token":"28D53CB942E14EE0C0B38D5CE7CDD7B9",
+    //         "json":1,
+    //         "outputformat":2,
+    //         "pid":1,
+    //         "page":1,
+    //         "pagesize":100})
+    //     );   //get请求没有请求主题
+    // xmlHttp.onreadystatechange =function () {
+    //     if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+    //         console.log('数据返回成功',xmlHttp);
+    //         console.log(xmlHttp.responseText)
+    //     }
+    // }
+}
+//Ajax_post();
+
+
+
+//终止请求和超时
+function timeedGetText(timeout,callback){
+    var xhr = new XMLHttpRequest();
+    xhr.open('get','https://admin-api-inhouse.bbwc.cn/ttt.php?1');
+    xhr.send();
+    // xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+    var timedout = false;
+    var timer = setTimeout(function(){
+        timedout = true;
+        xhr.abort();
+    },timeout);
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState ==4){
+            console.log(1)
+            console.log(xhr)
+        }
+        if(timedout){
+            console.log(2)
+        }
+        clearTimeout(timer);
+        if(xhr.status === 200){
+            callback(xhr.responseText);
+        }
+    };
+    xhr.onabort = function(){
+        console.log('我中断了')
+    }
+}
+timeedGetText(1000,function(msg){
+    console.log(msg)
+})
+
+// 0 － （未初始化）还没有调用send()方法
+// 1 － （载入）已调用send()方法，正在发送请求
+// 2 － （载入完成）send()方法执行完成，已经接收到全部响应内容
+// 3 － （交互）正在解析响应内容
+// 4 － （完成）响应内容解析完成，可以在客户端调用了
+</script>
+</body>
+</html>

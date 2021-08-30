@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ <p class="p1">1</p>
+ <p ></p>
+<script>
+    //  1.Object.setPrototypeOf(a,b) ：a的原型链指向b
+    const child = {
+        name:'child'
+    };
+    const parent ={
+        name:'parent'
+    };
+    Object.setPrototypeOf(child,parent);   //child.__proto__ = parent.__proto__
+    var pro = Object.getPrototypeOf(parent);  //查看对象的原型
+    console.log("setPrototypeOf",child,pro);
+
+
+    //
+    function user(name){
+        this.name = name;
+    }
+    const myUser = new user('张三');
+    function user_2(obj,...args){
+        const constructor = Object.getPrototypeOf(obj).constructor;  //constructor 就是user
+        return new constructor(...args)
+    }
+
+    //2.构造函数检测  classA instanceof funB  =>类A的构造函数中是否含有functionB
+    var mm = user_2(myUser,'老王')
+
+    console.log ('instanceof',mm,mm instanceof user)   //构造函数检测，mm类的构造函数中是否含有user
+
+    //3.原型链检测  b.isPrototypeOf(a)  =>b对象是否在a对象的原型链上
+    const a={};
+    const b ={}
+    // Object.setPrototypeOf(a,b);
+    console.log('isPrototypeOf', b.isPrototypeOf(a))   //原型链检测，b对象是否在a对象的原型链上
+
+    // 4.属性检测：
+    //     1) in 不仅检测对象属性还会检测原型链上的属性
+    //     2) hasOwnPrototype 只会检测当前对象属性；
+    const aa = {name:'老王'};
+    const bb = {title:'第一课'};
+    aa.__proto__.web='100';
+    Object.prototype.webs='100';
+    console.log('in',"bb" in aa)
+    console.log('in',"webs" in aa)
+    console.log("hasOwnProperty",bb.hasOwnProperty('web'))
+
+
+    // 5.1(案例)对象方法借用
+    let hd = {
+        data:[1,2,4,3,16,24,5,6,7]
+    }
+    Object.setPrototypeOf(hd,{
+        max(){
+            return this.data.sort((a,b)=>{
+                return a-b
+            })
+        }
+    })
+    console.log('hd',hd)
+    let xx={
+        lessons:{
+            aa:'88',
+            bb:'55',
+            cc:'77',
+            dd:'100'
+        },
+        get data(){
+            return Object.values(this.lessons)
+        }
+    }
+    console.log('hd.max',hd.max())
+    console.log('hd.max.apply',hd.max.apply(xx))
+
+
+    // 5.2 (案例)dom借用数组借用方法
+    var arr = [-1,1,2,3,5];
+    var res = arr.filter(item=>{
+        return item<0
+    })
+    var ps = document.querySelectorAll('p');
+    console.log('dom',ps)
+    console.log('Array',Array)
+    var p1 = Array.prototype.filter.call(ps,item=>{
+        return item.hasAttribute('class')
+    })
+    console.log(p1)
+
+    //6.1.比较 User和 User1 两种创建类的区别
+    function User(name){
+        this.name = name;
+        // 1）show 在构造函数中，show函数在每次创建实例的时候都会被创建，增加内存开销
+        this.show = function(){
+            console.log(1)
+        }
+    }
+    function User1(name){
+        this.name = name;
+    }
+        // 2）show在prototype 添加show
+    User1.prototype.show=function(){
+        console.log(1)
+    }
+
+
+    // 6.2.多个方法可使用constructor:User1
+    User1.prototype ={
+        constructor:User,
+        show(){
+            console.log(1)
+        },
+        get (){
+            console.log(2)
+        }
+    }
+    var user = new User('张三');
+    console.log('constructor',user);
+    var user1 = new User1('李四');
+    console.log('constructor',user1);
+
+
+
+    // 7. 设置对象的原型 create 与 __proto__ 与 setPrototypeOf(a,b)
+    function show(name){
+        console.log(name)
+    }
+
+    //  1) 使用create设置,这种方式设置时第二个参数只能为对象;创建时第一个参数可以为null，创建的是没有__proto__的对象
+    let hd_1 = Object.create(show)  //可以设置hd的原型为show
+    //let h1 = Object.create(show)  //设置非object会报错
+    let h1 = Object.create(null)
+    console.log('h1',h1)
+    let hd1 = Object.create(show,{
+        name:{
+            value:111
+        }
+    })
+    //  2) __proto__ 赋值，不能赋值为非object的值
+    // hd1.__proto__ = Object.prototype // 当给__proto__ 给的值是基本数据类型的话是不会执行的
+    // hd1.__proto__ = null;            // 当给__proto__ 可以给null值, 或者 let hd1 =   Object.create(null)
+    hd_1.__proto__ = 'zhangsan';     // 这种赋值不会处理
+    console.log('hd_1',hd_1)
+    // 3)   Object.setPrototypeOf(hd,hd1)  //将hd1的原型对象给hd
+</script>
+</body>
+</html>

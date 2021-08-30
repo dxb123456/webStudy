@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    //super 的作用：
+    //1.相当于call  如：A.call(this,参数)，改变了this指向，将A的constructor执行了
+    //2.super.xx();  super能调用父级的方法
+
+    class KK{
+        constructor() {
+            this.cc ='1000'
+        }
+        getbb(){
+            console.log(this.cc)
+        }
+    }
+    class A extends KK{
+        constructor(n){
+            super()
+            this.x = 100;
+            this.dd='展示干'
+        }
+        getX(){
+            console.log(this.x);
+        }
+        pp(){
+            console.log(this.dd);
+        }
+        getParent(){
+            console.log(this.y)
+        }
+    }
+
+    class B extends A{//=>extends 类似实现原型继承
+        //
+        constructor(){
+            super(10);//=>类似于call的继承：在这里super相当于把A的constructor给执行了，并且让方法中的this是B的实例，super当中传递的实参都是在给A的constructor传递。
+            this.y = 20;
+        }
+        getY(){
+            console.log(this.y);
+        }
+        getParent(){
+            super.getParent();
+        }
+    }
+
+    let f = new B();
+    f.getParent();
+</script>
+</body>
+</html>
