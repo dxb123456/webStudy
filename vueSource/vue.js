@@ -2709,7 +2709,7 @@
 
     /**
      * Runtime helper for resolving raw children VNodes into a slot object.
-     * 将原始vnodes防御slot
+     * 将原始vnodes转成slot
      */
     //拆分slots
     function resolveSlots(
@@ -2808,8 +2808,8 @@
         var normalized = function () {
             var res = arguments.length ? fn.apply(null, arguments) : fn({});
             res = res && typeof res === 'object' && !Array.isArray(res)
-                ? [res] // single vnode
-                : normalizeChildren(res);
+                ? [res] // single vnode   单个vnode
+                : normalizeChildren(res); //多个vnode
             return res && res.length === 0
                 ? undefined
                 : res
@@ -2817,6 +2817,7 @@
         // this is a slot using the new v-slot syntax without scope. although it is
         // compiled as a scoped slot, render fn users would expect it to be present
         // on this.$slots because the usage is semantically a normal slot.
+        //这是一个使用新的v-slot语法的槽，没有作用域。虽然它被编译为一个有作用域的槽，但是渲染fn用户会期望它出现在这个槽上。因为在语义上使用的是一个正常的槽。
         if (fn.proxy) {
             Object.defineProperty(normalSlots, key, {
                 get: normalized,
@@ -2827,7 +2828,7 @@
         return normalized
     }
 
-    function proxyNormalSlot(slots, key) {
+    function proxyNormalSlot(slots, key) {  //新语法普通插槽
         return function () {
             return slots[key];
         }
@@ -2836,9 +2837,9 @@
     /*  */
 
     /**
-     * Runtime helper for rendering v-for lists.
+     * Runtime helper for rendering v-for lists.用于呈现v-for列表的运行时助手
      */
-    function renderList(
+    function renderList(     //返回了一个列表
         val,
         render
     ) {
@@ -2881,7 +2882,7 @@
     /*  */
 
     /**
-     * Runtime helper for rendering <slot>
+     * Runtime helper for rendering <slot>  //渲染slot助手
      */
     function renderSlot(
         name,
@@ -2918,8 +2919,9 @@
     /*  */
 
     /**
-     * Runtime helper for resolving filters
+     * Runtime helper for resolving filters  filters助手
      */
+    //拆分filter
     function resolveFilter(id) {
         return resolveAsset(this.$options, 'filters', id, true) || identity
     }
@@ -2938,6 +2940,7 @@
      * Runtime helper for checking keyCodes from config.
      * exposed as Vue.prototype._k
      * passing in eventKeyName as last argument separately for backwards compat
+     * 用于检查配置中的keyCodes的运行时助手。作为Vue.prototype._k作为最后一个参数单独传入eventKeyName，用于向后兼容
      */
     function checkKeyCodes(
         eventKeyCode,
@@ -2959,7 +2962,7 @@
     /*  */
 
     /**
-     * Runtime helper for merging v-bind="object" into a VNode's data.
+     * Runtime helper for merging v-bind="object" into a VNode's data.将v-bind插入到vNode的data中
      */
     function bindObjectProps(
         data,
@@ -2976,7 +2979,7 @@
                 );
             } else {
                 if (Array.isArray(value)) {
-                    value = toObject(value);
+                    value = toObject(value);  //这里将value变成了object
                 }
                 var hash;
                 var loop = function (key) {
@@ -3014,7 +3017,7 @@
     /*  */
 
     /**
-     * Runtime helper for rendering static trees.
+     * Runtime helper for rendering static trees. 静态树帮助器
      */
     function renderStatic(
         index,
@@ -3024,6 +3027,7 @@
         var tree = cached[index];
         // if has already-rendered static tree and not inside v-for,
         // we can reuse the same tree.
+        //如果已经呈现了静态树而不在v-for中，我们可以重用同一棵树。
         if (tree && !isInFor) {
             return tree
         }
@@ -3031,7 +3035,7 @@
         tree = cached[index] = this.$options.staticRenderFns[index].call(
             this._renderProxy,
             null,
-            this // for render fns generated for functional component templates
+            this // for render fns generated for functional component templates  用于呈现为功能组件模板生成的FNS
         );
         markStatic(tree, ("__static__" + index), false);
         return tree
@@ -3040,6 +3044,7 @@
     /**
      * Runtime helper for v-once.
      * Effectively it means marking the node as static with a unique key.
+     * v-once的运行时助手。这意味着用唯一的键将节点标记为静态。
      */
     function markOnce(
         tree,
@@ -3072,7 +3077,7 @@
         node.isOnce = isOnce;
     }
 
-    /*  */
+    /* 绑定listeners*/
 
     function bindObjectListeners(data, value) {
         if (value) {
@@ -3093,7 +3098,7 @@
         return data
     }
 
-    /*  */
+    /* 拆分作用域插槽 */
 
     function resolveScopedSlots(
         fns, // see flow/vnode
@@ -3121,7 +3126,7 @@
         return res
     }
 
-    /*  */
+    /* 绑定动态key */
 
     function bindDynamicKeys(baseObj, values) {
         for (var i = 0; i < values.length; i += 2) {
@@ -3130,6 +3135,7 @@
                 baseObj[values[i]] = values[i + 1];
             } else if (key !== '' && key !== null) {
                 // null is a speical value for explicitly removing a binding
+                //Null是显式删除绑定的特殊值
                 warn(
                     ("Invalid value for dynamic directive argument (expected string or null): " + key),
                     this
@@ -3142,11 +3148,12 @@
     // helper to dynamically append modifier runtime markers to event names.
     // ensure only append when value is already string, otherwise it will be cast
     // to string and cause the type check to miss.
+    //帮助程序动态地将修饰符运行时标记追加到事件名称。确保只在value已经是字符串时才追加，否则它将被转换为字符串并导致类型检查为Miss。
     function prependModifier(value, symbol) {
         return typeof value === 'string' ? symbol + value : value
     }
 
-    /*  */
+    /* 配置render助手 */
 
     function installRenderHelpers(target) {
         target._o = markOnce;
@@ -3168,8 +3175,7 @@
         target._p = prependModifier;
     }
 
-    /*  */
-
+    //渲染上下文
     function FunctionalRenderContext(
         data,
         props,
@@ -3182,6 +3188,7 @@
         var options = Ctor.options;
         // ensure the createElement function in functional components
         // gets a unique context - this is necessary for correct named slot check
+        // 确保函数组件中的createElement函数获得唯一的上下文  ——  这对于正确的命名槽检查是必要的
         var contextVm;
         if (hasOwn(parent, '_uid')) {
             contextVm = Object.create(parent);
@@ -3191,12 +3198,13 @@
             // the context vm passed in is a functional context as well.
             // in this case we want to make sure we are able to get a hold to the
             // real context instance.
+            //传入的上下文vm也是一个函数上下文。在本例中，我们希望确保能够持有真实的上下文实例。
             contextVm = parent;
             // $flow-disable-line
             parent = parent._original;
         }
-        var isCompiled = isTrue(options._compiled);
-        var needNormalization = !isCompiled;
+        var isCompiled = isTrue(options._compiled);   //是否编译
+        var needNormalization = !isCompiled;            //是否需要标准化
 
         this.data = data;
         this.props = props;
@@ -3221,9 +3229,9 @@
             }
         }));
 
-        // support for compiled functional template
+        // support for compiled functional template     支持编译函数模板
         if (isCompiled) {
-            // exposing $options for renderStatic()
+            // exposing $options for renderStatic()   //
             this.$options = options;
             // pre-resolve slots for renderSlot()
             this.$slots = this.slots();
@@ -3231,7 +3239,7 @@
         }
 
         if (options._scopeId) {
-            this._c = function (a, b, c, d) {
+            this._c = function (a, b, c, d) {   //_c 是创建vnode的
                 var vnode = createElement(contextVm, a, b, c, d, needNormalization);
                 if (vnode && !Array.isArray(vnode)) {
                     vnode.fnScopeId = options._scopeId;
@@ -3247,7 +3255,7 @@
     }
 
     installRenderHelpers(FunctionalRenderContext.prototype);
-
+    //创建一个功能组件
     function createFunctionalComponent(
         Ctor,
         propsData,
@@ -3260,14 +3268,14 @@
         var propOptions = options.props;
         if (isDef(propOptions)) {
             for (var key in propOptions) {
-                props[key] = validateProp(key, propOptions, propsData || emptyObject);
+                props[key] = validateProp(key, propOptions, propsData || emptyObject); //验证并返回一个value
             }
         } else {
             if (isDef(data.attrs)) {
-                mergeProps(props, data.attrs);
+                mergeProps(props, data.attrs);    //合并attrs
             }
             if (isDef(data.props)) {
-                mergeProps(props, data.props);
+                mergeProps(props, data.props);    //合并props
             }
         }
 
@@ -3297,6 +3305,7 @@
         // #7817 clone node before setting fnContext, otherwise if the node is reused
         // (e.g. it was from a cached normal slot) the fnContext causes named slots
         // that should not be matched to match.
+        //在设置fnContext之前克隆节点，否则如果节点被重用(例如它来自缓存的普通槽位)，fnContext会导致命名槽位不匹配。
         var clone = cloneVNode(vnode);
         clone.fnContext = contextVm;
         clone.fnOptions = options;
@@ -3323,7 +3332,7 @@
 
     /*  */
 
-    // inline hooks to be invoked on component VNodes during patch
+    // inline hooks to be invoked on component VNodes during patch 补丁期间在组件vnode上调用的内联钩子
     var componentVNodeHooks = {
         init: function init(vnode, hydrating) {
             if (
@@ -3331,7 +3340,7 @@
                 !vnode.componentInstance._isDestroyed &&
                 vnode.data.keepAlive
             ) {
-                // kept-alive components, treat as a patch
+                // kept-alive components, treat as a patch  保持活性的组件，作为补丁处理
                 var mountedNode = vnode; // work around flow
                 componentVNodeHooks.prepatch(mountedNode, mountedNode);
             } else {
@@ -3343,10 +3352,10 @@
             }
         },
 
-        prepatch: function prepatch(oldVnode, vnode) {
+        prepatch: function prepatch(oldVnode, vnode) {    //新旧vnode打补丁
             var options = vnode.componentOptions;
             var child = vnode.componentInstance = oldVnode.componentInstance;
-            updateChildComponent(
+            updateChildComponent(    //更新子孙组件
                 child,
                 options.propsData, // updated props
                 options.listeners, // updated listeners
@@ -3355,12 +3364,12 @@
             );
         },
 
-        insert: function insert(vnode) {
+        insert: function insert(vnode) {            //插入
             var context = vnode.context;
             var componentInstance = vnode.componentInstance;
             if (!componentInstance._isMounted) {
                 componentInstance._isMounted = true;
-                callHook(componentInstance, 'mounted');
+                callHook(componentInstance, 'mounted');   //调用hook
             }
             if (vnode.data.keepAlive) {
                 if (context._isMounted) {
@@ -3369,7 +3378,8 @@
                     // change, so directly walking the tree here may call activated hooks
                     // on incorrect children. Instead we push them into a queue which will
                     // be processed after the whole patch process ended.
-                    queueActivatedComponent(componentInstance);
+                    //在更新期间，保持活动的组件的子组件可能会发生变化，因此直接遍历树可能会在不正确的子组件上调用已激活的钩子。相反，我们将它们推入一个队列，该队列将在整个补丁进程结束后进行处理。
+                    queueActivatedComponent(componentInstance);  //推入活动组件
                 } else {
                     activateChildComponent(componentInstance, true /* direct */);
                 }
@@ -4380,7 +4390,7 @@
         }
     }
 
-    function isInInactiveTree(vm) {
+    function isInInactiveTree(vm) {    //是否是不活跃组件
         while (vm && (vm = vm.$parent)) {
             if (vm._inactive) {
                 return true
@@ -4389,7 +4399,7 @@
         return false
     }
 
-    function activateChildComponent(vm, direct) {
+    function activateChildComponent(vm, direct) {   //direct 直接的
         if (direct) {
             vm._directInactive = false;
             if (isInInactiveTree(vm)) {
@@ -4424,8 +4434,8 @@
     }
 
     function callHook(vm, hook) {
-        // #7573 disable dep collection when invoking lifecycle hooks
-        pushTarget();
+        // #7573 disable dep collection when invoking lifecycle hooks  在调用生命周期钩子时禁用dep收集
+        pushTarget();    // 将当前target推入 队列，
         var handlers = vm.$options[hook];
         var info = hook + " hook";
         if (handlers) {
@@ -4436,7 +4446,7 @@
         if (vm._hasHookEvent) {
             vm.$emit('hook:' + hook);
         }
-        popTarget();
+        popTarget(); // 完成之后又将target移出
     }
 
     /*  */
@@ -4568,7 +4578,8 @@
     function queueActivatedComponent(vm) {
         // setting _inactive to false here so that a render function can
         // rely on checking whether it's in an inactive tree (e.g. router-view)
-        vm._inactive = false;
+        //在这里将_inactive设置为false，以便渲染函数可以依赖于检查它是否处于非活动树中(例如路由器视图)
+        vm._inactive = false;    //inactive 不活跃的
         activatedChildren.push(vm);
     }
 
