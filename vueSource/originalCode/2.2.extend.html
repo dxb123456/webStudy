@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="vue.js"></script>
+    <title>extend测试</title>
+
+</head>
+<body>
+<div id="todoItem"></div>
+<script>
+    // 局部注册组件
+    var todoItem = Vue.extend({
+        // data: function () {
+        //     return {
+        //         todoData: [
+        //             { id: 0, text: '蔬菜1' },
+        //             { id: 1, text: '奶酪1' },
+        //             { id: 2, text: '随便其它什么人吃的东西1' }
+        //         ]
+        //     }
+        // },
+        props:{
+            todoData:{
+                type:Array,
+                default:[]
+            }
+        },
+        template: `
+        <ul>
+            <li v-for='(d, i) in todoData' :key="i">
+                {{ d.text }}
+            </li>
+        </ul>
+  `
+    });
+
+    // 请注意，在实例化extends组件构造器时，传入属性必须是propsData、而不是props哦
+    let myvue = new todoItem({
+        propsData: {
+            todoData: [
+                { id: 0, text: '蔬菜sss' },
+                { id: 1, text: '奶酪sss' },
+                { id: 2, text: '随便其它什么人吃的东西ssss' }
+            ]
+        }
+    }).$mount('#todoItem')
+    setTimeout(()=>{
+        debugger
+        myvue.todoData = [
+            {
+                id:99,
+                text:'sss'
+            },
+            {
+                id:100,
+                text:'sss1'
+            }
+        ]
+    },2000)
+</script>
+</body>
+</html>

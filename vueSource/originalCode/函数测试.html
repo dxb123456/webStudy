@@ -144,6 +144,41 @@
     document.onclick = function (ev) {
         console.log(ev)
     }
+
+    //12
+    function createOnceHandler(event, fn) {  //创建执行一次的处理器
+        var _target = {a:100};
+        var arg = arguments
+        console.log(arg)
+        return function onceHandler() {
+            console.log(arguments,arg === arguments)
+            var res = fn.apply(null, arguments);
+            console.log(res)
+            if (res !== null) {
+                console.log(event, onceHandler)
+                // _target.$off(event, onceHandler);
+            }
+        }
+    }
+    createOnceHandler('on',()=>{
+        console.log(2000)
+        return 2222
+    })(555)
+
+    //13
+    ~function time (){
+        const t0 = performance.now();  //程序运行到此位置时的内部时间毫秒
+        console.log(t0)
+        for (let i = 0; i < 1000; i++) {
+            console.log(i);
+        }
+        const t1 = performance.now();
+        console.log(t1)
+        console.log(`Call to doSomething took ${t1 - t0} milliseconds.`);
+
+        console.log(Date.now())
+    }()
+
 </script>
 </body>
 </html>
