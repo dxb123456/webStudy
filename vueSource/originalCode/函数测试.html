@@ -5,7 +5,9 @@
     <title>Title</title>
 </head>
 <body>
+ <div id="root">
 
+ </div>
 <script>
 
     //1.
@@ -166,18 +168,28 @@
     })(555)
 
     //13
-    ~function time (){
-        const t0 = performance.now();  //程序运行到此位置时的内部时间毫秒
-        console.log(t0)
-        for (let i = 0; i < 1000; i++) {
-            console.log(i);
-        }
-        const t1 = performance.now();
-        console.log(t1)
-        console.log(`Call to doSomething took ${t1 - t0} milliseconds.`);
+    // ~function time (){
+    //     const t0 = performance.now();  //程序运行到此位置时的内部时间毫秒
+    //     console.log(t0)
+    //     for (let i = 0; i < 1000; i++) {
+    //         console.log(i);
+    //     }
+    //     const t1 = performance.now();
+    //     console.log(t1)
+    //     console.log(`Call to doSomething took ${t1 - t0} milliseconds.`);
+    //
+    //     console.log(Date.now())
+    // }()
 
-        console.log(Date.now())
-    }()
+    //14.
+
+    // var text=document.createElement('text');
+    var text=document.createElementNS('http://www.w3.org/2000/svg','text');     //createElementNS 第一个参数是命名空间，第二个参数标签名
+    text.innerHTML='this is content';
+    text.setAttribute('dx','50')
+    text.setAttribute('dy','50')
+    console.log(text)
+    document.getElementById('root').appendChild(text)
 
 </script>
 </body>
