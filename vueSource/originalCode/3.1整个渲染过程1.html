@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //1.加载vue阶段：
+    //1）dep初始化，
+    //2)给Vnode的原型上拦截child，当获取child是返回vnodede实例
+    // var prototypeAccessors = {child: {configurable: true}};
+    // prototypeAccessors.child.get = function () {
+    //     return this.componentInstance
+    // };
+    //Object.defineProperties(VNode.prototype, prototypeAccessors);
+    //3)给array 添加方法拦截，
+        //var method= ['push','pop','shift','unshift','splice','sort','reverse']
+        //var arrayMethods = Object.create(Array.prototype)
+        //保存原始方法original = arrayProto[method]
+        //def(arrayMethods, method, ()=>{
+        //  var result = original.apply(this, args);//args中记录原有的参数
+        // ob.observeArray(inserted); 当有push，unshift，splice的话 需要再绑定监听
+        //ob.dep.notify();//更新
+        // }
+
+    //4）声明Observe，数组需要每一个都监听
+    //5) 声明watcher
+    //6)  a)initMixin(Vue);
+           // vue.prototype._init= function init()
+        //b) stateMixin(Vue);
+            //Object.defineProperty(Vue.prototype, '$data', dataDef);
+            //Object.defineProperty(Vue.prototype, '$props', propsDef);
+            //Vue.prototype.$set = set;
+            //Vue.prototype.$delete = del;
+            // Vue.prototype.$watch = function ()
+        //c)eventsMixin(Vue);
+            //Vue.prototype.$on
+            //Vue.prototype.$once
+            //Vue.prototype.$off
+            //Vue.prototype.$emit
+        //d)lifecycleMixin(Vue);
+            //Vue.prototype._update
+            //Vue.prototype.$forceUpdate
+            //Vue.prototype.$destroy
+        //e)renderMixin(Vue);
+            //Vue.prototype.$nextTick
+            // Vue.prototype._render
+    //7)Vue.prototype.__patch__
+    //8)Vue.prototype.$mount
+    //9）Vue.compile = compileToFunctions
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://resource-sdk.bbwc.cn/js/lib/vue/vue_2.5.16.min.js"></script>
+</head>
+<body>
+<div id="v1">
+    <my-tem inline-template :message="message">
+        <div>
+            <p>我是测试文件</p>
+            <p>{{message}}</p>
+            <p>{{name}}</p>
+            <p>{{age}}</p>
+<!--            <tem-p :name="name">-->
+<!--                {{name}}-->
+<!--            </tem-p>-->
+            <tem-p inline-template :name="name">
+                <p>这种写法等于template 不在声明中写，而是在父容器中写的</p>
+                <p>wwww</p>
+                {{name}}
+            </tem-p>
+        </div>
+    </my-tem>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#v1',
+        data: {
+            message: 'Hello',
+            name:'我是name'
+        },
+        components:{
+            'my-tem':{
+                props:['message'],
+                data:function () { //组件只能用返回函数获取值
+                    return    {
+                        age:'100'
+                    }
+                },
+                components: {
+                    "tem-p":{
+                        props:['name'],
+                        // template:'<p>{{ name }}</p>'
+                    }
+                }
+            }
+        },
+        computed: {
+
+        },
+        methods: {
+
+        }
+    })
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<img src="img/渲染0.png" alt="">
+<script>
+//vue 的几个模块
+    //Vue的核心方法
+    import Vue from './instance/index'
+    //定义了全局API的相关方法
+    import { initGlobalAPI } from './global-api/index'
+    //初始化_isServer,判断是否ssr
+    import { isServerRendering } from 'core/util/env'
+    import { FunctionalRenderContext } from 'core/vdom/create-functional-component'
+    //初始化全局API，如Vue.util,Vue.set,Vue.use等
+    initGlobalAPI(Vue)
+    //原型属性定义'$isServer',并拦截监听
+    Object.defineProperty(Vue.prototype, '$isServer', {
+        get: isServerRendering
+    })
+    //原型属性定义'$ssrContext',并拦截
+    Object.defineProperty(Vue.prototype, '$ssrContext', {
+        get () {
+            /* istanbul ignore next */
+            return this.$vnode && this.$vnode.ssrContext
+        }
+    })
+    // expose FunctionalRenderContext for ssr runtime helper installation
+    Object.defineProperty(Vue, 'FunctionalRenderContext', {
+        value: FunctionalRenderContext
+    })
+    Vue.version = '__VERSION__'
+    export default Vue
+
+
+    //1.vue instance/index见渲染过程1；
+    //2.全局API方法：
+        import config from '../config'
+        import { initUse } from './use'
+        import { initMixin } from './mixin'
+        import { initExtend } from './extend'
+        import { initAssetRegisters } from './assets'
+        import { set, del } from '../observer/index'
+        import { ASSET_TYPES } from 'shared/constants'
+        import builtInComponents from '../components/index'
+        import {
+            warn,
+            extend,
+            nextTick,
+            mergeOptions,
+            defineReactive
+        } from '../util/index'
+        //定义了全局属性和方法
+        export function initGlobalAPI (Vue: GlobalAPI) {
+        // 全局配置
+            const configDef = {}
+            configDef.get = () => config
+            if (process.env.NODE_ENV !== 'production') {
+                configDef.set = () => {
+                    warn(
+                        'Do not replace the Vue.config object, set individual fields instead.'
+                    )
+                }
+            }
+            Object.defineProperty(Vue, 'config', configDef)
+        // 这些工具方法不视作全局API的一部分，除非你已经意识到某些风险，否则不要去依赖他们
+            Vue.util = {
+                warn,
+                extend,
+                mergeOptions,
+                defineReactive
+            }
+        //全局属性
+            Vue.set = set
+            Vue.delete = del
+            Vue.nextTick = nextTick
+            Vue.options = Object.create(null)
+            ASSET_TYPES.forEach(type => {
+                Vue.options[type + 's'] = Object.create(null)
+            })
+            Vue.options._base = Vue
+        //扩展构建Vue.options.components
+            extend(Vue.options.components, builtInComponents)
+        //定义全局方法
+        //Vue.use
+            initUse(Vue)
+        //Vue.Mixin
+            initMixin(Vue)
+        //Vue.Extend
+            initExtend(Vue)
+            initAssetRegisters(Vue)
+        }
+
+
+
+</script>
+</body>
+</html>

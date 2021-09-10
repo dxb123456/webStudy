@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ <div id="div" style="transition-duration: 2s;transition: 1s  linear;">
+     我是测试的样式
+ </div>
+ <script>
+
+     //object.setProperty(propertyname, value, priority)
+     //	可选。字符串，规定是否需要设置属性的优先级 important。
+     //propertyname:必选
+     //value:可选
+     //priority 可选，可以是下面三个值:
+     //     "important"
+     //     undefined
+     //     ""
+     div.addEventListener('click',function(){
+
+         div.style.setProperty('color','blue')
+     })
+     var styles = window.getComputedStyle(div)
+     var transitionDelays = (styles["transition" + 'Delay'] || '').split(', ');
+     var transitionDurations = (styles["transition" + 'Duration'] || '').split(', ');
+     console.log(transitionDelays,transitionDurations)
+ </script>
+</body>
+</html>

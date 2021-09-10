@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="div1" xmlns:special="http://www.mozilla.org/ns/specialspace"
+special:specialAlign="utterleft" width="200px" >
+    2000
+</div>
+
+</body>
+<script>
+    div1.onclick = function(){
+        console.log(11)
+        d = document.getElementById("div1");
+        d.removeAttributeNS("http://www.mozilla.org/ns/specialspace", "specialAlign");
+    }
+
+    // Now: <div id="div1" width="200px" />
+</script>
+
+</body>
+</html>

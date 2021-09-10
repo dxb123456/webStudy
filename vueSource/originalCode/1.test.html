@@ -7,35 +7,105 @@
 
 </head>
 <body>
-<div id="root">
-    <input type="text" v-model="value" ref="myinput">
-    <button @click="click">点我</button>
+<div id="root" class="a1" :class="bb" :style={fontSize:"20px"} v-if="bb" style="color: #00ff00;">
+    <keep-alive>
+        <tem-p></tem-p>
+    </keep-alive>
+    <p-p>
+        <slot slot="h1">我是父组件给子组件的slot</slot>
+        <p>
+            我是父组件的
+        </p>
+    </p-p>
+    <ul>
+        <li v-for="item in arr" :key="item">{{item}}</li>
+    </ul>
+    <input type="text" v-model="value1" ref="myinput">
+    <button @click="myclick" style="color: #00ffff;">点我</button>
+    <p>{{nn}}</p>
+    <p>{{mm}}</p>
 </div>
 <script>
 
 
     var myVue = new Vue({
         el: '#root',
-        props:['a-b'],
+        props: ['a-b'],
         data() {
             return {
-                value: 1111,
+                value1: 1111,
+                bb: 'b1',
+                arr:[1,2,3,4,5]
             }
         },
-        methods:{
-            click(){
-                this.value = 2000;
+        methods: {
+            myclick() {
+                this.value1 = 2000;
                 console.log(this.$refs.myinput.value)
             }
         },
         mounted() {
             console.log(100)
+        },
+        computed(){
+            mm:function q(){
+                return this.value1+'mm'
+            }
+            nn:{
+                get:function p(){
+                    return this.value1+'nn'
+                }
+                set:function p2(v){
+                    this.value1 = v+'我是set'
+                }
+            }
+        },
+        components: {
+            "tem-p":{
+                props:['name'],
+                template:'<p>这种写法等于template 不在声明中写，而是在父容器中写的</p>\n' +
+                    '<p>wwww</p>\n' +
+                    '{{name}}'
+            },
+            'p-p':{
+                template:'<div class="aaa">' +
+                        '<div>我是子组件中</div>'+
+                        '<slot name="h1"></slot>'+
+                    '</div>'
+            }
+
         }
+
     })
     console.log(myVue)
-    console.log(window.HTMLUnknownElement )
+    console.log(window.HTMLUnknownElement)
 
 
+   // var astRender =  "" +
+   //     "with(this){" +
+   //     " return (bb)?_c(" +
+   //     "'div',{" +
+   //     "staticClass:"a1"," +
+   //     "class:bb," +
+   //     "staticStyle:{"color":"#00ff00"}," +
+   //      "style:({fontSize:"20px"})," +
+   //      "attrs:{"id":"root"}}," +
+   //      "[_c('input'," +
+   //          "{directives:[{name:"model",rawName:"v-model",value:(value),expression:"value"}]," +
+   //          "ref:"myinput"," +
+   //          "attrs:{"type":"text"}," +
+   //          "domProps:{"value":(value)}," +
+   //          "on:{"input":function($event){if($event.target.composing)return;" +
+   //              "value=$event.target.value}}})," +
+   //       "_v(" ")," +
+   //       "_c('button'," +
+   //          "{staticStyle:{"color":"#00ffff"}," +
+   //          "on:{"click":click}}," +
+   //          "[_v("点我")])]):_e()}"
+
+
+
+    "(bb)?_c('div',{staticClass:\"a1\",class:bb,staticStyle:{\"color\":\"#00ff00\"},style:({fontSize:\"20px\"}),attrs:{\"id\":\"root\"}},[_c('keep-alive',[_c('tem-p')],1),_v(\" \"),_c('p-p',[_t(\"default\",[_v(\"我是父组件给子组件的slot\")],{\"slot\":\"h1\"}),_v(\" \"),_c('p',[_v(\"\\n            我是父组件的\\n        \")])],2),_v(\" \"),_c('ul',_l((arr),function(item){return _c('li',{key:item},[_v(_s(item))])}),0),_v(\" \"),_c('input',{directives:[{name:\"model\",rawName:\"v-model\",value:(value),expression:\"value\"}],ref:\"myinput\",attrs:{\"type\":\"text\"},domProps:{\"value\":(value)},on:{\"input\":function($event){if($event.target.composing)return;value=$event.target.value}}}),_v(\" \"),_c('button',{staticStyle:{\"color\":\"#00ffff\"},on:{\"click\":click}},[_v(\"点我\")])],1):_e()"
 </script>
 </body>
 </html>

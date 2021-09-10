@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>constructor-nodelist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.css"/>
+
+</head>
+<body>
+<button class="copy_file" onclick="copyText('copy_file')">点我复制</button>
+<a id="copy_file" href="复制内容" ></a>
+<script type="text/javascript" src="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script>
+    function copyText(str_file) {
+        const btn = document.querySelector('.'+str_file);
+        var copy_val = document.getElementById(str_file)
+        var copy_file = copy_val.getAttribute("href");
+        btn.addEventListener('click',() => {
+            const input = document.createElement('input');
+            document.body.appendChild(input);
+            input.setAttribute('value', copy_file);
+            input.select();
+            if (document.execCommand('copy')) {
+                document.execCommand('copy');
+                swal("复制成功！","success");
+            }
+            document.body.removeChild(input);
+        })
+    }
+
+</script>
+</body>

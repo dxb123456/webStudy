@@ -8,6 +8,8 @@
  <div id="root">
 
  </div>
+ <p id="p">234324234</p>
+ <input type="text" id="input">
 <script>
 
     //1.
@@ -190,6 +192,50 @@
     text.setAttribute('dy','50')
     console.log(text)
     document.getElementById('root').appendChild(text)
+
+    //15.
+    function trigger(el, type) {
+        var e = document.createEvent('HTMLEvents');
+        e.initEvent(type, true, true);
+        el.dispatchEvent(e);
+    }
+    p.addEventListener('click', function (e) {
+        console.log(11111)
+        e.stopPropagation()
+    });
+    setTimeout(()=>{
+        trigger(p, 'click');
+    },1000)
+
+    //17
+    input.addEventListener('compositionstart', onCompositionStart);
+    input.addEventListener('compositionend', onCompositionEnd);
+    function onCompositionStart(e) {   //当正在输入汉语拼音时，能被捕获
+        console.log(111)
+        e.target.composing = true;
+
+    }
+
+    input.addEventListener('input',(e)=>{
+        if(e.target.composing){
+            return
+        }
+        console.log(input.value)
+    })
+    //
+    function trigger(el, type) {
+        var e = document.createEvent('HTMLEvents');
+        e.initEvent(type, true, true);
+        el.dispatchEvent(e);
+    }
+    function onCompositionEnd(e) {
+        if (!e.target.composing) {
+            return
+        }
+        e.target.composing = false;
+        trigger(e.target, 'input');
+    }
+
 
 </script>
 </body>
