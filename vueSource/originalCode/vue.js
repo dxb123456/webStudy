@@ -1680,9 +1680,9 @@
      * 将两个选项对象合并为一个新对象  在实例化和继承中使用的核心实用程序，options的值会使用starts对应的方法进行处理
      */
     function mergeOptions(
-        parent,
-        child,
-        vm
+        parent,     //基础配置
+        child,      //实例
+        vm          //this
     ) {
         {
             checkComponents(child);
@@ -4864,21 +4864,21 @@
         vm._watchers = [];
         var opts = vm.$options;
         if (opts.props) {
-            initProps(vm, opts.props);
+            initProps(vm, opts.props);   //添加了一个_props 和vm[key]的监听
         }
         if (opts.methods) {
-            initMethods(vm, opts.methods);
+            initMethods(vm, opts.methods); //vm[fn] = function;fn的this指向vm
         }
         if (opts.data) {
-            initData(vm);
+            initData(vm);                 //给vm添加vm[key]的拦截，_data{_ob_:obj,...vm[key]的拦截}
         } else {
             observe(vm._data = {}, true /* asRootData */);
         }
         if (opts.computed) {
-            initComputed(vm, opts.computed);
+            initComputed(vm, opts.computed);  //给vm[key]拦截，_watchers数组添加了两个computed对象生成的watcher，vm._computedWatchers保存了两个数据
         }
         if (opts.watch && opts.watch !== nativeWatch) {
-            initWatch(vm, opts.watch);
+            initWatch(vm, opts.watch);  //_watchers数组添加了两个watch生成的watcher
         }
     }
 
@@ -5167,9 +5167,9 @@
         Vue.prototype.$delete = del;
 
         Vue.prototype.$watch = function (
-            expOrFn,
-            cb,
-            options
+            expOrFn,  //watch名称
+            cb,       //用户写入的cb
+            options     //传入配置，默认无
         ) {
             var vm = this;
             if (isPlainObject(cb)) {
@@ -5200,8 +5200,7 @@
             var vm = this;                        //当前vue实例
             // a uid
             vm._uid = uid$3++;                      //添加一个uid
-
-            var startTag, endTag;
+            var startTag, endTag;                   //开始标签，结束标签
             /* istanbul ignore if */
             if (config.performance && mark) {
                 startTag = "vue-perf-start:" + (vm._uid);
@@ -5218,26 +5217,26 @@
                 // internal component options needs special treatment. 优化内部组件实例化，因为动态选项合并非常慢，而且内部组件选项不需要特殊处理。
                 initInternalComponent(vm, options);
             } else {
-                vm.$options = mergeOptions(
-                    resolveConstructorOptions(vm.constructor),
+                vm.$options = mergeOptions(          //1.合并options配置,供后期使用
+                    resolveConstructorOptions(vm.constructor), //分解构造函数配置
                     options || {},
                     vm
                 );
             }
             /* istanbul ignore else */
             {
-                initProxy(vm);
+                initProxy(vm);                     //2使用Proxy 创建一个render函数的调用者
             }
             // expose real self
             vm._self = vm;
-            initLifecycle(vm);
-            initEvents(vm);
-            initRender(vm);
-            callHook(vm, 'beforeCreate');
-            initInjections(vm); // resolve injections before data/props
-            initState(vm);
-            initProvide(vm); // resolve provide after data/props
-            callHook(vm, 'created');
+            initLifecycle(vm);                   //3.初始化组件的生命周期，绑定$children,_watcher,_isMounted等，目前是空值
+            initEvents(vm);                     //4,主要创建_events属性，用于存储和当前组件有关的事件监听
+            initRender(vm);                     //5.初始化与渲染有关的属性和方法，初始化_vnode,$slots,_c,$attr,$listeners
+            callHook(vm, 'beforeCreate');  //6.调用beforeCreate钩子
+            initInjections(vm);                  //7.从外部组件注入进当前组件的数据，即接收数据，
+            initState(vm);                      //8.分别调用了initProps，initMethods，initData、initComputed、initWatch初始化配置
+            initProvide(vm);                    // 9、与injections 对应，vm._provided = 用户写入的provide
+            callHook(vm, 'created');       //10.调用creatd钩子
 
             /* istanbul ignore if */
             if (config.performance && mark) {
@@ -5245,7 +5244,7 @@
                 mark(endTag);
                 measure(("vue " + (vm._name) + " init"), startTag, endTag);
             }
-
+            debugger
             if (vm.$options.el) {
                 vm.$mount(vm.$options.el);
             }
@@ -5315,14 +5314,26 @@
         ) {
             warn('Vue is a constructor and should be called with the `new` keyword');
         }
-        debugger
+        debugger;
         this._init(options);
     }
-    initMixin(Vue);
-    stateMixin(Vue);
-    eventsMixin(Vue);
+    initMixin(Vue);     //添加_init;
+    stateMixin(Vue);    //Object.defineProperty(Vue.prototype, '$data', dataDef);
+                        //Object.defineProperty(Vue.prototype, '$props', propsDef);
+                        //Vue.prototype.$set = set;
+                        //Vue.prototype.$delete = del;
+                        //Vue.prototype.$watch = function ()
+    eventsMixin(Vue);   //Vue.prototype.$on
+                        //Vue.prototype.$once
+                        //Vue.prototype.$off
+                        //Vue.prototype.$emit
     lifecycleMixin(Vue);
+                        //Vue.prototype._update
+                        //Vue.prototype.$forceUpdate
+                        //Vue.prototype.$destroy
     renderMixin(Vue);
+                        //Vue.prototype.$nextTick
+                        // Vue.prototype._render
 
     /* 对外暴露了use ，用于使用插件*/
     function initUse(Vue) {
@@ -5384,6 +5395,7 @@
             }
 
             var Sub = function VueComponent(options) {
+                debugger
                 this._init(options);
             };
             Sub.prototype = Object.create(Super.prototype);
@@ -12285,6 +12297,7 @@
         el,
         hydrating
     ) {
+        debugger
         el = el && query(el);
         /* istanbul ignore if */
         if (el === document.body || el === document.documentElement) {

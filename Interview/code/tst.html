@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+
+
+    // async function async1(){
+    //     console.log('async1 start')    //1
+    //     let data = await async2();
+    //     console.log(data)       //100  6
+    //     console.log("async1 end")    //7
+    // }
+    // async function async2(){
+    //     console.log('async2')           //2
+    //     return Promise.resolve('100')   //等待1 结束
+    // }
+    // setTimeout(()=>{
+    //     console.log('setTimeout')    //9
+    // },0)
+    // // async1()
+    // console.log('script start')      //3
+    // let promise = new Promise((resolve,reject)=>{
+    //     console.log(1000)             //4
+    //     resolve(Promise.resolve(20).then(value=>{console.log(value,200); return value}))  //等待2 结束
+    // })
+    // debugger
+    // new Promise((resolve,reject)=>{         //4
+    //     resolve(300)  //等待2 结束
+    // }).then(value=>console.log(value))
+    // promise.then(value=>console.log(value)) //8
+    // console.log('end')                //5
+
+    // fn(Promise.resolve(20).then(value=>{console.log(value,200); return value}));
+    // function fn(mm){
+    //     // new Promise((resolve,reject)=>{         //4
+    //     //     resolve(mm)
+    //     // }).then(value=>console.log(value,'22222'))
+    //     console.log(mm)
+    //     setTimeout(_=>{
+    //        console.log(mm)
+    //     },0)
+    // }
+    let info ={
+        name:'xx',
+        age:0,
+        id:1
+    }
+    function call_test(name,age){
+        console.log(this)
+        this.name = name;
+        this.age = age;
+        return name
+    }
+
+    Function.prototype._call = function (obj,...args){
+        obj = obj ? Object(obj):window;
+        obj.fn = this;
+        let result = obj.fn(...args);
+        delete obj.fn
+        return result
+    }
+    Function.prototype._apply = function (obj,args){
+        obj = obj ? Object(obj):window;
+        obj.fn = this;
+        let result = obj.fn(...args);
+        delete obj.fn
+        return result
+    }
+    Function.prototype._bind= function(obj,...args){
+        var _this = this;
+        return function result(...arg){
+            if(this instanceof result){
+                return _this.apply(this,[...args,...arg])
+            }
+            return _this.apply(obj,[...args,...arg])
+        }
+    }
+    var mybind = call_test.bind(info,'张三');
+    // console.log(mybind)
+    // console.log(new mybind(15))
+
+   //  console.log(call_test._apply(info,['张三',10]))
+   // console.log(call_test.apply(info,['张三',10]))
+
+   //  var a =1;b=2
+   //  console.log(aa)
+   //  {
+   //      function aa(){
+   //          console.log(100)
+   //      }
+   //  }
+   // var ss = ()=>{}
+   // console.log(ss)
+
+    // var obj={
+    //
+    //     get(){
+    //         console.log(100);
+    //     }
+    // }
+    // console.log(obj.hh)
+    // class Bb{
+    //     constructor(){
+    //         this.age = '122'
+    //     }
+    //     get ages(){
+    //         return this.age
+    //     }
+    //     set ages(value){
+    //         this.age = value
+    //     }
+    // }
+    // var bb = new Bb();
+    // bb.ages = 1 ;
+    // console.log(bb)
+    //
+    // let obj ={
+    //     a:[1,2,3]
+    // }
+    // let newobj = new Proxy(obj.a,{
+    //     get:function(target,attr){
+    //         console.log(target,attr)
+    //         return target[attr]
+    //     },
+    //     set:function(target,attr,newvalue){
+    //         if(target[attr] === newvalue){
+    //             return
+    //         }
+    //         target[attr] = value
+    //     }
+    // })
+    // newobj[1] = 2
+    // console.log(newobj)
+
+
+
+    //1.原型链继承
+    // var Aa = function (){
+    //     this.name = '张三'
+    // }
+    //
+    // let Bb = function (){}
+    // Bb.prototype = new Aa();
+    // Bb.prototype.constructor = Bb;
+    //
+    // console.dir(new Bb().name)
+    //
+    // //2.使用call 继承
+    // function Cc() {
+    //     this.name ='cc'
+    // }
+    // Cc.prototype.say = function(){
+    //     console.log(this.cc)
+    // }
+    //
+    // function Dd (){
+    //     Cc.call(this)
+    //     this.age = 1
+    // }
+    // Dd.prototype.say1 = function(){
+    //     console.log(this.age)
+    // }
+    // let dd = new Dd();
+    // // console.log(dd)
+    //
+    // //3.混合继承
+    // function Ee(){
+    //     Cc.call(this)
+    //     this.age =100
+    // }
+    // Ee.prototype = Object.create(Cc.prototype);
+    // Ee.prototype.say1 = function(){
+    //     console.log(this.age)
+    // }
+    // let ff = new Ee();
+    // Cc.prototype.kk = 111
+    // // console.log(ff)
+    //
+    // //4.class中的extends继承
+    // class Parent{
+    //     constructor(name){
+    //         this.a =name;
+    //         this.b =2;
+    //     }
+    //     say(){
+    //         this.a=1;
+    //     }
+    // }
+    // class Son extends Parent{
+    //     constructor(name){
+    //         super(name)
+    //         this.c =111
+    //     }
+    //     say1(){
+    //         console.log(111)
+    //     }
+    // }
+    // // console.dir(new Son('老张'))
+    // let obj ={
+    //     p:{
+    //         value:function(){
+    //             console.log('ppp')
+    //         }
+    //     }
+    //
+    // }
+    // create 的内部过程
+    // Object.prototype._create = function (fn,obj){
+    //     var myfn = function (){}
+    //     myfn.prototype = fn
+    //     let result = new myfn();
+    //     if(obj){
+    //         console.log(obj)
+    //         for(let key in obj){
+    //             if(obj.hasOwnProperty(key)){
+    //                 result[key] = obj[key].value
+    //             }
+    //         }
+    //     }
+    //     return result
+    // }
+    // console.log(Object._create(Aa,obj))
+    // console.log(Object.create(Aa,obj))
+
+    //new 的内部过程
+    // function CreateNew(fn,...args) {
+    //     let obj ={}
+    //     obj.__proto__ = fn.prototype;
+    //     fn.call(obj,...args)
+    //     return obj
+    // }
+    // console.log(CreateNew(Aa,'老王'))
+    // console.log(new Aa('老王1'))
+
+
+
+    //排序
+    var arr= [23,45,6,9,23,78,90,2,4,5,29,21,9,88,33,22]
+    // //1.冒泡排序
+    // for (var i=0;i<arr.length;i++){    //
+    //     for(var j = 0;j<arr.length-i;j++){
+    //         if(arr[j]>arr[j+1]){
+    //             let temp = arr[j]
+    //             arr[j] = arr[j+1]
+    //             arr[j+1] = temp
+    //         }
+    //     }
+    // }
+    // console.log(arr)
+    //2.sort排序
+    // console.log(arr.sort((a,b)=>a-b))
+    //3.快速排序
+
+    function quick(arr){
+        if(arr.length<=1){
+            return arr
+        }
+        let middleDate = arr[parseInt((arr.length-1)/2)]
+        let left=[]
+        let right =[]
+        arr.map(item=>{
+            item <middleDate ?
+                left.push(item) :
+                right.push(item)
+        })
+        return quick(left).concat([middleDate],quick(right))
+    }
+    //4.插入排序
+    var arr= [22,23,45,6,9,23,78,90,2,4,45,5,29,21,9,88,33,22]
+     function insertSort(arr){
+         var newArr= [arr[0]];
+         for(var i = 1;i<arr.length;i++){
+             let j = i;
+             if(arr[i]<=newArr[0]){
+                 newArr.unshift(arr[i])
+             }else{
+                 while(j){
+                     if(arr[i]>newArr[j-1]){
+                         newArr.splice(j,0,arr[i])
+                         break;
+                     }
+                     j--;
+                 }
+             }
+         }
+         return newArr
+     }
+    // console.log(insertSort(arr))
+
+    // var arr1 = [9,8,3,4,5]
+    // arr1.splice(2,0,arr1[4])
+
+
+    //数组去重
+    //1.对象数组去重
+    function del(arr){
+        for(var i=0;i<arr.length;i++){
+            var  j = i;
+            while(--j>=0){
+                if(arr[j] === arr[i]){
+                    arr.splice(i,1)
+                    i--;
+                    break;
+                }
+            }
+        }
+        return arr
+    }
+    //console.log(del(arr))
+    // 2.使用reduce
+    function del2(arr){
+        var newArr =[];
+        arr.reduce((total,item,index,arrs)=>{
+            if(!total.includes(item)){
+                total.push(item)
+            }
+            return total
+        },newArr)
+        return newArr
+    }
+    // console.log(arr,del2(arr))
+    //3.使用 map或者Array
+    function del3(arr){
+        var map=new Map();
+        arr.map((item)=>{
+            if(!map.has(item)){
+                map.set(item,true)
+            }
+        })
+        return Array.from(map.keys())
+    }
+    console.log(arr,del3(arr))
+    //4.使用set
+    var map= new Set(arr)
+    console.log(map)
+
+    //斐波那契数列
+    function fobList(num){
+        var arr = [1,1]
+        if(num<=0){
+            throw new Error('num must > 0')
+        }
+        if(num == 1){
+            return [1]
+        }
+        if(num == 2){
+            return arr
+        }
+        else{
+            for(let i=2;i<num;i++){
+                arr.push(arr[i-2]+arr[i-1])
+            }
+        }
+        return arr
+    }
+
+
+    //判断回文
+    function huiwen(str){
+        return str === str.split('').reverse().join('')   //split 默认不分割，join默认是以 ','分割
+    }
+</script>
+</body>
+</html>

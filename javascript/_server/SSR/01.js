@@ -1,11 +1,19 @@
 // 第 1 步：创建一个 Vue 实例
 const Vue = require('vue')
 const app = new Vue({
-    template: `<div>Hello World:{{a}}+{{b}}</div>`,
+    template: `<div>
+        <header> 你是谁 </header>
+        Hello World:{{a}}+{{b}}
+        <span :class="className">我是你</span>
+        
+</div>`,
     data: ()=>{
         return {
             a:1000,
-            b:20000
+            b:20000,
+            className:{
+                'pp':true
+            }
         }
     }
 })

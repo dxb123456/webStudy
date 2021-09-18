@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="div">
+
+</div>
+<script>
+    //1.微任务
+    //1.mutationObserve
+    //childList：设置true，表示观察目标子节点的变化，比如添加或者删除目标子节点，不包括修改子节点以及子节点后代的变化
+    // attributes：设置true，表示观察目标属性的改变
+    // characterData：设置true，表示观察目标数据的改变
+    // subtree：设置为true，目标以及目标的后代改变都会观察
+    // attributeOldValue：如果属性为true或者省略，则相当于设置为true，表示需要记录改变前的目标属性值，设置了attributeOldValue可以省略attributes设置
+    // characterDataOldValue：如果characterData为true或省略，则相当于设置为true,表示需要记录改变之前的目标数据，设置了characterDataOldValue可以省略characterData设置
+    // attributeFilter：如果不是所有的属性改变都需要被观察，并且attributes设置为true或者被忽略，那么设置一个需要观察的属性本地名称（不需要命名空间）的列表
+
+    // setTimeout(()=>{
+    //  console.log(11111)
+    // })
+    // var mutation = new MutationObserver((mutations)=>{
+    //     console.log(100,mutations)
+    //     //mutations[i].type 能判断出来是什么改变了
+    // })
+    // var div = document.querySelector('.div');
+    // mutation.observe(div,{childList:true,subtree:true,attributes:true})
+    // div.appendChild(document.createTextNode('100'))
+    // var record = mutation.takeRecords();   //保存当前记录，后面有改变将不再触发
+    // div.setAttribute('name',1)
+    // Promise.resolve(200).then(_=>console.log(_))
+    // mutation.disconnect();   //停止监听   会清空已经检测的列表
+
+
+    //2.setImmediate   只有ie10 以上支持
+    // var immediate = setImmediate(fn,[参数1,参数2])    //参数会被传入fn
+
+</script>
+</body>
+</html>

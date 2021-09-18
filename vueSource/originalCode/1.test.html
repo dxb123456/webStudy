@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="vue.js"></script>
     <title>Title</title>
-
+    <script src="vue.js"></script>
 </head>
 <body>
 <div id="root" class="a1" :class="bb" :style={fontSize:"20px"} v-if="bb" style="color: #00ff00;">
     <keep-alive>
-        <tem-p></tem-p>
+        <tem-p1></tem-p1>
     </keep-alive>
     <p-p>
         <slot slot="h1">我是父组件给子组件的slot</slot>
@@ -18,7 +17,7 @@
         </p>
     </p-p>
     <ul>
-        <li v-for="item in arr" :key="item">{{item}}</li>
+        <li v-for="item in arr" :key="item">{{item | myfilter}}</li>
     </ul>
     <input type="text" v-model="value1" ref="myinput">
     <button @click="myclick" style="color: #00ffff;">点我</button>
@@ -30,6 +29,7 @@
 
     var myVue = new Vue({
         el: '#root',
+        name:'root',
         props: ['a-b'],
         data() {
             return {
@@ -47,33 +47,61 @@
         mounted() {
             console.log(100)
         },
-        computed(){
-            mm:function q(){
+        computed:{
+            mm:function (){
                 return this.value1+'mm'
-            }
+            },
             nn:{
                 get:function p(){
                     return this.value1+'nn'
-                }
+                },
                 set:function p2(v){
                     this.value1 = v+'我是set'
                 }
             }
         },
-        components: {
-            "tem-p":{
-                props:['name'],
-                template:'<p>这种写法等于template 不在声明中写，而是在父容器中写的</p>\n' +
-                    '<p>wwww</p>\n' +
-                    '{{name}}'
+        provide(){
+            return {
+                myProvide:{
+                    a:100,
+                    b:200
+                }
+            }
+        },
+        filters:{
+            myfilter(value){
+                return value+10000;
+            }
+        },
+        watch:{
+            watch_a(val, oldVal){
+                console.log(+val, oldVal);
             },
+            watch_b:{//深度监听，可监听到对象、数组的变化
+                handler(val, oldVal){
+                    console.log(value,oldVal)
+                },
+                deep:true //true 深度监听
+            }
+        },
+
+        components: {
+            // "tem-p1":{
+            //     props:['name'],
+            //     inject:['myProvide'],
+            //     template:'<div><p>这种写法等于template 不在声明中写，而是在父容器中写的</p>\n' +
+            //         '<p>wwww{{name}}----{{myProvide.a}}</p></div>'
+            // },
             'p-p':{
                 template:'<div class="aaa">' +
-                        '<div>我是子组件中</div>'+
-                        '<slot name="h1"></slot>'+
-                    '</div>'
+                                '<div>我是子组件中</div>'+
+                                '<slot name="h1"></slot>'+
+                        '</div>'
             }
 
+        },
+        created(){
+            console.log('我创建了')
         }
 
     })
@@ -105,7 +133,7 @@
 
 
 
-    "(bb)?_c('div',{staticClass:\"a1\",class:bb,staticStyle:{\"color\":\"#00ff00\"},style:({fontSize:\"20px\"}),attrs:{\"id\":\"root\"}},[_c('keep-alive',[_c('tem-p')],1),_v(\" \"),_c('p-p',[_t(\"default\",[_v(\"我是父组件给子组件的slot\")],{\"slot\":\"h1\"}),_v(\" \"),_c('p',[_v(\"\\n            我是父组件的\\n        \")])],2),_v(\" \"),_c('ul',_l((arr),function(item){return _c('li',{key:item},[_v(_s(item))])}),0),_v(\" \"),_c('input',{directives:[{name:\"model\",rawName:\"v-model\",value:(value),expression:\"value\"}],ref:\"myinput\",attrs:{\"type\":\"text\"},domProps:{\"value\":(value)},on:{\"input\":function($event){if($event.target.composing)return;value=$event.target.value}}}),_v(\" \"),_c('button',{staticStyle:{\"color\":\"#00ffff\"},on:{\"click\":click}},[_v(\"点我\")])],1):_e()"
+    // "(bb)?_c('div',{staticClass:\"a1\",class:bb,staticStyle:{\"color\":\"#00ff00\"},style:({fontSize:\"20px\"}),attrs:{\"id\":\"root\"}},[_c('keep-alive',[_c('tem-p')],1),_v(\" \"),_c('p-p',[_t(\"default\",[_v(\"我是父组件给子组件的slot\")],{\"slot\":\"h1\"}),_v(\" \"),_c('p',[_v(\"\\n            我是父组件的\\n        \")])],2),_v(\" \"),_c('ul',_l((arr),function(item){return _c('li',{key:item},[_v(_s(item))])}),0),_v(\" \"),_c('input',{directives:[{name:\"model\",rawName:\"v-model\",value:(value),expression:\"value\"}],ref:\"myinput\",attrs:{\"type\":\"text\"},domProps:{\"value\":(value)},on:{\"input\":function($event){if($event.target.composing)return;value=$event.target.value}}}),_v(\" \"),_c('button',{staticStyle:{\"color\":\"#00ffff\"},on:{\"click\":click}},[_v(\"点我\")])],1):_e()"
 </script>
 </body>
 </html>

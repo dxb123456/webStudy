@@ -1,5 +1,6 @@
 var express = require('express');
 var CONFIG =require("./config.js")
+CONFIG.PORT = 8001;
 // 创建 express 实例
 var app = express();
 app.use((req,res,next)=>{
@@ -33,6 +34,6 @@ app.get('/', function (req, res) {
 });
 
 // 监听到8000端口
-app.listen(8000, function () {
+app.listen(CONFIG.PORT, function () {
     console.log('Hello World is listening at port 8000');
 });
