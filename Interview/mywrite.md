@@ -281,5 +281,90 @@
    29.JS模块包装格式有哪些？
    
    30.常用的算法：
-    1.排序
+    1).冒泡排序
+      for (var i=0;i<arr.length;i++){    //
+          for(var j = 0;j<arr.length-i;j++){
+              if(arr[j]>arr[j+1]){
+                  let temp = arr[j]
+                  arr[j] = arr[j+1]
+                  arr[j+1] = temp
+              }
+          }
+      }
+    2)快速排序
+    function quick(arr){
+        if(arr.length<=1){
+            return arr
+        }
+        let middleDate = arr[parseInt((arr.length-1)/2)]
+        let left=[]
+        let right =[]
+        arr.map(item=>{
+            item <middleDate ?
+                left.push(item) :
+                right.push(item)
+        })
+        return quick(left).concat([middleDate],quick(right))
+    }
+    3）插入排序
+     function insertSort(arr){
+         var newArr= [arr[0]];
+         for(var i = 1;i<arr.length;i++){
+             let j = i;
+             if(arr[i]<=newArr[0]){
+                 newArr.unshift(arr[i])
+             }else{
+                 while(j){
+                     if(arr[i]>newArr[j-1]){
+                         newArr.splice(j,0,arr[i])
+                         break;
+                     }
+                     j--;
+                 }
+             }
+         }
+         return newArr
+     }
+     4）使用sort
+     arr.sort((a,b)=>a-b)
+     5)去重1
+     function del(arr){
+         for(var i=0;i<arr.length;i++){
+             var  j = i;
+             while(--j>=0){
+                 if(arr[j] === arr[i]){
+                     arr.splice(i,1)
+                     i--;
+                     break;
+                 }
+             }
+         }
+         return arr
+     }
+     6) 去重2
+         function del2(arr){
+             var newArr =[];
+             arr.reduce((total,item,index,arrs)=>{
+                 if(!total.includes(item)){
+                     total.push(item)
+                 }
+                 return total
+             },newArr)
+             return newArr
+         }
+     7）去重3 map
+         function del3(arr){
+             var map=new Map();
+             arr.map((item)=>{
+                 if(!map.has(item)){
+                     map.set(item,true)
+                 }
+             })
+             return Array.from(map.keys())
+         }
+     8）去重4 Set
+        let set = new Set(arr)
+        console.log(Array.from(set))
+        
+     9)
    

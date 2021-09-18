@@ -241,16 +241,16 @@
 
     //排序
     var arr= [23,45,6,9,23,78,90,2,4,5,29,21,9,88,33,22]
-    // //1.冒泡排序
-    // for (var i=0;i<arr.length;i++){    //
-    //     for(var j = 0;j<arr.length-i;j++){
-    //         if(arr[j]>arr[j+1]){
-    //             let temp = arr[j]
-    //             arr[j] = arr[j+1]
-    //             arr[j+1] = temp
-    //         }
-    //     }
-    // }
+    //1.冒泡排序
+    for (var i=0;i<arr.length;i++){    //
+        for(var j = 0;j<arr.length-i;j++){
+            if(arr[j]>arr[j+1]){
+                let temp = arr[j]
+                arr[j] = arr[j+1]
+                arr[j+1] = temp
+            }
+        }
+    }
     // console.log(arr)
     //2.sort排序
     // console.log(arr.sort((a,b)=>a-b))
@@ -336,8 +336,8 @@
     }
     console.log(arr,del3(arr))
     //4.使用set
-    var map= new Set(arr)
-    console.log(map)
+    var set= new Set(arr)
+    console.log('set',Array.from(set))
 
     //斐波那契数列
     function fobList(num){
@@ -364,6 +364,14 @@
     function huiwen(str){
         return str === str.split('').reverse().join('')   //split 默认不分割，join默认是以 ','分割
     }
+
+
+    var aa = {
+        a:1
+    }
+    console.log(Object.create(aa))
+    console.log(Object._create(aa))
+
 </script>
 </body>
 </html>
