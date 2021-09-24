@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="my_promise.js"></script>
+<!--    <script src="my_promise.js"></script>-->
 </head>
 <body>
 
@@ -97,18 +97,26 @@
 
     let p100 = new Promise((resolve, reject) => {
         setTimeout(()=>{
-            resolve('p100')
+            resolve('resolve-p100')
         },1000)
 
     })
     let p200 = new Promise((resolve, reject) => {
         setTimeout(()=>{
-            reject('p200')
+            reject('reject-p200')
         },100)
     })
 
     //race 谁快用谁
-    Promise.race([p100, p200]).then(
+    // Promise.race([p100, p200]).then(
+    //     value => {
+    //         console.log(value)
+    //     },
+    //     reason => {
+    //         console.log(reason)
+    //     }
+    // )
+    Promise.any([p100, p200]).then(
         value => {
             console.log(value)
         },
@@ -116,7 +124,6 @@
             console.log(reason)
         }
     )
-
 </script>
 </body>
 </html>

@@ -341,25 +341,37 @@
 
     //斐波那契数列
     function fobList(num){
-        var arr = [1,1]
         if(num<=0){
             throw new Error('num must > 0')
         }
         if(num == 1){
             return [1]
         }
+        var arr = [1,1]
         if(num == 2){
             return arr
         }
-        else{
-            for(let i=2;i<num;i++){
-                arr.push(arr[i-2]+arr[i-1])
-            }
+        for(let i=2;i<num;i++){
+            arr.push(arr[i-2]+arr[i-1])
         }
         return arr
     }
-
-
+    function fb(num){
+        if(num<=2){
+            return 1
+        }
+        let a=1;
+        let b =1;
+        let c = 0;
+        for(let i=3;i<=num;i++){
+            c = a+b;
+            a=b;
+            b=c;
+        }
+        return b
+    }
+    console.log(fb(12))
+    console.log(fobList(12))
     //判断回文
     function huiwen(str){
         return str === str.split('').reverse().join('')   //split 默认不分割，join默认是以 ','分割
@@ -369,8 +381,8 @@
     var aa = {
         a:1
     }
-    console.log(Object.create(aa))
-    console.log(Object._create(aa))
+    // console.log(Object.create(aa))
+    // console.log(Object._create(aa))
 
 </script>
 </body>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" id="txt">
+<button id="test">点我
+</button>
+<div id="div">
+    <p>我是测试</p>
+</div>
+<script>
+    test.addEventListener('click', function () {
+        var str = txt.value;
+        div.innerHTML = `<a href=${txt.value} >你想去哪？</a>`
+    }, false)
+    console.log(document.body.children)
+    console.log(Array.from(document.querySelectorAll("*")))  //获取所有的标签
+    console.log([...document.querySelectorAll("*")].values())
+    //txt中的代码如下:
+
+
+    //1.xss攻击 垮脚本攻击：自己的网站运行了别人的代码；目的：盗取cookie storage token泄露  获取用户或者后台数据，恶意导流
+    //原理：<script>   或者  <img src='http://ss' onerror=alert(document.cookie)>
+     //1)反射型（非持久型）：浏览器发送一段带有攻击性的xss代码，服务器将其返回回来,xss攻击代码被浏览器解析。
+        // eg：输入框输入，<img src='null' onerror='alert(document.cookies)'> 提交给后台，后台处理后返回给前端，当成标签解析。获取到cookie
+     //2.存储型 （持久型xss） 将xss代码发送给服务器，通过服务器散播
+       // eg:留言板中留言一条 <img src='null' onerror='alert(document.cookies)'> 提交给数据库，保存到了数据库，当以后有人访问的时候，这段代码都会被获取到被浏览器解析
+    //3.DOM型  直接通过浏览器的dom解析
+        // eg:
+        // test.addEventListener('click', function () {
+        //     var str = txt.value;
+        //     div.innerHTML = `<a href=${txt.value} >你想去哪？</a>`
+        // }, false)
+
+      //input 中输入 # onclick='alert(123)'
+               // 或者  ><img src=null onmouseover = 'alert(document.cookie)'>
+
+    //危害：
+    // 1.可造成网站内容不可控，
+    // 2.获取用户的私密数据
+    // 3.植入广告
+    // 4.给别的网站引流
+
+    //xss防御
+     //1.慎用innerHTML，转译一些字符 如：< > & 等
+     //2.过滤掉危险的属性节点，如：style，style，href
+     //3.也可以使用防第三方脚本库来对输入内容碱性过滤
+     //4.对cookie设置httpOnly,会导致js无法操作，不太推荐。
+
+
+    //2.CSRF攻击  跨站请求伪造，攻击者盗用了你的身份，以你的名义发送恶意请求。源于web的隐式身份认证，web身份认证机制能保一个请求来源于同一个浏览器但是不能保证是用户批准发送的
+       //步骤：1、登录收信人网站A，并且生成了cookie，
+       //     2. 在没有退出A的情况下，访问了危险网站B，B网站中有A网站的链接
+    //eg:
+    // 银行网站A，它以GET请求来完成银行转账的操作，如：http://www.mybank.com/Transfer.php?toBankId=11&money=1000
+    // 危险网站B，它里面有一段<img src=http://www.mybank.com/Transfer.php?toBankId=11&money=1000>
+
+
+    //CSRF 检测：
+      //1.抓包工具，抓取一个正常请求的数据包，去掉Referer字段后再重新提交，如果还有效，则存在漏洞
+      //2.使用专业检测工具 如CSRFTester
+
+
+    //CSRF防御：
+     //1.验证HTTP Referer
+        //在 HTTP 头中有一个字段叫 Referer，它记录了该 HTTP 请求的来源地址,服务端可以同过Referer 来判读改请求是否来自于信任网站。
+    //2.通过token，这个token不保存在cookie中，遍历所有a 和from 来给标签添加token，给链接到本网站的加token后缀，非本网站的不加。
+    //3.在http头部自定义属性并验证；可以通过XMLHttpRequest一次性给加上一个token的头属性，但是也有局限性，并非所有的请求都适合使用ajax来发送（比如打开一个新网页），这个类的请求得到的页面不能被浏览器记录。从而进行、后退刷新、收藏等操作，给用户带来不便。对于之前没有使用XMLHttpRequest 的类来说，几乎要重写整个网站。
+
+
+
+
+
+
+</script>
+</body>
+</html>

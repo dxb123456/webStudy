@@ -365,6 +365,78 @@
      8）去重4 Set
         let set = new Set(arr)
         console.log(Array.from(set))
-        
-     9)
+     9)斐波那契数列
+          function fobList(num){
+              if(num<=0){
+                  throw new Error('num must > 0')
+              }
+              if(num == 1){
+                  return [1]
+              }
+              var arr = [1,1]
+              if(num == 2){
+                  return arr
+              }
+              for(let i=2;i<num;i++){
+                  arr.push(arr[i-2]+arr[i-1])
+              }
+              return arr
+          }
+          function fb(num){
+              if(num<=2){
+                  return 1
+              }
+              let a=1;
+              let b =1;
+              let c = 0;
+              for(let i=3;i<=num;i++){
+                  c = a+b;
+                  a=b;
+                  b=c;
+              }
+              return b
+          }
+     10).判断回文 
+          function huiwen(str){
+              return str === str.split('').reverse().join('')   //split 默认不分割，join默认是以 ','分割
+          }   
+
+   31.跨域
    
+   32.http的结构？ http头都有哪些字段
+   33.网络OSI七层模型？TCP在那一层？
+   
+   34.常用的状态码？
+   
+   35.http1.0 和http1.1、 http2.0有什么区别？
+   
+   36.http和https的区别，https的原理
+   
+   37.localStorage、sessionStorage、cookie、session的区别
+   
+   38.localStorage存满了怎么处理？
+   
+   39.cookie的增删改查
+   
+   40.get和post的区别？
+   
+   41.http的缓存？
+   
+   42.tcp和udp的区别
+   
+   43.浏览器输入网址 按下回车后的流程？
+   
+   44.滑动窗口和拥塞窗口有什么区别？
+   45.什么是cdn？
+   46.XSS和CSRF？
+   47.OWASP top10 （10大安全漏洞）？
+   
+   48.回流和重绘
+   
+   49.事件冒泡和事件捕获有什么区别？
+   50.防抖和节流 手写一个？
+   51.函数柯理化原理？
+   52.requestAnimationFrame是什么？
+   53.js常见的设计模式？
+   54.js性能优化？
+     
