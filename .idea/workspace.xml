@@ -2,23 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="194d610e-4f45-4df2-a3b1-ae4e19399e72" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javascript/面向对象和this/10.js常用的设计模式.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vueSource/projects/v3.0test/src/App2.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vueSource/projects/v3.0test/src/components/UpsA.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vueSource/projects/v3.0test/src/components/base.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vueSource/projects/v3.0test/src/router.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vueSource/projects/v3.0test/src/test.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vueSource/projects/v3.0test/vite.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interview/mywrite.md" beforeDir="false" afterPath="$PROJECT_DIR$/Interview/mywrite.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vueSource/code/1.computed.html" beforeDir="false" afterPath="$PROJECT_DIR$/vueSource/code/1.computed.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vueSource/code/2.input和blue.html" beforeDir="false" afterPath="$PROJECT_DIR$/vueSource/code/2.input和blue.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vueSource/projects/v3.0test/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/vueSource/projects/v3.0test/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vueSource/projects/v3.0test/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/vueSource/projects/v3.0test/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vueSource/projects/v3.0test/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vueSource/projects/v3.0test/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vueSource/projects/v3.0test/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/vueSource/projects/v3.0test/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vueSource/projects/v3.0test/src/stores.js" beforeDir="false" afterPath="$PROJECT_DIR$/vueSource/projects/v3.0test/src/stores.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vueSource/projects/v3.0test/src/test.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vueSource/projects/v3.0test/src/test.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/javascript/nuxt-myapp/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -53,7 +38,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vueSource/projects/v3.0test/src/stores.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="409">
@@ -81,19 +66,34 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vueSource/projects/v3.0test/src/App2.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="33" />
+            <state relative-caret-position="174">
+              <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="65" />
+              <folding>
+                <element signature="e#168#229#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Interview/mywrite.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="235">
+                <caret line="440" column="13" lean-forward="true" selection-start-line="440" selection-start-column="13" selection-end-line="440" selection-end-column="13" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/vueSource/projects/v3.0test/src/test.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="33" column="28" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="28" />
+            <state relative-caret-position="148">
+              <caret line="14" column="20" lean-forward="true" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
               <folding>
-                <element signature="e#70#99#0" expanded="true" />
+                <element signature="e#125#186#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -213,7 +213,6 @@
         <option value="$PROJECT_DIR$/vueSource/code/1.computed.html" />
         <option value="$PROJECT_DIR$/javascript/面向对象和this/10.前端设计模式.html" />
         <option value="$PROJECT_DIR$/javascript/面向对象和this/10.js常用的设计模式.html" />
-        <option value="$PROJECT_DIR$/Interview/mywrite.md" />
         <option value="$PROJECT_DIR$/vueSource/projects/v3.0test/src/components/base.vue" />
         <option value="$PROJECT_DIR$/vueSource/projects/v3.0test/src/vite.config.js" />
         <option value="$PROJECT_DIR$/vueSource/projects/v3.0test/package.json" />
@@ -224,8 +223,9 @@
         <option value="$PROJECT_DIR$/vueSource/projects/v3.0test/src/App.vue" />
         <option value="$PROJECT_DIR$/vueSource/projects/v3.0test/src/App2.vue" />
         <option value="$PROJECT_DIR$/vueSource/projects/v3.0test/src/router.js" />
-        <option value="$PROJECT_DIR$/vueSource/projects/v3.0test/src/test.vue" />
         <option value="$PROJECT_DIR$/vueSource/projects/v3.0test/src/stores.js" />
+        <option value="$PROJECT_DIR$/Interview/mywrite.md" />
+        <option value="$PROJECT_DIR$/vueSource/projects/v3.0test/src/test.vue" />
       </list>
     </option>
   </component>
@@ -281,15 +281,6 @@
               <item name="projects" type="462c0819:PsiDirectoryNode" />
               <item name="v3.0test" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="webStudy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="webStudy" type="462c0819:PsiDirectoryNode" />
-              <item name="vueSource" type="462c0819:PsiDirectoryNode" />
-              <item name="projects" type="462c0819:PsiDirectoryNode" />
-              <item name="v3.0test" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -380,12 +371,12 @@
       <workItem from="1632276720948" duration="42503000" />
       <workItem from="1632818598773" duration="5264000" />
       <workItem from="1632882164487" duration="18685000" />
-      <workItem from="1632967440807" duration="10690000" />
+      <workItem from="1632967440807" duration="13418000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="340917000" />
+    <option name="totallyTimeSpent" value="343645000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="786" extended-state="0" />
@@ -403,7 +394,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.3299712" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49964765" weight="0.24927954" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49964765" weight="0.39193085" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5003524" side_tool="true" weight="0.65129685" />
       <window_info anchor="bottom" id="TypeScript" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -694,16 +685,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Interview/mywrite.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="294">
-            <caret line="445" column="35" lean-forward="true" selection-start-line="445" selection-start-column="35" selection-end-line="445" selection-end-column="35" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vueSource/projects/v3.0test/vite.config.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="271">
@@ -724,13 +705,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vueSource/projects/v3.0test/src/components/base.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="18" column="11" lean-forward="true" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vueSource/projects/v3.0test/src/App.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-337">
@@ -738,13 +712,6 @@
           <folding>
             <element signature="e#291#352#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vueSource/projects/v3.0test/src/App2.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -758,16 +725,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vueSource/projects/v3.0test/src/test.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="33" column="28" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="28" />
-          <folding>
-            <element signature="e#70#99#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vueSource/projects/v3.0test/src/stores.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="409">
@@ -775,6 +732,43 @@
           <folding>
             <element signature="e#50#708#0" />
             <element signature="e#726#1283#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/mywrite.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="235">
+            <caret line="440" column="13" lean-forward="true" selection-start-line="440" selection-start-column="13" selection-end-line="440" selection-end-column="13" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vueSource/projects/v3.0test/src/components/base.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="18" column="11" lean-forward="true" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vueSource/projects/v3.0test/src/App2.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="65" />
+          <folding>
+            <element signature="e#168#229#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vueSource/projects/v3.0test/src/test.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="14" column="20" lean-forward="true" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+          <folding>
+            <element signature="e#125#186#0" expanded="true" />
           </folding>
         </state>
       </provider>

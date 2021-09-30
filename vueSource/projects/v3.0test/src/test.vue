@@ -9,6 +9,7 @@
 </template>
 
 <script>
+    import {ref, reactive, watch, computed, createApp} from 'vue'
     import router from '@/router'
     import store from './stores'
     export default {
@@ -34,7 +35,11 @@
                 store.commit('changeA',999)
             },1000)
 
-            return {store}
+            var sss=ref({
+                mm:22
+            })
+            console.log(sss.value)
+            return {store,sss}
         },
         created(){
             console.log(this.store.state.a)
