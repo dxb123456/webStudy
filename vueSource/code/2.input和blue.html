@@ -3,11 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="http://resource-sdk.bbwc.cn/js/lib/vue/vue_2.5.16.min.js"></script>
 </head>
 <body>
+<div id="root">
+    <p>
+        我是输入框：
+        <input type="text" v-model="inputValue" @blur="blue" @keyup.enter="enters">
+        <input type="text" v-model="inputValue2" ref="aa">
+    </p>
+</div>
 <p>
     input 中 @blur 和@keyup.enter 会同时出发，将 后者函数变更成 $event.target.blur
+
+
 </p>
+
+
+    <script>
+    var app=new Vue({
+        el:"#root",
+        data:{
+            inputValue:"a",
+            inputValue2:"b",
+        },
+        computed:{
+            value: {
+                get:function () {     //getter读取数据
+                    return this.first + " ~ " + this.second + " ~ " +  this.third
+                },
+                set:function (val) {    //setter 需要时触发
+                    var result=val.split(" ~ ");
+                    this.first=result[0];
+                    this.third=result[2];
+                }
+            }
+        },
+        methods:{
+            blue(){
+                console.log(111)
+            },
+            enters(){
+                console.log(22)
+                this.$refs['aa'].focus()
+            }
+        }
+    });
+
+
+</script>
 
 </body>
 </html>

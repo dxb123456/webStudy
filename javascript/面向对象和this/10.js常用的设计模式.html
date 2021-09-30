@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //观察者 和发布订阅者的区别
+    //1）观察者模式是有具体的目标调度，添加、删除、触发都是由目标来完成的。是一种松耦合关系eg：给目标绑定了一个事件，等于注册了一个观察者。
+    //2)发布订阅模式会由统一的调度中心处理。是观察者模式的升级版
+
+
+    //1.构造函数模式:
+    //  1)创建一个新对象
+    //   2)将构造函数的作用域赋给新的对象（this的指向）
+    //   3)执行构造函数里的代码
+    //   4)返回新对象
+
+    function Person(name, age) {
+        if (this instanceof Person) { //通过new创建的走这里
+            this.name = name;
+            this.age = age;
+            this.getName = function () {
+                return this.name
+            }
+        } else {
+            return new Person(name, age)
+        }
+    }
+
+    var xiaoming = new Person('xiaoming', 22)
+    console.log(xiaoming)
+
+
+    //2.工厂模式  (解决多个下相似的问题，有多个相似的属性和方法时用这个
+    // )
+    function PersonFactory(name, age) {
+        var obj = {}
+        obj.name = name;
+        obj.age = age;
+        obj.getName = function () {
+            return this.name
+        }
+        return obj
+    }
+
+    var p1 = new PersonFactory('老王', 10)
+    var p2 = new PersonFactory('老王2', 30)
+    console.log(p1, p2.getName())
+
+    //3.模块模式   封装主要逻辑，暴露必要的接口
+    function PersonModule() {
+        function say(msg) {
+            return msg
+        }
+
+        return {
+            say: say
+        }
+    }
+
+    var p3 = new PersonModule()
+    console.log(p3.say('hi'))
+
+    //4.单例模式 生成一个唯一的变量
+    var Single = (function () {
+        var instance;
+
+        function init() {
+            return {
+                obj: true
+            }
+        }
+
+        return {
+            //获取实例
+            getInstance: function () {
+                if (!instance) {
+                    instance = init();
+                }
+                return instance
+            }
+        }
+    })();
+    var obj1 = Single.getInstance();
+    var obj2 = Single.getInstance();
+    console.log(obj1, obj2, obj1 === obj2)
+
+    //5.混合模式    原型+构造函数模式
+    function PersonMinx(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    PersonMinx.prototype.say = function () {
+        console.log('姓名' + this.name)
+    }
+
+    function Bady(...args) {
+        console.log(...args)
+        PersonMinx.call(this, ...args)
+    }
+
+    Bady.prototype = Object.create(PersonMinx.prototype)
+    Bady.prototype.cry = function () {
+        console.log('Baby cried')
+    }
+    var bady = new Bady('大宝', 3)
+    console.log(bady)
+
+    //6.发布订阅模式
+    class Sub {
+        constructor() {
+            this.callbacks = []
+        }
+
+        add(evt) {
+            let flag= this.callbacks.some((item)=>{
+                return item ===evt
+            })
+
+            !flag ?this.callbacks.push(evt):null
+        }
+        remove(evt){
+            let index = this.callbacks.indexOf(evt)
+            if(index>-1){
+                this.callbacks[index] = null;
+            }
+        }
+        fire(...args){
+            // this.callbacks.map((item,index)=>{
+            //
+            // })
+            for(let i=0;i<this.callbacks.length;i++){
+                let item = this.callbacks[i]
+                if(item){
+                    if(typeof item === 'function'){
+                        item.call(this,...args)
+                    }
+                }else{
+                    if(item === null){
+                        this.callbacks.splice(i,1)
+                        i--;
+                    }
+                }
+            }
+        }
+    }
+
+    let mySub = new Sub()
+    function fn1(a,b){
+        console.log(a,b)
+    }
+    function fn2(){
+        console.log('fn2')
+    }
+    function fn3(){
+        console.log('fn3')
+    }
+    mySub.add(fn1);
+    mySub.add(fn2);
+    mySub.add(fn3);
+    mySub.remove(fn1);
+    mySub.fire(100,200,300)
+
+
+
+
+    //7.观察者模式
+
+
+    // 观察者
+    class Observer {
+        constructor() {
+
+        }
+        update(val) {
+
+        }
+    }
+    // 观察者列表
+    class ObserverList {
+        constructor() {
+            this.observerList = []
+        }
+        add(observer) {
+            return this.observerList.push(observer);
+        }
+        remove(observer) {
+            this.observerList = this.observerList.filter(ob => ob !== observer);
+        }
+        count() {
+            return this.observerList.length;
+        }
+        get(index) {
+            return this.observerList[index];
+        }
+    }
+    // 目标
+    class Subject {
+        constructor() {
+            this.observers = new ObserverList();
+        }
+        addObserver(observer) {
+            this.observers.add(observer);
+        }
+        removeObserver(observer) {
+            this.observers.remove(observer);
+        }
+        notify(...args) {
+            let obCount = this.observers.count();
+            for (let index = 0; index < obCount; index++) {
+                this.observers.get(i).update(...args);
+            }
+        }
+    }
+</script>
+</body>
+</html>

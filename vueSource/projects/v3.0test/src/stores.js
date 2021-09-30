@@ -59,36 +59,34 @@ const moduleB = {
 
 
 export default createStore({
-    modules:{
-        a:moduleA,
-        b:moduleB
-    }
-    // state:{
-    //     a:1
-    // },
-    // mutations:{
-    //     changeA(data){
-    //         console.log(11)
-    //         setTimeout(()=>{
-    //             this.state.a++
-    //         },300)
-    //     },
-    //     deleA(data){
-    //         this.state.a--
-    //     }
-    // },
-    // getters:{
-    //
-    // },
-    // actions:{
-    //     send(context,data){
-    //         console.log(data);
-    //         setTimeout(()=>{
-    //             this.state.a++
-    //         },300)
-    //     },
-    //     dd(context){
-    //
-    //     }
+    // modules:{
+    //     a:moduleA,
+    //     b:moduleB
     // }
+    state:{
+        a:1
+    },
+    mutations:{
+        changeA(state,preload){
+            console.log(preload)
+            this.state.a=preload
+        },
+        deleA(state,data){
+            this.state.a--
+        }
+    },
+    getters:{
+
+    },
+    actions:{
+        send(context,data){
+            console.log(data);
+            setTimeout(()=>{
+                this.state.a++
+            },300)
+        },
+        dd(context){
+
+        }
+    }
 })

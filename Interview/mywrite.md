@@ -282,7 +282,7 @@
    
    30.常用的算法：
     1).冒泡排序
-      for (var i=0;i<arr.length;i++){    //
+      for (var i=0;i<arr.length;i++){    
           for(var j = 0;j<arr.length-i;j++){
               if(arr[j]>arr[j+1]){
                   let temp = arr[j]
@@ -440,3 +440,10 @@
    53.js常见的设计模式？
    54.js性能优化？
      
+
+   vue3中的一些不同点
+   1.不对外暴露vue了 而是暴露createApp、ref、reactive 等等一些方法
+   2.使用了组合api setup中没有this，需要对外暴露数据
+   3.template中的用法和原来一样。
+   4.如果需要双向绑定 需要使用ref、reactive
+   5.setup中使用store 需要引入该文件

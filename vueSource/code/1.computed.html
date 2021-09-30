@@ -11,7 +11,7 @@
         <p>Computed reversed message: "{{ reversedMessage }}"</p>
         <p>{{now}}</p>
 <!--        <p>Computed reversed message: "{{ reversedMessage1() }}"</p>-->
-        <button @click="getNow();getReversedMessage()">点击</button>
+        <button @click="getNow(),getReversedMessage()">点击</button>
     </div>
     <script>
         var vm = new Vue({
