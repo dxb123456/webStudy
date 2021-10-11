@@ -10,9 +10,6 @@ import App from './App';
 //   expect(linkElement).toBeInTheDocument();
 // });
 
-
-
-
 let wrapper;
 
 // 运行每一个测试用例前先渲染组件
