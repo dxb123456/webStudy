@@ -24,6 +24,22 @@ app.get('/axios-demo', function (req, res) {
         res.send('你好！axios');
     },2000)
 });
+app.get('/axios-post', function (req, res) {
+    setTimeout(()=>{
+        res.send(JSON.stringify({
+            code:0,
+            msg:'成功！',
+            data:{
+                list:[
+                    {
+                        id:1,
+                        name:'老张'
+                    }
+                ]
+            }
+        }));
+    },200)
+});
 app.post('/axios-demo', function (req, res) {
     setTimeout(()=>{
         res.send('你好！axios,我是post');
@@ -35,5 +51,5 @@ app.get('/', function (req, res) {
 
 // 监听到8000端口
 app.listen(CONFIG.PORT, function () {
-    console.log('Hello World is listening at port 8000');
+    console.log('Hello World is listening at port 8001');
 });

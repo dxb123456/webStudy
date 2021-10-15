@@ -1,5 +1,7 @@
 import { render, screen,fireEvent,RenderResult } from '@testing-library/react';
 import App from './App';
+//    运行npm test -- --coverage查看
+
 
 // test('renders learn react link', () => {
 //   // render 方法返回一个包裹对象 对象中包括一些对 DOM 的查询/获取方法
@@ -42,3 +44,6 @@ describe('Should render App component correctly', () => {
 
   });
 });
+
+
+

@@ -402,8 +402,47 @@
           }   
 
    31.跨域
-   
+      1）jsonp
+      2）工程化使用proxy
+      3）CORS 跨域资源共享  res.header('Access-Control-Allow-Origin',*)
+      4）nginx反向代理
+      5）websocket
+      6）postMessage  
+         步骤:1. A.html中    
+          <iframe id='iframe' src='B.html'>
+         iframe.onload = function(){
+            // iframe.contentWindow   获取到iframe的window对象
+             iframe.contentWindow.postMessage('aaa', 'http://127.0.0.1:1002/')//第一个参数是信息，第二个参数是源，不知道请写*
+         }
+            2. B.html  接收信息
+            window.onmessage = function(ev){
+                console.log(ev.data,ev.origin)  //获取数据和来源
+                ev.source.postMessage('我是返回的数据')
+            }
+      7）document.domain + iframe   针对主域名相同，子域名不同 eg：aa.qq.com和bb.qq.com
+          步骤：1.A.html中
+                <iframe id='iframe' src='B.html'>
+                document.domain = 'qq.com'
+                var user = '我是数据'
+               2.B.html中
+               document.domain = 'qq.com'
+               console.log(window.parent.user)
+      8）window.name + iframe  （需要三个页面）原理：a和c同一个域名，b一般在服务器存着，b中含有我们想要的数据。a中通过iframe加载b，b中有window.name='xx',如果iframe的name没有被修改过，c是能够访问到iframe的name的
+           步骤 1. A.html
+                  <iframe id='iframe' src='B.html'>
+                  iframe.onload = function(){
+                      iframe.src = 'c.html';
+                      console.log(iframe.contentWindow.name)
+                  }
+                2.B.html
+                  window.name = 'A想要的data'
+                3.C.html
+                  一般是空的html    
+       9)location.hash + iframe  （需要三个页面） 原理:a和c同源，b是其他服务器上存着，a通过hash把值传给链接b，b经过加工生成数据，b中iframe指向c，c中可以通过window.parent.parent 获取到a.html的window对象，即可将数据传给a
+       
    32.http的结构？ http头都有哪些字段
+   
+   
    33.网络OSI七层模型？TCP在那一层？
    
    34.常用的状态码？
