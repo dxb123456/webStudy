@@ -1,8 +1,8 @@
-1.JavaScript中什么是基本数据类型什么是引用数据类型？以及各个数据类型是如何存储的？
- 基本类型：undefined、null、string、number、boolean、bigInt、symbol
- 引用类型：object，
+1.JavaScript中什么是基本数据类型？什么是引用数据类型？以及各个数据类型是如何存储的？
+ 基本类型：undefined、null、string、number、boolean、bigInt、symbol；
+ 引用类型：object：
     细分包含：Array，function，date、**RegExp**，
- 基本数据类型在栈中存储，引用数据类型在堆中存储，栈中会保存他们的引用地址，
+    基本数据类型在栈中存储，引用数据类型在堆中存储，栈中会保存他们的引用地址，
  
  2.在JS中为什么0.2+0.1>0.3?
   0.2和0.1在运算的时候会被转换成二进制，0.2转换时会转成无限循环的一个二进制（ 转换方法小数部分取0，小数后面的一次跟2相乘，取整数部分，小数继续乘*2）小数最多保留52位，二进制计算时结果会有重叠部分。
@@ -45,7 +45,7 @@
      }
      
  6.字面量创建对象和new创建对象有什么区别，new内部都实现了什么，手写一个new；
-  比较：字面量创建的对象 更高效 更利于阅读，
+    比较：字面量创建的对象 更高效 更利于阅读，
     function _New(fn,...args){
         let target = Object.create(fn.prototype);
         fn.apply(target,args)
@@ -409,7 +409,7 @@
       5）websocket
       6）postMessage  
          步骤:1. A.html中    
-          <iframe id='iframe' src='B.html'>
+         <iframe id='iframe' src='B.html'>
          iframe.onload = function(){
             // iframe.contentWindow   获取到iframe的window对象
              iframe.contentWindow.postMessage('aaa', 'http://127.0.0.1:1002/')//第一个参数是信息，第二个参数是源，不知道请写*
@@ -441,14 +441,61 @@
        9)location.hash + iframe  （需要三个页面） 原理:a和c同源，b是其他服务器上存着，a通过hash把值传给链接b，b经过加工生成数据，b中iframe指向c，c中可以通过window.parent.parent 获取到a.html的window对象，即可将数据传给a
        
    32.http的结构？ http头都有哪些字段
-   
+     结构：请求行、请求头、空行、请求体
+     请求行： eg：POST /chapter17/user.html HTTP/1.1
+     请求头: eg:
+        Accept(接受):image/jpeg,application/x-ms-application,...
+        Referer（引用：地址从哪个页面发过来的）：http：//localhost:8000/xx.xx
+        Content-Type（内容类型）: application/x-www-form-urlencoded
+        Host(地址): localHost：8000
+        User-Agent（设备信息）：Mozilla/4.0(Windows NT 6.1)
+        Connection(长连接):Keep-Alive
+        Cache-Control(缓存控制):no-cache
+        Cookie:xxx=xxxx
+        Accept-Language(接受语言):zh-CN 
+    请求体：eg：name=张三&age=15      
    
    33.网络OSI七层模型？TCP在那一层？
+     1.物理层  ->定义设备的标准，eg:网线（光纤)接口类型，主要用来传递比特流 (光纤、网线、协调器)
+     2.数据链路层 ->对数据格式化用来传输，也支持数据错误检测 （WiFi、中继器）
+     3.网络层 ->数据传输包含路由寻址（IP）
+     4.传输层 ->定义了端到端的链接（tcp、udp）
+     5.会话层 ->应用程序之间的会话 （SMTP、DNS）
+     6.表示层 ->封装和解封装数据，加密格式化传输（TeInet、SNMP）
+     7.应用层 ->为应用程序提供服务(eg :电子邮件、文件传输)提供网络服务
    
    34.常用的状态码？
-   
+      2xx:成功
+          200：Ok   成功和强缓存都会返回200
+          202：接收了请求，但是还没有处理
+          204：No Content 返回没有实体的主体
+      3xx: 重定向
+        301: 永久重定向
+        302：临时重定向
+        304：弱缓存会返回
+      4xx：客户端错误
+        400：报文中存在语法错误
+        403：服务器拒绝访问   
+        404：资源不存在
+      5xx：服务器错误
+        500：服务器内部错误
+        503：服务器过载或者维护无法解决当前的请求
    35.http1.0 和http1.1、 http2.0有什么区别？
-   
+      http1.0 :
+        是一种无状态、无连接的应用层协议；（无连接是因为每次浏览器和服务器都会通过tcp建立连接，服务器处理完后立即断开TCP连接；无状态是因为服务器不跟踪每个客户端过去的请求）
+        缺点：1.无法复用链接，每次都需要建立Tcp连接
+            2.队头阻塞，http1.0规定下一个请求必须在前一个请求响应到达之前法能发送。前一个不响应后面的就无法响应
+     http1.1 ：
+        继承了http1.0的特点，克服了一些性能上的特点
+        1.增加了长链接 ：Connection：keep-Alive，避免每次都需要建立TCP连接
+        2.请求管道化（理论上），大部分都是支持多个TCP同时连接
+        3.添加了缓存处理：cache-control：no-cache
+        4.增加了Host字段，支持断点传输
+     http2.0：
+        1.二进制分帧；通过在应用层和传输层之间增加一个二进制分帧层，突破了http1.1的性能限制、进行传输性能。二进制解析更高效，错误更少
+        2.多路复用  一旦tcp的connection建立，后续请求以srream肥肉方式发送，每个stream的基本单位是frame（二进制帧）客户端和服务器可以把http消息分解成互不依赖的帧，然后乱序发出，在另一端重新组合起来。
+        3.头部压缩  http1.1中的header中带有大量信息，而且每次都要重复发送。http2中为了减少这部分的开销，给头部信息进行了压缩
+        4.服务器推送  浏览器与服务器建立连接后，服务器主动将一些资源推送给浏览器并缓存起来。eg：当访问index.html时，主动将index.css推送过来并缓存，index.html在解析时就调用缓存中的css文件即可。
    36.http和https的区别，https的原理
    
    37.localStorage、sessionStorage、cookie、session的区别
