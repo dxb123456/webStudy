@@ -4,7 +4,52 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+    }
+    ul{
+        display: flex;
+    }
+    li{
+        list-style: none;
+        margin-right: 10px;
+
+    }
+
+    li:after{
+        display: inline-block;
+        width: 0;
+        content: '';
+        height: 3px;
+        /*position: relative;*/
+        /*top:15px*/
+        background-color: red;
+        transition: .2s;
+    }
+    li span{
+        display: inline-block;
+        color: #000;
+    }
+    li:hover:after{
+        transition: 0.2s;
+        width: 100%;
+    }
+    li:hover span{
+        color: red;
+    }
+</style>
 <body>
+
+     <ul>
+         <li>
+             <span>首页</span>
+         </li>
+         <li>
+             <span>关于海里</span>
+         </li>
+     </ul>
 
 </body>
 </html>

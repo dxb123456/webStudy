@@ -497,29 +497,168 @@
         3.头部压缩  http1.1中的header中带有大量信息，而且每次都要重复发送。http2中为了减少这部分的开销，给头部信息进行了压缩
         4.服务器推送  浏览器与服务器建立连接后，服务器主动将一些资源推送给浏览器并缓存起来。eg：当访问index.html时，主动将index.css推送过来并缓存，index.html在解析时就调用缓存中的css文件即可。
    36.http和https的区别，https的原理
-   
+      http是一种超文本传输协议，创立初期主要是为了提供和发布一种html的方法。http是以明文发送数据信息，易被黑客截取。常用端口是80
+      https:是以http为基础，引入ssl证书对传输书记进行加解密。ssl证书一般需要购买，常用端口443。
+      https过程：1.客户端请求（携带客户端的ssl协议版本号，加密算法种类，以及随机数）
+                2.服务器端返回证书信息、版本号、加密算法种类，随机数->
+                3.客户端（验证证书后）根据证书信息与服务器协商加密等级->
+                4.客户端建立会话密钥，利用2传过来的公钥对密钥加密发送服务端->
+                5.服务器通过私钥解密会话密钥->
+                6.服务器利用解密得到的会话密钥对数据进行加密返回客户端。
    37.localStorage、sessionStorage、cookie、session的区别
-   
+    localStoragese：本地长期存储，只要不删除，就会一直保存下去，一般大小为5M
+    sessionStorage：本地存储，当浏览器关闭时会删除
+    cookie：客户端存储，引入的原因是http是无状态的，并不知道当前是哪个用户在操作，服务端可以通过HTTP
+    的头信息set Cookie来存储cookie信息，客户端也可以通过js来设置cookie，过期会被删除。单个cookie<=4kB,一般能存20条左右，只存储字符串。
+    session：存储在服务端中，需要配合cookie使用，需要使用sessionId来识别用户。
    38.localStorage存满了怎么处理？
-   
+    1.降级使用sessionStorage
+    2.使用indexedDB(本地数据库，引入localforage.js操作) 特点：键值对存储，一般能存储250M，遵循同源策略 
    39.cookie的增删改查
-   
+        增：
+           var exdate=newDate();
+           exdate.setHours(exdate.getHours()+72)
+           document.cookie = 'name=value;expires='+exdate.toGMTString()+';path=/;'
+        改：同增换个value即可
+        删除：过期时间设置为当前时间-1即可
+        查：1.function getCookie(name) {
+            var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+            if (arr = document.cookie.match(reg))
+              return (arr[2]);
+            else
+              return null;
+          }
+          2.function getCookie(c_name){
+            if (document.cookie.length>0)
+              {c_start=document.cookie.indexOf(c_name + "=")
+              if (c_start!=-1){ 
+                c_start=c_start + c_name.length+1 
+                c_end=document.cookie.indexOf(";",c_start)
+                if (c_end==-1) c_end=document.cookie.length
+                    return unescape(document.cookie.substring(c_start,c_end))
+                } 
+              }
+              return ""
+            }
    40.get和post的区别？
-   
+        核心区别：
+              GET 表示从服务端获取数据，具有幂等性，无论请求多少次，每次获得的结果都一样，不会对服务端数据产生任何影响。
+              POST 表示向服务端提交数据，非幂等，会对服务端数据产生影响。
+        主要区别:get的参数是通过拼写在url中发送给后端，而post是放在request.body中
+        其他区别：1) get主要用于获取数据，post主要用于提交数据
+                2) get会被浏览器主动缓存，post不会
+                3) get会将参数暴露在url上不是很安全，post则不会。
+                4) 文件类上传必须使用post，get无法实现。
+                5) get中的url长度会被浏览器或者服务器限制。
    41.http的缓存？
-   
+        web缓存主要包含：数据库缓存、服务器缓存（代理服务器缓存、CDN缓存）、浏览器缓存
+        浏览器缓存包括：http缓存、indexDB、cookie、localstorage等
+        网页不使用缓存的方法：
+          <meta HTTP-EQUIV="Pragma" CONTENT="no-store" />   表示网页不缓存
+        强缓存：
+            特点：1.不会向服务器发送请求，直接从本地获取数据 2.状态码200
+            使用：1.Cache-Control：max-age=xxx(单位秒)；no-cache(使用缓存，但是需要请求服务器，对比是否为最新的缓存)，no-store（禁止缓存）
+                 2.expires：（http1.0中优先级低）GMT格式的过期日期，
+            为什么引入Cache-Control ？
+               expires有弊端：缓存过期时间都是与客户端时间进行对比，当客户端时间有偏差时，会不准确。
+        弱缓存:  
+          特点：1.向服务器发送请求，服务器会根据请求头的资源判断是否命中协商缓存 2.返回304
+          使用：1.Last-Modified/If-Modified-Since   最后修改时间，当与ETag同时使用 会优先Etag
+               2.ETag/If-None-Match      通过每次变更都会形成一个唯一标识符，即时轻微的变化也会改变
+          为什么引入ETag ？  
+              1.Last-Modified 的响应式以秒计的，有些服务器并不能拿到精确的时间。
+              2.当1秒内有多次改动时，是无法识别的    
+              3.一些文件可能是定时生成的，但是内容没有改变，但是Last-Modified更新了，会导致缓存失效
    42.tcp和udp的区别
-   
+        tcp：
+            优点：可靠、稳定、不易丢包（连接需要三次握手）
+            缺点：连接慢、效率低、占用资源高（传输数据前必须先建立连接，头部开销20字节，每个tcp只能点对点）
+            适用场景：电子邮件、网页、文件传输等
+        udp ：
+            优点：快、比tcp稍安全（没有tcp的握手环节，无状态的传输协议，没有tcp那些机制利用的漏洞就会少一点，头部开销只有8字节，可以一对一，也可以一对多）
+            缺点：网络不好时易丢包
+            使用场景：qq语音、视频会议、直播等
+          
    43.浏览器输入网址 按下回车后的流程？
-   
+        www.baidu.com
+      1.dns解析：（含cdn）
+         过程：浏览器dns缓存->本地host->路由器缓存->本地dns服务器（运营商）->本地DNS向根域名.询问-> 顶级域名 (如：com、cn、net等）->权威域名（如：baidu）-> 主机名（www）->获取ip返回本地DNS->返回ip给浏览器
+         cdn过程：如果有cdn的话，获取的不是ip而是CNAME域名，需要浏览器再次对该CNAME域名进行解析，此次将使用的全局负载均衡DNS解析（根据用户当前的IP地址和各个节点的状态返回最优的服务器地址），浏览器拿到ip地址后请求数据，如果当前服务器中没有缓存的内容，就会逐级向上层缓存服务器中拉取，如果都没有的话会去源服务器中拉取，然后缓存并返回给客户端。
+      2.与服务器建立TCP连接，
+        过程：3次握手进行连接(详见tcp的3次握手和4次挥手)
+      3.浏览器向服务器请求首页（含重定向）
+         有重定向：永久重定向返回301，临时重定向返回302，跳转一个新地址；
+         无重定向：正常接收请求，处理请求。
+      4.服务器处理请求返回首页内容（keepalive）
+         keepalive：设置长连接后，服务器和客户端的会话不会在返回完index.html数据后立马中断，而是保持连接。而是等超过长连接的过期时间后才能断开。
+         保持长连接的目的是：tcp的三次握手是很耗时的。
+      5.浏览器解析首页加载资源并展示。
    44.滑动窗口和拥塞窗口有什么区别？
-   45.什么是cdn？
+   45.什么是cdn？ 见43.dns解析cdn
    46.XSS和CSRF？
+      xss：垮脚本攻击，自己的网站运行了别人的代码。
+        1.反射型：浏览器发送一段带有攻击性的xss代码，服务器将其返回回来,xss攻击代码被浏览器解析;<img src='null' onerror='alert(document.cookies)'>
+        2.存储型：（持久型xss） 将xss代码发送给服务器，通过服务器散播；eg:留言板
+        3.DOM型： 通过都没来解析；个：div.innerHTML = `<a href=${txt.value} >你想去哪？</a>`，value的值是通过input传递过来的，那么input中输入 # onclick=alert(123) 就能打印出123
+        危害：
+         1.可造成网站内容不可控，
+         2.获取用户的私密数据
+         3.植入广告
+         4.给别的网站引流
+        防御：1.慎用innerHTML，转译一些字符 如：< > & 等
+             2.过滤掉危险的属性节点，如：style，style，href
+             3.也可以使用防第三方脚本库来对输入内容进行过滤
+             4.对cookie设置httpOnly,会导致js无法操作，不太推荐。 
+     CSRF：跨站请求伪造。原理：web的隐式身份认证不能保证是从该浏览器发的，不能保证是用户的真实操作。
+        攻击步骤：1.用户访问网站A，并生成了cookie，网站A可以使用链接http:xxx.xom?money=100&to=zhangsan 来完成转账操作。
+                2.此时用户没有退出网站A，点击了钓鱼网站B，B网站中使用<img src='http:xxx.xom?money=100&to=zhangsan'> 即可完成转账
+        CSRF检测方法：
+           1.使用抓包工具 去掉referer，观察是否能通过，如果能通过则有安全隐患
+           2.使用专用测试工具
+        防御办法：
+           1. 服务端可以使用http请求中的Referer字段来识别信任的网址。
+           2. tooken不保存在cookie中，而是遍历所有的a和form，给需要连接本网站的地址添加token。
+           3.给http的头信息添加自定义属性，可以通过XMLHttpRequest一次性给加上一个token的头属性。（弊端：并非所有的请求都适合使用ajax来发送（比如打开一个新网页），这个类的请求得到的页面不能被浏览器记录。从而进行、后退刷新、收藏等操作，给用户带来不便。对于之前没有使用XMLHttpRequest 的类来说，几乎要重写整个网站。）
    47.OWASP top10 （10大安全漏洞）？
    
    48.回流和重绘
-   
+     回流：当浏览器渲染完毕后，对dom进行了操作，如果浏览器的流式结构发生了变化，会导致浏览器的重新渲染或者部分渲染的现象叫做回流
+        特点：回流的性能开销更大
+        可能会导致回流的操作：
+          1.首次渲染
+          2.浏览器窗口改变
+          3.内容变化
+          4.删除、添加节点
+          5.激活css伪类
+          6.获取元素之神属性值（clientWidth，offsettop，offsetLeft, ...）
+     重绘：当页面中元素的样式改变不影响它在文档流中的位置，浏览器会将新样式赋值给元素，这个过程叫做重绘。
+        重绘重排的最小单元是图层
+        可能会导致重绘的操作：
+          1.background
+          2.visibility
+          3.opacity
+     优化：(补充)
+        1）动画时尽量使用transform 代替left、top
+        2)opacity 代替visibility  （直接使用opacity，会使用触发重绘和重排），需要配合will-change 不触发重排和重绘（以前不触发，现在会触发重绘）
+        3)不是用table布局
+        4)多次修改样式合并成一次  使用calss
+        5)将dom离线后再修改：先将都dom隐藏，修改后在展示
+        6)文档碎片 documentFragment
+        7)尽量将获取 元素的style属性，各个值保存，不循环获取offsetTop，offsetWidth ...
+         8)动画实现过程招聘哪个，启用硬件加速，transform:translateZ(0);
+         9)为动画元素新建图层，提高动画的等级
+         10)使用动画 questAnimationFrame；在浏览器下次绘制前执行回调
    49.事件冒泡和事件捕获有什么区别？
+     事件冒泡：事件会从最内层的元素开始发生，一直向上传播，直到document对象
+     事件捕获：与事件冒泡相反，事件会从最外层开始发生，直到最具体目标元素。
+     addEventListener(event, function, useCapture)
+     第一个参数是需要绑定的事件，第二个参数是触发事件后要执行的函数。而第三个参数默认值是false，表示在事件冒泡的阶段调用事件处理函数，如果参数为true，则表示在事件捕获阶段调用处理函数。
+     事件代理机制：    
+         ul.onclick=function(e){
+            console.log(e.target)         //当前触发事件的元素
+            console.log(e.currentTarget)  //当前绑定事件的元素
+         }
+
    50.防抖和节流 手写一个？
    51.函数柯理化原理？
    52.requestAnimationFrame是什么？

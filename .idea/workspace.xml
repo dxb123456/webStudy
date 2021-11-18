@@ -2,25 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="194d610e-4f45-4df2-a3b1-ae4e19399e72" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/img/http缓存.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javascript/面向对象和this/11.本地存储.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javascript/面向对象和this/js/localforage.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interview/code/10000.other.html" beforeDir="false" afterPath="$PROJECT_DIR$/Interview/code/10000.other.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interview/code/23.网络攻击.html" beforeDir="false" afterPath="$PROJECT_DIR$/Interview/code/23.网络攻击.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Interview/mywrite.md" beforeDir="false" afterPath="$PROJECT_DIR$/Interview/mywrite.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javascript/ES6、ES7核心知识/1.let、const、var的区别.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javascript/ES6、ES7核心知识/10.js底层运行机制：时间循环机制、宏任务、微任务.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javascript/ES6、ES7核心知识/11.Interator迭代器和for of循环.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javascript/ES6、ES7核心知识/12.宏任务和微任务.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javascript/ES6、ES7核心知识/2.箭头函数ArrowFunction.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javascript/ES6、ES7核心知识/3.结构赋值和拓展运算符.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javascript/ES6、ES7核心知识/4.1.set数据结构与weakset.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javascript/ES6、ES7核心知识/4.2.Map数据结构与weakMap.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javascript/ES6、ES7核心知识/5.promise设计模式.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javascript/ES6、ES7核心知识/6.async、await 及实现原理.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javascript/ES6、ES7核心知识/7.Generator生成器函数.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javascript/ES6、ES7核心知识/8.手写promise源码.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javascript/ES6、ES7核心知识/9.js底层运行机制：单线程和同步异步编程.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javascript/ES6、ES7核心知识/my_promise.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javascript/ES6、ES7核心知识/promise-test.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javascript/ES6、ES7核心知识/promise.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/9.浏览器的缓存.html" beforeDir="false" afterPath="$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/9.浏览器的缓存.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javascript/DOM、BOM、事件处理/9.浏览器的底层渲染机制和Dom的回流重绘.html" beforeDir="false" afterPath="$PROJECT_DIR$/javascript/DOM、BOM、事件处理/9.浏览器的底层渲染机制和Dom的回流重绘.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javascript/面向对象和this/2.类和实例.html" beforeDir="false" afterPath="$PROJECT_DIR$/javascript/面向对象和this/2.类和实例.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/javascript/nuxt-myapp/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -34,46 +24,70 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/javascript/_server/1.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="24" column="11" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/javascript/_server/config.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="9" column="22" lean-forward="true" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Interview/code/10000.other.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="395">
-              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/javascript/1234.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Interview/mywrite.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="403">
-                <caret line="501" column="3" lean-forward="true" selection-start-line="501" selection-start-column="3" selection-end-line="501" selection-end-column="3" />
+              <first_editor relative-caret-position="22011">
+                <caret line="672" column="27" selection-start-line="672" selection-start-column="27" selection-end-line="672" selection-end-column="27" />
               </first_editor>
               <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/javascript/DOM、BOM、事件处理/2.事件对象.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-3993" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/javascript/DOM、BOM、事件处理/6.事件传播机制和事件代理.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="320">
+              <caret line="57" selection-start-line="57" selection-end-line="60" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/javascript/DOM、BOM、事件处理/9.浏览器的底层渲染机制和Dom的回流重绘.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="206">
+              <caret line="102" selection-start-line="102" selection-end-line="112" selection-end-column="51" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/7.HTTP网络状态码和实战中的处理方案.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="598">
+              <caret line="45" column="9" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/8.浏览器的性能优化.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="514">
+              <caret line="40" column="30" lean-forward="true" selection-start-line="40" selection-start-column="30" selection-end-line="40" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Interview/code/22.setProperty.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="522">
+              <caret line="18" column="21" lean-forward="true" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -84,8 +98,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="package.json" />
-        <option value="HTML File" />
         <option value="Vue Single File Component" />
+        <option value="HTML File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -130,12 +144,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/javascript/面向对象和this/9.amd和cmd.html" />
-        <option value="$PROJECT_DIR$/javascript/面向对象和this/js/seajs.js" />
-        <option value="$PROJECT_DIR$/javascript/面向对象和this/js/sea.js" />
-        <option value="$PROJECT_DIR$/javascript/面向对象和this/js/modules/alter.js" />
-        <option value="$PROJECT_DIR$/javascript/面向对象和this/js/modules/dataServer.js" />
-        <option value="$PROJECT_DIR$/javascript/面向对象和this/js/require_main.js" />
         <option value="$PROJECT_DIR$/javascript/面向对象和this/9.Amd.html" />
         <option value="$PROJECT_DIR$/javascript/面向对象和this/js/libs/Require.js" />
         <option value="$PROJECT_DIR$/Interview/code/100_3.map对象.html" />
@@ -179,15 +187,22 @@
         <option value="$PROJECT_DIR$/reactSource/projects/auto-test/src/mytest.test.js" />
         <option value="$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/7.HTTP网络状态码和实战中的处理方案.html" />
         <option value="$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/6.9种跨域方案.html" />
-        <option value="$PROJECT_DIR$/Interview/mywrite.md" />
         <option value="$PROJECT_DIR$/Interview/code/10000.other.html" />
+        <option value="$PROJECT_DIR$/javascript/面向对象和this/2.类和实例.html" />
+        <option value="$PROJECT_DIR$/javascript/面向对象和this/js/localforage.min.js" />
+        <option value="$PROJECT_DIR$/javascript/面向对象和this/11.本地存储.html" />
+        <option value="$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/9.浏览器的缓存.html" />
+        <option value="$PROJECT_DIR$/Interview/code/23.网络攻击.html" />
+        <option value="$PROJECT_DIR$/javascript/DOM、BOM、事件处理/9.浏览器的底层渲染机制和Dom的回流重绘.html" />
+        <option value="$PROJECT_DIR$/Interview/mywrite.md" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
-    <option name="width" value="1440" />
-    <option name="height" value="777" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-307" />
+    <option name="y" value="44" />
+    <option name="width" value="1244" />
+    <option name="height" value="798" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -214,20 +229,8 @@
             <path>
               <item name="webStudy" type="b2602c69:ProjectViewProjectNode" />
               <item name="webStudy" type="462c0819:PsiDirectoryNode" />
-              <item name="reactSource" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="webStudy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="webStudy" type="462c0819:PsiDirectoryNode" />
-              <item name="reactSource" type="462c0819:PsiDirectoryNode" />
-              <item name="projects" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="webStudy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="webStudy" type="462c0819:PsiDirectoryNode" />
-              <item name="reactSource" type="462c0819:PsiDirectoryNode" />
-              <item name="projects" type="462c0819:PsiDirectoryNode" />
-              <item name="auto-test" type="462c0819:PsiDirectoryNode" />
+              <item name="javascript" type="462c0819:PsiDirectoryNode" />
+              <item name="DOM、BOM、事件处理" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -249,14 +252,14 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/vueSource/originalCode" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/img" />
       <recent name="$PROJECT_DIR$/vueSource/projects/v3.0test/src" />
       <recent name="$PROJECT_DIR$/vueSource/projects/v3.0test" />
       <recent name="$PROJECT_DIR$/javascript/面向对象和this/js/libs" />
       <recent name="$PROJECT_DIR$/vueSource/originalCode/img" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/vueSource/originalCode" />
     </key>
   </component>
@@ -348,30 +351,41 @@
       <workItem from="1634611890287" duration="9630000" />
       <workItem from="1634636247661" duration="696000" />
       <workItem from="1634697651782" duration="8156000" />
-      <workItem from="1634867678719" duration="4409000" />
+      <workItem from="1634867678719" duration="4842000" />
+      <workItem from="1635300669040" duration="1493000" />
+      <workItem from="1635928458326" duration="2687000" />
+      <workItem from="1635995941073" duration="5566000" />
+      <workItem from="1636080770188" duration="7196000" />
+      <workItem from="1636340815412" duration="7587000" />
+      <workItem from="1636425607049" duration="13291000" />
+      <workItem from="1636599075314" duration="6692000" />
+      <workItem from="1636683589928" duration="13115000" />
+      <workItem from="1636970205818" duration="240000" />
+      <workItem from="1637046324908" duration="1836000" />
+      <workItem from="1637115416756" duration="15896000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="420169000" />
+    <option name="totallyTimeSpent" value="496201000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="777" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="798" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.07751938" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21282594" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.40406978" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.4029197" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997093" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32994187" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" sideWeight="0.7660324" visible="true" weight="0.16934307" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.7660324" weight="0.62025315" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.23396759" side_tool="true" weight="0.7732558" />
       <window_info anchor="bottom" id="TypeScript" order="11" weight="0.32994187" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -433,163 +447,34 @@
     </option>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/vueSource/projects/v3.0test/src/App2.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
-          <folding>
-            <element signature="e#168#229#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vueSource/projects/v3.0test/src/components/base.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/jest-react/package.json" />
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/jest-react/src/setupTests.js" />
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/jest-react/src/logo.svg" />
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/jest-react/src/index.js" />
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/jest-react/src/index.css" />
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/jest-react/src/App.test.js" />
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="15" column="54" selection-start-line="15" selection-start-column="53" selection-end-line="15" selection-end-column="54" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/src/setupTests.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/src/logo.svg">
+    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/img/三次握手.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/styleMock.js" />
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/node_modules/@types/jest/index.d.ts">
+    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/img/TCP和IP协议簇.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/img/tcp常见端口.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/1234.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/_server/config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="595" column="8" selection-start-line="595" selection-start-column="8" selection-end-line="595" selection-end-column="8" />
+        <state relative-caret-position="319">
+          <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/babel.config.js" />
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/jest.config.js" />
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/coverage/lcov-report/App.js.html">
+    <entry file="file://$PROJECT_DIR$/javascript/_server/1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="783">
+          <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/面向对象和this/10.js常用的设计模式.html">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/coverage/lcov-report/index.js.html" />
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="15" column="19" lean-forward="true" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="256">
-            <caret line="64" selection-start-line="64" selection-end-line="64" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/src/index.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/package-lock.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="957">
-          <caret line="33" column="26" lean-forward="true" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/coverage/lcov-report/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="14" column="9" lean-forward="true" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#td#1;n#tr#1;n#tbody#0;n#table#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#td#1;n#tr#1;n#tbody#0;n#table#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="17" column="35" lean-forward="true" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/src/mytest.test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1537">
-          <caret line="53" column="37" selection-start-line="53" selection-start-column="37" selection-end-line="53" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/面向对象和this/1.单例设计模式.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1189">
-          <caret line="41" column="11" lean-forward="true" selection-start-line="41" selection-start-column="11" selection-end-line="41" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/面向对象和this/7.js中的this五种情况.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="9" column="24" lean-forward="true" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/src/App.test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="928">
-          <caret line="33" selection-start-line="33" selection-end-line="33" />
-          <folding>
-            <element signature="e#0#79#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/src/mytest.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="19" column="9" lean-forward="true" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reactSource/projects/auto-test/src/reportWebVitals.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/6.9种跨域方案.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="113" column="5" selection-start-line="113" selection-start-column="5" selection-end-line="113" selection-end-column="5" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/javascript/面向对象和this/10.Cmd.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -598,106 +483,247 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/面向对象和this/js/sea_main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/javascript/面向对象和this/9.Amd.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
+        <state relative-caret-position="348">
           <caret line="12" column="9" lean-forward="true" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/5.fetch基础和实战应用.html">
+    <entry file="file://$PROJECT_DIR$/javascript/面向对象和this/1.单例设计模式.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="471">
+          <caret line="59" column="53" lean-forward="true" selection-start-line="59" selection-start-column="53" selection-end-line="59" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/堆栈内存及闭包作用域/7.惰性函数、柯理化函数、高阶函数.html">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/面向对象和this/2.类和实例.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="458">
+          <caret line="54" column="7" lean-forward="true" selection-start-line="54" selection-start-column="7" selection-end-line="54" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/面向对象和this/3.原型和原型链.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/面向对象和this/4.new运算符的实现机制.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="14" column="25" lean-forward="true" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/面向对象和this/js/localforage.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="870">
+          <caret line="6" column="29540" selection-start-line="6" selection-start-column="29540" selection-end-line="6" selection-end-column="29540" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/面向对象和this/11.本地存储.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="18" column="27" lean-forward="true" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/6.9种跨域方案.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="113" column="5" selection-start-line="113" selection-start-column="5" selection-end-line="113" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/1.AJAX核心四部操作.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1450">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/4.axios库和源码剖析.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/1.AJAX核心四部操作.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/面向对象和this/8.四大继承方案.html">
+    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/myAxios/axios.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3103">
-          <caret line="107" column="31" lean-forward="true" selection-start-line="107" selection-start-column="31" selection-end-line="107" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/8.浏览器的性能优化.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/7.HTTP网络状态码和实战中的处理方案.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-266">
-          <caret line="17" column="28" lean-forward="true" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/img/三次握手.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/img/TCP和IP协议簇.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/9.浏览器的缓存.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="29">
-          <caret line="19" column="26" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
+        <state relative-caret-position="290">
+          <caret line="10" column="29" lean-forward="true" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/4.1.myaxios-test.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/4.1.myaxios.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3567">
+          <caret line="123" column="43" selection-start-line="123" selection-start-column="43" selection-end-line="123" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/myAxios/defaults.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/3.TCP三次握手和四次挥手.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+        <state relative-caret-position="1334">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/_server/1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="24" column="11" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/img/tcp常见端口.png">
-      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/2.GET、POST核心机制与区别.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/5.fetch基础和实战应用.html">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/code/24.OSI网络模型.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/code/25.http和https.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/code/26.js的加密.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/code/123_2.画中画.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/code/16.1.canvas相关api.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-215">
+          <caret line="10" column="7" lean-forward="true" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/code/21.stopImmediatePropagation.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/code/123_1.手写轮播.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/code/200_2.vue过度动画.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/code/10000.other.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="609">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/53a75074e02baa4ef07294c2d72f3966/Message/MessageTemp/9cb6ed26954febaff6c3b7c5d4d9148c/File/10015.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="29">
+          <caret line="1" column="36" lean-forward="true" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/code/6.4.圣杯和双飞翼.less">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/code/17.innerText和textContent.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/code/200_1.vue_nexttick.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/code/18.文档碎片.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/code/20.文字copy.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/code/6.4.圣杯和双飞翼.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="29">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/code/22.setProperty.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="18" column="21" lean-forward="true" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/9.浏览器的缓存.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="610">
+          <caret line="50" column="43" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
+          <folding>
+            <element signature="n#style#0;n#img#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interview/code/23.网络攻击.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="69" column="48" lean-forward="true" selection-start-line="69" selection-start-column="48" selection-end-line="69" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/8.浏览器的性能优化.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="514">
+          <caret line="40" column="30" lean-forward="true" selection-start-line="40" selection-start-column="30" selection-end-line="40" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/AJAX、HTTP前后端交互/7.HTTP网络状态码和实战中的处理方案.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="598">
+          <caret line="45" column="9" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/DOM、BOM、事件处理/2.事件对象.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3993" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/DOM、BOM、事件处理/9.浏览器的底层渲染机制和Dom的回流重绘.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="206">
+          <caret line="102" selection-start-line="102" selection-end-line="112" selection-end-column="51" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/DOM、BOM、事件处理/6.事件传播机制和事件代理.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="57" selection-start-line="57" selection-end-line="60" selection-end-column="5" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Interview/mywrite.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="403">
-            <caret line="501" column="3" lean-forward="true" selection-start-line="501" selection-start-column="3" selection-end-line="501" selection-end-column="3" />
+          <first_editor relative-caret-position="22011">
+            <caret line="672" column="27" selection-start-line="672" selection-start-column="27" selection-end-line="672" selection-end-column="27" />
           </first_editor>
           <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/1234.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Interview/code/10000.other.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/_server/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="9" column="22" lean-forward="true" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
         </state>
       </provider>
     </entry>

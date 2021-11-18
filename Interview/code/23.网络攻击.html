@@ -18,7 +18,7 @@
     }, false)
     console.log(document.body.children)
     console.log(Array.from(document.querySelectorAll("*")))  //获取所有的标签
-    console.log([...document.querySelectorAll("*")].values())
+    // console.log([...document.querySelectorAll("*")].values())
     //txt中的代码如下:
 
 
@@ -47,12 +47,12 @@
     //xss防御
      //1.慎用innerHTML，转译一些字符 如：< > & 等
      //2.过滤掉危险的属性节点，如：style，style，href
-     //3.也可以使用防第三方脚本库来对输入内容碱性过滤
+     //3.也可以使用防第三方脚本库来对输入内容进行过滤
      //4.对cookie设置httpOnly,会导致js无法操作，不太推荐。
 
 
-    //2.CSRF攻击  跨站请求伪造，攻击者盗用了你的身份，以你的名义发送恶意请求。源于web的隐式身份认证，web身份认证机制能保一个请求来源于同一个浏览器但是不能保证是用户批准发送的
-       //步骤：1、登录收信人网站A，并且生成了cookie，
+    //2.CSRF攻击  跨站请求伪造，攻击者盗用了你的身份，以你的名义发送恶意请求。源于web的隐式身份认证，web身份认证机制能确保一个请求来源于同一个浏览器但是不能保证是用户批准发送的
+       //步骤：1、登录受信网站A，并且生成了cookie，
        //     2. 在没有退出A的情况下，访问了危险网站B，B网站中有A网站的链接
     //eg:
     // 银行网站A，它以GET请求来完成银行转账的操作，如：http://www.mybank.com/Transfer.php?toBankId=11&money=1000

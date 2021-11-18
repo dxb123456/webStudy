@@ -5,7 +5,7 @@
     <title>缓存</title>
 </head>
 <body>
-
+<img style="width: 500px" src="img/http缓存.png" alt="">
 <script>
     //缓存的分类
     //1.强缓存
@@ -26,7 +26,7 @@
         //只有expires时：如果再次发送请求在expires 之前 则使用缓存数据
         //只有cache-control：如果再次发送请求在第一次请求时间+number 之前，则使用缓存
             //cache-control还有其他的值：（了解）
-                //no-cache:不使用缓存
+                //no-cache:使用缓存,但是需要请求服务器查看是否是最新的缓存，类似弱缓存
                 //no-store:禁止缓存
                 //public ：可以被所有用户缓存包含cdn
                 //private:允许终端缓存，不允许cdn等中继缓存服务器缓存

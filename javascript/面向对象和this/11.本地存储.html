@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/localforage.min.js"></script>
+</head>
+<body>
+<script>
+    console.log(localforage)
+    var  i = 0;
+    // 通过 localStorage 设置值
+    // localStorage.setItem('key', JSON.stringify('value'));
+    // doSomethingElse();
+
+    // 通过 localForage 完成同样功能
+    localforage.setItem('key33', 'value').then(doSomethingElse);
+
+    // localForage 同样支持回调函数
+    localforage.setItem('key99', 'values', doSomethingElse);
+
+    localforage.getItem('key').then(value=>console.log(value))
+    function doSomethingElse(){
+        console.log(i);
+        i++
+    }
+</script>
+
+</body>
+</html>
