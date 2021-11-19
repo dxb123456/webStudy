@@ -5,6 +5,34 @@
     <title>Title</title>
 </head>
 <body>
+<script>
 
+
+
+    function debounce(fn,delay){
+        let timer=null;
+        return function(){
+            timer && clearTimeout(timer);
+            timer = setTimeout(fn,delay)
+        }
+    }
+    let fangdou_fun =  debounce(()=>console.log(1),1000)
+    document.onclick=function(){
+        fangdou_fun()
+    }
+
+    function throttle(fn,delay){
+        let timer = null;
+        return function (){
+            if(timer) return
+            timer = setTimeout(()=> {
+                    fn();
+                    timer=null;
+             }
+            ,delay)
+        }
+    }
+
+</script>
 </body>
 </html>

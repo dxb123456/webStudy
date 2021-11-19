@@ -7,7 +7,123 @@
 <body>
 
 <script>
-    //惰性函数
+    //柯理化函数  将接受多个参数的函数转换成接收单一参数的函数
+     //函数柯里化思想：一个JS预处理的思想，降低通用性，提高适用性
+
+    //1.原理版
+    // function add(x, y) {
+    //     return x + y
+    // }
+
+    // Currying后
+    // function curryingAdd(x) {
+    //     return function (y) {
+    //         return x+y
+    //
+    //     }
+    // }
+
+    // console.log(add(1, 2))          // 3
+    // console.log(curryingAdd(1)(2));   // 3
+
+
+    //2.初级版
+    // var add = function(num1, num2) {
+    //     return num1 + num2;
+    // }
+    // function curry(add) {
+    //     var arr = [];
+    //     return function reply() {
+    //         var arg = Array.prototype.slice.call(arguments);
+    //         arr = arr.concat(arg);
+    //         if (arg.length === 0) { // 递归结束条件，修改为 传入空参数
+    //             return arr.reduce(function(p, c) {
+    //                 return p = add(p, c);
+    //             }, 0)
+    //         } else {
+    //             return reply;
+    //         }
+    //     }
+    // }
+    // var sum = curry(add);
+    // console.log(sum(4)(3)(2)(1)(5)())
+
+
+    //3.中级版
+    function curry(fn) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        return function() {
+            var innerArgs = Array.prototype.slice.call(arguments);
+            var finalArgs = args.concat(innerArgs);
+            return fn.apply(null, finalArgs);
+        };
+    }
+
+    function add(num1, num2) {
+        return num1 + num2;
+    }
+    var curriedAdd = curry(add, 5);
+
+    var curriedAdd2 = curry(add, 5, 12);
+
+    curriedAdd(3)        // 8
+    curriedAdd2(4,2)     // 17
+
+
+    //4.高级版， 支持多参数传递
+    function progressCurrying(fn, args) {
+
+        var _this = this
+        var len = fn.length;
+        var args = args || [];
+        debugger
+        return function() {
+            var _args = Array.prototype.slice.call(arguments);
+            Array.prototype.push.apply(args, _args);
+
+            // 如果参数个数小于最初的fn.length，则递归调用，继续收集参数
+            if (_args.length < len) {
+                return progressCurrying.call(_this, fn, _args);
+            }
+
+            // 参数收集完毕，则执行fn
+            return fn.apply(this, _args);
+        }
+    }
+    var aa  = progressCurrying(add)
+   console.log(aa(1,5)(2)(3))
+
+
+    //
+    //5.面试题 实现一个add方法，使计算结果能够满足如下预期：
+    // add_1(1)(2)(3) = 6;
+    // add_1(1, 2, 3)(4) = 10;
+    // add_1(1)(2)(3)(4)(5) = 15;
+
+    function add_1() {
+        // 第一次执行时，定义一个数组专门用来存储所有的参数
+        debugger
+        var _args = Array.prototype.slice.call(arguments);
+
+        // 在内部声明一个函数，利用闭包的特性保存_args并收集所有的参数值
+        var _adder = function() {
+            _args.push(...arguments);
+            return _adder;
+        };
+
+        // 利用toString隐式转换的特性，当最后执行时隐式转换，并计算最终的值返回
+        _adder.toString = function () {
+            return _args.reduce(function (a, b) {
+                return a + b;
+            });
+        }
+        return _adder;
+    }
+
+    // alert(add_1(1)(2)(3))                       // 6
+    // console.log(add_1(1, 2, 3)(4));            // 10
+    // console.log(add_1(1)(2)(3)(4)(5));          // 15
+    // console.log(add_1(2, 6)(1));                // 9
 </script>
 
 </body>

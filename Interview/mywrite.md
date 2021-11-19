@@ -660,6 +660,26 @@
          }
 
    50.防抖和节流 手写一个？
+      防抖：一个时间区间只允许一个通过，最新的执行。
+      节流：一个时间区间只允许一个通过，执行原来的。
+      function debounce(fn,delay){
+         let timer=null;
+         return function(){
+            timer && clearTimeout(timer);
+            timer = setTimeout(fn,delay)
+         }
+      }
+      function throttle(fn,delay){
+          let timer = null;
+          return function (){
+              if(timer) return
+              timer = setTimeout(()=> {
+                      fn();
+                      timer=null;
+              },delay)
+          }
+      }
+      注意：timer = null 和clearTimeout(timer) 的区别：clearTimeout只是清除了定时器的执行，但是timer依然指向这个定时器，使用timer=null可以让定时器的内存释放。
    51.函数柯理化原理？
    52.requestAnimationFrame是什么？
    53.js常见的设计模式？
@@ -672,3 +692,8 @@
    3.template中的用法和原来一样。
    4.如果需要双向绑定 需要使用ref、reactive
    5.setup中使用store 需要引入该文件
+   
+   其他类别：
+   1.前端大文件上传
+    
+   
