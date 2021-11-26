@@ -681,10 +681,72 @@
       }
       注意：timer = null 和clearTimeout(timer) 的区别：clearTimeout只是清除了定时器的执行，但是timer依然指向这个定时器，使用timer=null可以让定时器的内存释放。
    51.函数柯理化原理？
+     函数柯理化的原理：利用闭包的原理，让我们前面传输过来的参数不要被释放掉。
+     作用:1.参数复用
+         2.提前确认 （如on时间）eg：
+         var on = (function () {
+             if (document.addEventListener) {
+                 return function (element, event, handler) {
+                     if (element && event && handler) {
+                         element.addEventListener(event, handler, false);
+                     }
+                 };
+             } else {
+                 return function (element, event, handler) {
+                     if (element && event && handler) {
+                         element.attachEvent('on' + event, handler);
+                     }
+                 };
+             }
+         })();
+         3.延迟运行，使用bind或者call，使函数等所有的参数传入完成再运行
+         Function.prototype.bind = function (context) {
+             var _this = this
+             var args = Array.prototype.slice.call(arguments, 1)
+             return function() {
+                 return _this.apply(context, args)
+             }
+         }
+     一个简单的函数柯理化代码：
+         var add = function(num1, num2) {
+              return num1 + num2;
+         }
+         function progressCurrying(fn, args) {
+             var _this = this
+             var len = fn.length;
+             var args = args || [];
+             return function() {
+                 var _args = Array.prototype.slice.call(arguments);
+                 Array.prototype.push.apply(args, _args);
+                 // 如果参数个数小于最初的fn.length，则递归调用，继续收集参数
+                 if (_args.length < len) {
+                     return progressCurrying.call(_this, fn, _args);
+                 }
+                 // 参数收集完毕，则执行fn
+                 return fn.apply(this, _args);
+             }
+         }
    52.requestAnimationFrame是什么？
+      requestAnimationFrame：下次重绘之前，执行callback，浏览器会把每一帧中的所有DOM操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+      与setInterval的区别：
+       1.requestAnimationFrame是基于帧来的，setInterval是基于时间的，requestAnimationFrame是为动画而生的，运行时浏览器会自动优化
+       2.如果浏览器进入后台后requestAnimationFrame是不执行的，setInterval部分浏览器还是会执行的
+       3.requestAnimationFrame 属于GUI层面，不进入任务队列，setInterval属于宏任务
    53.js常见的设计模式？
+      1.单例模式
+      2.工厂模式
+      3.构造函数模式
+      4.模块模式
+      5.观察者模式
+      6.发布订阅模式
    54.js性能优化？
-     
+     1.合理使用闭包，清除一些不用的引用如（定时器）
+     2.合理使用全局变量，let声明的变量，会被垃圾回收机制回收
+     3.使用事件委托
+     4.减少重绘和重排
+     5.尽量减少http的请求
+     6.适度减少对变量的访问 （多个地方需要访问变量 可以保存一下）
+     7.多个if-else的话可以使用switch语句
 
    vue3中的一些不同点
    1.不对外暴露vue了 而是暴露createApp、ref、reactive 等等一些方法
