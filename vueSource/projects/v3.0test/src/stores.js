@@ -3,6 +3,8 @@ import {createStore} from 'vuex'
 const moduleA = {
     state: () => ({
         a:1,
+        uid:'10001',
+        token:'JADJAJ2_QWSAKK__'
     }),
     mutations: {
         async changeA(data){
@@ -64,7 +66,9 @@ export default createStore({
     //     b:moduleB
     // }
     state:{
-        a:1
+        a:1,
+        uid:'22222',
+        token:'SDKJJDJDS_SKJDFJSJ_'
     },
     mutations:{
         changeA(state,preload){

@@ -4,7 +4,9 @@
        <h3>
            {{store.state.a}}
        </h3>
-
+       <input type="text" v-model="this.$store.state.uid">
+        <p>{{this.$store.state.uid}}</p>
+       <p>{{myUid}}</p>
    </div>
 </template>
 
@@ -12,6 +14,7 @@
     import {ref, reactive, watch, computed, createApp} from 'vue'
     import router from '@/router'
     import store from './stores'
+    import {useStore} from 'vuex'
     export default {
         name: "test.app",
         setup(props,context){
@@ -30,7 +33,10 @@
             //     })
             // },2000)
             console.log(store.state.a)
-
+            const stores = useStore();
+            console.log(stores)
+            stores.state.uid =100000
+            let myUid = computed(()=>store.state.uid)
             setTimeout(()=>{
                 store.commit('changeA',999)
             },1000)
@@ -39,7 +45,7 @@
                 mm:22
             })
             console.log(sss.value)
-            return {store,sss}
+            return {store,sss,myUid}
         },
         created(){
             console.log(this.store.state.a)
