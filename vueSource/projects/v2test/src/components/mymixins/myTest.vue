@@ -4,6 +4,8 @@
         <p>{{ name1 }}</p>
         <button @click="add">+</button>
         <p>{{obj.name}}</p>
+        <input type="text" v-model="input">
+        <p>{{input}}</p>
     </div>
 </template>
 
@@ -12,11 +14,19 @@
     export default {
         name: "myTest",
         mixins:[mixins],
-        // data(){
-        //     return {
-        //         name1:'我是test中的name',
-        //     }
-        // }
+        data(){
+            return {
+                input:''
+            }
+        },
+        methods:{
+            add(){
+                console.log(2222)
+                console.log(this.$root)
+                console.log(this.$parent)
+
+            }
+        }
     }
 </script>
 

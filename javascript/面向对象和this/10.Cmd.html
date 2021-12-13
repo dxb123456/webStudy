@@ -8,7 +8,9 @@
 <script type="text/javascript" src="./js/libs/Sea-debug.js">
 </script>
 <script>
-    seajs.use("./js/sea_main.js")
+    seajs.use("./js/sea_main.js",function(main){
+        console.log(main)
+    })
 </script>
 </body>
 </html>

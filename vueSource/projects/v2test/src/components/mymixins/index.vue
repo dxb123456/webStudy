@@ -1,7 +1,7 @@
 <template>
     <div>
-        <my-test></my-test>
-        <my-test2></my-test2>
+        <my-test id="pp2"></my-test>
+        <my-test2 id="pp3"></my-test2>
     </div>
 </template>
 

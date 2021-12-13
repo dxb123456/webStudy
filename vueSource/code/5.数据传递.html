@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue3.2.23.js"></script>
+</head>
+<body>
+<div class="app2">
+
+</div>
+<script>
+    // 1.props 传值类型限制
+    let childTemp = {
+        // props:['name1','name2'],
+        props:{
+            name1:{
+                type:String,
+                default:'我是默认name1',   //基本数据类型，default 可以直接设置
+            },
+            name2:{
+                type:[String,Number],    //多个使用数组分割
+                default:'我是默认name2'   //基本数据类型，default 可以直接设置
+            },
+            name3:{
+                type:String,
+                required:true,           //是否必传
+                validator(value){         //对传入的数据进行验证
+                    return ['danger','info','success'].includes(value)
+                }
+            },
+            arr:{
+                type:Array,
+                default(){              //复杂类型 需要使用函数
+                    return [1,2,'sss']
+                }
+            }
+        },
+        data(){
+            return {
+                childName1:'',
+            }
+        },
+        template: `<div>
+                        <p>{{name1}}  </p>
+                        <p>{{name2}}  </p>
+                        <p>{{name3}}  </p>
+                        <p>{{arr}}</p>
+                    </div>`
+    }
+
+
+    Vue.createApp({
+        data(){
+            return {
+                name1:'我是父组件传过来的name1',
+                name2:'info'
+            }
+        },
+        components:{child:childTemp},    //局部组件
+        methods: {
+        },
+        template:
+            `<div>
+                <p>我是根组件</p>
+                <child :name1="name1" :arr="[1,'wwww']" :name3="name2"/>
+            </div>`
+    }).mount('.app2')
+</script>

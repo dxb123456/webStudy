@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue3.2.23.js"></script>
+</head>
+<body>
+<div id="app">
+    <button-counter :[arg]="id" :class="{current:active}"></button-counter>
+    <p :class="['a1',active?'current':'a2']" @click.middle="presskey">1111</p>
+    <div >
+
+    </div>
+
+    <p>
+        <textarea name="" id="" cols="30" rows="10" v-model="textarea1"></textarea>
+    </p>
+
+<!--    表单-->
+
+<!--    1.单选按钮-->
+    a1:<input type="radio" v-model="radioValue" value="a1" @change="aa">
+    a2:<input type="radio" v-model="radioValue" value="a2" @change="aa">
+    a3:<input type="radio" v-model="radioValue" value="a3" @change="aa">
+    <p>{{radioValue}}</p>
+    <hr>
+<!--      2.复选框     -->
+    <label for="box1">
+        b1:
+        <input id="box1" type="checkbox" v-model="boxValue" value="b1" @change="aa">
+    </label>
+    <label for="box2">
+        b2:
+        <input id="box2" type="checkbox" v-model="boxValue" value="b2" @change="aa">
+    </label>
+    <label for="box3">
+        b3:
+        <input id="box3" type="checkbox" v-model="boxValue" value="b3" @change="aa">
+    </label>
+    <p>
+        {{boxValue}}
+    </p>
+<!--    3.下拉列表-->
+    <select  id="select100" v-model="selectValue" @change="bb" >
+        <option value="">请选择</option>
+        <option value="bb1">列表1</option>
+        <option value="bb2">列表2</option>
+        <option value="bb3">列表3</option>
+    </select>
+
+    <p>
+        <input type="text"  v-model.rtrim="text1">
+        {{text1}}
+    </p>
+</div>
+
+<div class="app2">
+
+</div>
+<script>
+    var  myvue = Vue.createApp({
+        data(){
+            return {
+                arg:"s1",
+                id:1001,
+                active:true,
+                text1:'',
+                textarea1:'',
+                radioValue:'',    //radio 使用字符串
+                boxValue:[],     //checkbox 需要使用数组
+                selectValue:'',
+            }
+        },
+        methods: {
+            presskey(event){
+                console.log(event)
+            },
+            aa(){
+                console.log(this.boxValue)
+            },
+            bb(value){
+                console.log(this.selectValue)
+            },
+            cc(value){
+                console.log(value.target.value)
+            }
+        }
+    });  //此处应传递一个对象
+    console.log(myvue)
+
+      myvue.component(
+        'button-counter',
+        {
+            data(){
+                return{
+                    mm:'123',
+                }
+            },
+            props:['s1'],
+            methods:{
+                mm_cancel(){
+                    this.mm = null; //让值是失效，可以设置为null或者undefined
+                }
+            },
+            mounted(){
+                console.log(this.s1)
+            },
+            template:
+                `
+                    <h1 @click="mm_cancel">{{mm}}</h1>
+                `
+        },
+    )
+    myvue.mount('#app')
+
+    //1.事件修饰符   @click
+       // 1).capture   捕获阶段实行
+       // 2).self      触发元素本身才会执行，不会受冒泡影响
+       // 3).once      事件只执行一次
+       // 4).stop      阻止冒泡
+       // 5).passive   用户告知不用处理浏览器的默认行为。
+       // 6).prevent   阻止默认
+       // 7).middle    使用鼠标中键触发
+    //2.键盘修饰符
+      //1）. @keyup.ctrl     按ctrl、alt、shift、enter 、a、b、c  ...
+      //2）. @keyup.k        这种方式使用shift+k 也是能够触发的
+      //3）. @keyup.k.exact  只按k键才能触发
+
+   //3.表单修饰符
+      //1) v-model.lazy       光标离开触发
+      //2) v-model.number     只获取数字
+      //3) v-model.trim       去除前后空格
+      //4) v-model.ltrim      去除左空格
+      //5) v-model.rtrim      去除右空格
+
+    //4.注册组件
+    //    1.全局注册  Vue.component('name',{})
+    //    2.局部注册
+    let newTemp = {
+        data(){
+            return {
+                aa:'100'
+            }
+        },
+        template:'<div>{{aa}}</div>'
+
+    }
+    Vue.createApp({
+        data(){
+            return {
+                name1:''
+            }
+        },
+        components:{hd:newTemp},    //局部组件
+        methods: {
+        },
+        template:'<div><p>我是APP2</p><hd/></div>'
+    }).mount('.app2')
+</script>

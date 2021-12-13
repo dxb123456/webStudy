@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 <!--    <my-test msg="Welcome to Your Vue.js App"/>-->
-    <mixins-index />
+    <mixins-index  id="pp1"/>
   </div>
 </template>
 
@@ -13,6 +13,9 @@ export default {
 
   components: {
       mixinsIndex,
+  },
+  mounted() {
+      console.log(this.$children)
   }
 }
 </script>

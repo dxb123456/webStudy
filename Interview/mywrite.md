@@ -747,7 +747,100 @@
      5.尽量减少http的请求
      6.适度减少对变量的访问 （多个地方需要访问变量 可以保存一下）
      7.多个if-else的话可以使用switch语句
-
+   55.js的模块化  CommonJS、AMD、CMD、UMD、JS 模块化；
+     发展历史：
+      1.原始状态： 弊端（代码的复用；全局作用域污染；可维护性）
+        function add(a, b) {
+            console.log(a + b)
+        }
+        add(1, 2)
+      2.使用命名空间
+        var namespace = {}
+        namespace.add = function(a, b) {
+            console.log(a + b)
+        }
+        namespace.add(1, 2)
+      3.匿名闭包 IIFE 模式
+        var utils = (function() {
+            var module = {}
+            module.multiply = function(a, b) {
+                console.log(a * b)
+            }
+            return module
+        }())
+        utils.multiply(1,2)
+      4.CommonJS   (nodejs中主要方法是exports和require)
+      commonjs是同步执行，服务端中能够很快的拿到想要的模块，但是在浏览器中去拿后端的模块需要很长时间，会造成浏览器"假死"。
+      //对外暴露
+      function add(a, b) {
+          console.log(a + b)
+      }
+      module.exports.add = add
+      //引用
+      var add = require('./utils').add
+      add(1, 2)
+      5.AMD 异步模块定义，需要使用require，只有当模块加载完成才会执行回调方法
+      //utils.js 定义
+      define([], function() {
+          return {
+              add: function(a, b) {
+                  console.log(a + b)
+              }
+          }
+      })
+      //引用
+      require(['./utils'], function(utils) {
+          utils.add(1, 2)
+      })
+      6.cmd 在seajs中提出的 也是要解决异步问题 ，与amd的区别是：amd是前置依赖，cmd是后置依赖，require中默认是前置依赖
+      // AMD 中
+      require(['./utils', 'a', 'b'], function(utils) {
+          console.log(1)
+          // 还没有用到 utils a b 等模块，但是 AMD 已经初始化了所有模块
+          console.log(2)
+          utils.add(1, 2)
+      })
+      //CMD 中
+      define(function(require, exports, module){
+          console.log(1)
+          if(false) {
+              var utils = require('./utils') // 需要时再 require，不执行就不会加载
+              utils.add(1, 2)
+          }
+      })
+      7. UMD 通用模块定义,AMD和commonJS的一个结合体，用来自动判端是浏览器还是服务器环境
+      (function(root, factory) {
+          if (typeof define === 'function' && define.amd) {
+              //AMD
+              define(['utils'], factory)
+          } else if (typeof exports === 'object') {
+              //CommonJS
+              var utils = require('utils')
+              module.exports = factory(utils)
+          } else {
+              root.result = factory(root.utils)
+          }
+      }(this, function(utils) {
+          utils.add(1, 2)
+      }))
+      8.ES6   
+        //定义   
+        export const utils = {
+            add: function(a, b) {
+                console.log(a + b)
+            }
+        }
+        // 引入
+        import { utils } from "./utils"
+        utils.add(1, 2)
+      9.commonJS和ES6的区别
+      CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用。
+      CommonJS 模块是运行时加载，ES6 模块是编译时输出接口。
+      CommonJs 是单个值导出，ES6 Module可以导出多个。
+      CommonJs 是动态语法可以写在判断里，ES6 Module 静态语法只能写在顶层。
+      CommonJs 的 this 是当前模块，ES6 Module的 this 是 undefined。
+      
+        
    vue3中的一些不同点
    1.不对外暴露vue了 而是暴露createApp、ref、reactive 等等一些方法
    2.使用了组合api setup中没有this，需要对外暴露数据

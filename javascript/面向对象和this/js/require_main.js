@@ -9,6 +9,7 @@
     })
     requirejs(['alter','jquery'],function(alter,$){
         alter.showMsg();
+        console.log(alter.getName());
         $('body').css({
             backgroundColor:'red'
         })
